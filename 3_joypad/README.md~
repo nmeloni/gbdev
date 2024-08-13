@@ -1,0 +1,4 @@
+# Joypad
+
+La gestion du joypad avec **GBDK** est relativement simple. La
+fonction `joypad()` permet récupérer l'état des différents boutons.
