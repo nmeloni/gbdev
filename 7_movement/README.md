@@ -47,3 +47,5 @@ fluides.
 
 La gestion de la physique elle-même est standard avec une gestion de
 l'accélération, de la vitesse et enfin du déplacement.
+
+<img src="https://github.com/nmeloni/gbdev/blob/main/img/movement.gif" alt="moves" width="500" title="Un exemple de gestion des mouvements"/>
