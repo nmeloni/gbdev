@@ -7,18 +7,18 @@ des bonus.
 
 - [ ] Logo
 - [ ] Ecran d'accueil
-- [ ] Personnage principal
-	- [ ] Sprites
-		- [ ] Arrêt
-		- [ ] Course
-		- [ ] Accroupi
-		- [ ] Saut
-		- [ ] Dégat
-	- [ ] Animations
-	- [ ] Controles
-		- [ ] Saut
-		- [ ] Acceleration
-		- [ ] Accroupi
+- [~] Personnage principal
+	- [x] Sprites
+		- [x] Arrêt
+		- [x] Course
+		- [x] Accroupi
+		- [x] Saut
+		- [x] Dégat
+	- [x] Animations
+	- [x] Controles
+		- [x] Saut
+		- [x] Acceleration
+		- [x] Accroupi
 - [ ] HUD
 	- [ ] Sprites
 	- [ ] Vie
@@ -31,11 +31,11 @@ des bonus.
 	- [ ] Sprites
 	- [ ] Animations
 - [ ] Game engine
-	- [ ] Input
-	- [ ] Game logic
-		- [ ] Physics
+	- [~] Input
+	- [~] Game logic
+		- [~] Physics
 		- [ ] Collisions
-		- [ ] Animations
+		- [~] Animations
 	- [ ] Màj scène
 	- [ ] Audio 
 		- [ ] Musique
