@@ -32,6 +32,7 @@ build_all:
 	$(MAKE) build
 
 build:
+	mkdir -p obj
 	$(MAKE) $(BIN)
 
 clean:
