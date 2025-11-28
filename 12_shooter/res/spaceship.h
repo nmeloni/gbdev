@@ -9,17 +9,17 @@
 #define spaceship_TILE_ORIGIN 0
 #define spaceship_TILE_W 8
 #define spaceship_TILE_H 8
-#define spaceship_WIDTH 8
-#define spaceship_HEIGHT 8
+#define spaceship_WIDTH 16
+#define spaceship_HEIGHT 16
 #define spaceship_TILE_COUNT 4
 #define spaceship_PALETTE_COUNT 1
 #define spaceship_COLORS_PER_PALETTE 4
 #define spaceship_TOTAL_COLORS 4
-#define spaceship_PIVOT_X 4
-#define spaceship_PIVOT_Y 4
-#define spaceship_PIVOT_W 8
-#define spaceship_PIVOT_H 8
-extern const metasprite_t* const spaceship_metasprites[4];
+#define spaceship_PIVOT_X 8
+#define spaceship_PIVOT_Y 8
+#define spaceship_PIVOT_W 16
+#define spaceship_PIVOT_H 16
+extern const metasprite_t* const spaceship_metasprites[1];
 
 BANKREF_EXTERN(spaceship)
 

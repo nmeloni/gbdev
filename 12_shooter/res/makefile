@@ -15,10 +15,10 @@ all: $(C_FILES)
 # Règle générique pour la plupart des sprites 8x8
 %.c: $(PNG_DIR)/%.png
 	@echo "Converting $< to $@"
-	$(PNG2ASSET) $< -c $@ -sw 8 -sh 8 -spr8x8 -noflip
+	$(PNG2ASSET) $< -c $@ -sw 8 -sh 8 -spr8x8 -noflip -keep_palette_order
 
-spacechip.c: $(PNG_DIR)/spaceship.png
-	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip
+spaceship.c: $(PNG_DIR)/spaceship.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
 
 # Nettoyer les fichiers générés
 clean:
