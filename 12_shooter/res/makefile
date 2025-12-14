@@ -17,7 +17,13 @@ all: $(C_FILES)
 	@echo "Converting $< to $@"
 	$(PNG2ASSET) $< -c $@ -sw 8 -sh 8 -spr8x8 -noflip -keep_palette_order
 
-spaceship.c: $(PNG_DIR)/spaceship.png
+spaceship_sprite.c: $(PNG_DIR)/spaceship_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
+
+rock16x16_sprite.c: $(PNG_DIR)/spaceship_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
+
+ennemy16x16_sprite.c: $(PNG_DIR)/spaceship_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
 
 # Nettoyer les fichiers générés

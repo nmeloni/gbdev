@@ -4,14 +4,14 @@
 #include <gbdk/platform.h>
 #include <gbdk/metasprites.h>
 
-BANKREF(rock8x8)
+BANKREF(rock8x8_sprite)
 
-const palette_color_t rock8x8_palettes[4] = {
+const palette_color_t rock8x8_sprite_palettes[4] = {
 	RGB8(255,255,255), RGB8(169,169,169), RGB8( 84, 84, 84), RGB8(  0,  0,  0)
 	
 };
 
-const uint8_t rock8x8_tiles[16] = {
+const uint8_t rock8x8_sprite_tiles[16] = {
 	0x18,0x1c,0x3a,0x66,
 	0xdc,0xa3,0xb5,0xcb,
 	0x19,0xe7,0xa5,0xdb,
@@ -19,11 +19,11 @@ const uint8_t rock8x8_tiles[16] = {
 	
 };
 
-const metasprite_t rock8x8_metasprite0[] = {
+const metasprite_t rock8x8_sprite_metasprite0[] = {
 	METASPR_ITEM(-4, -4, 0, S_PAL(0)),
 	METASPR_TERM
 };
 
-const metasprite_t* const rock8x8_metasprites[1] = {
-	rock8x8_metasprite0
+const metasprite_t* const rock8x8_sprite_metasprites[1] = {
+	rock8x8_sprite_metasprite0
 };

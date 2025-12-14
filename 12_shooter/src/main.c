@@ -2,92 +2,70 @@
 #include <stdint.h>
 
 #include <gbdk/platform.h>
-#include <gbdk/metasprites.h>
 #include <gbdk/emu_debug.h>
 
-#include "spaceship.h"
-#include "rock8x8.h"
+#include "player.h"
+#include "ennemy.h"
 
-#define SPACESHIP_TILE_OFFSET 0
-#define ROCK8x8_TILE_OFFSET (SPACESHIP_TILE_OFFSET+spaceship_TILE_COUNT)
 
-#define UPDATE_KEYS()   previous_joypad = current_joypad; current_joypad = joypad()
-#define KEY_PRESSED(K)  (current_joypad & (K))
-uint8_t current_joypad, previous_joypad;
+uint8_t oam = 0;
+uint16_t level_framecounter = 0;
+uint16_t level_next_event = 0;
+uint8_t level[][4] = {
+    {1,80,0,ENNEMY_1},
+    {2,80,0,ENNEMY_1},
+    {3,80,0,ENNEMY_1},
 
-typedef struct {
-    uint8_t x,y;
-    int8_t const * bounding_boxes;
-    metasprite_t * const * sprites;
-} spaceship;
+    {8,80,0,ENNEMY_1},
+    {9,80,0,ENNEMY_1},
+    {10,80,0,ENNEMY_1},
 
-typedef struct {
-    uint8_t x,y;
-    int8_t const * bounding_boxes;
-    metasprite_t * const * sprites; 
-} rock;
+};
+void level_events(void);
 
-void init_gfx(void) {
-    set_sprite_data(SPACESHIP_TILE_OFFSET, spaceship_TILE_COUNT, spaceship_tiles);
-    set_sprite_data(ROCK8x8_TILE_OFFSET, rock8x8_TILE_COUNT, rock8x8_tiles);
+void main(void){
+    //Initialisation des gfx
+    set_sprite_data(SPACESHIP_TILE_OFFSET, spaceship_sprite_TILE_COUNT, spaceship_sprite_tiles);
+    set_sprite_data(BULLET_TILE_OFFSET, bullet_sprite_TILE_COUNT, bullet_sprite_tiles
+	);
+    set_sprite_data(POWERUP_TILE_OFFSET, powerup_sprite_TILE_COUNT, powerup_sprite_tiles
+	);
+
     SPRITES_8x8;
     SHOW_SPRITES;
     DISPLAY_ON;
-}
-
-spaceship PLAYER;
-rock ROCKS[4];
-
-uint8_t ssbbox[] = {0,0,16,16};
-uint8_t rockbbox[] = {0,0,8,8};
-
-void init_player(void) {
-    PLAYER.x = 120;
-    PLAYER.y = 140;
-    PLAYER.bounding_boxes = ssbbox;
-    PLAYER.sprites = spaceship_metasprites;
-}
-
-void init_rocks(void){
-    for (int i=0; i<4; i++){
-	ROCKS[i].x = 10+i*40;
-	ROCKS[i].y = i*20;
-	ROCKS[i].bounding_boxes=rockbbox;
-	ROCKS[i].sprites = rock8x8_metasprites;
-    }
-}
-
-int oam;
-
-void main(void){
-    init_gfx();
-    init_player();
-    init_rocks();
     
+    init_player();
     while(1) {
 	// On attend la prochaine frame
-	OBP0_REG = DMG_PALETTE(DMG_DARK_GRAY, DMG_WHITE, DMG_LITE_GRAY, DMG_BLACK); 
         vsync();
-
+	oam = 0;
 	// Mise à jour des entrées
 	UPDATE_KEYS();
-	// Déplacement de l'entité carti en fonction des entrées
+	if (KEY_RELEASED(J_SELECT)){
+	    add_powerup(80,10);
+	}
+	//Mouvements
+	handle_player();
+	handle_bullets();
+	handle_powerups();
+	//Physique
+	handle_collisions();
 	
-	if (KEY_PRESSED(J_LEFT)) {
-	    PLAYER.x -=1;
-	}
-	if (KEY_PRESSED(J_RIGHT)) {
-	    PLAYER.x += 1;
-	}
-	//OBP0_REG = DMG_PALETTE(DMG_WHITE, DMG_LITE_GRAY, DMG_DARK_GRAY, DMG_BLACK);
-	for (int8_t i=0; i<4;i++){
-	    ROCKS[i].y+=i+1;
-	}
+	//Affichage
+	draw_player();
+	draw_bullets();
+	draw_powerups();
 	
-	move_metasprite_ex(PLAYER.sprites[0],0,0,0,PLAYER.x, PLAYER.y);
-	for (int8_t i=0; i<4; i++){
-	    move_metasprite_ex(ROCKS[i].sprites[0],4,0,4+i,ROCKS[i].x, ROCKS[i].y);
-	}
-	
+	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
+    }
+    
+}
+
+void level_events(void){
+    level_framecounter++;
+    if (level_framecounter == level_events[level_next_event][0]){
+	add_ennemy(
+	level_next_event++;
     }
 }
