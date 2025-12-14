@@ -1,0 +1,104 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module main
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _main
+                                     11 	.globl _set_bkg_tiles
+                                     12 	.globl _set_bkg_data
+                                     13 ;--------------------------------------------------------
+                                     14 ; special function registers
+                                     15 ;--------------------------------------------------------
+                                     16 ;--------------------------------------------------------
+                                     17 ; ram data
+                                     18 ;--------------------------------------------------------
+                                     19 	.area _DATA
+                                     20 ;--------------------------------------------------------
+                                     21 ; ram data
+                                     22 ;--------------------------------------------------------
+                                     23 	.area _INITIALIZED
+                                     24 ;--------------------------------------------------------
+                                     25 ; absolute external ram data
+                                     26 ;--------------------------------------------------------
+                                     27 	.area _DABS (ABS)
+                                     28 ;--------------------------------------------------------
+                                     29 ; global & static initialisations
+                                     30 ;--------------------------------------------------------
+                                     31 	.area _HOME
+                                     32 	.area _GSINIT
+                                     33 	.area _GSFINAL
+                                     34 	.area _GSINIT
+                                     35 ;--------------------------------------------------------
+                                     36 ; Home
+                                     37 ;--------------------------------------------------------
+                                     38 	.area _HOME
+                                     39 	.area _HOME
+                                     40 ;--------------------------------------------------------
+                                     41 ; code
+                                     42 ;--------------------------------------------------------
+                                     43 	.area _CODE
+                                     44 ;src/main.c:5: void main(void) {
+                                     45 ;	---------------------------------
+                                     46 ; Function main
+                                     47 ; ---------------------------------
+    00000000                         48 _main::
+                                     49 ;src/main.c:7: BGP_REG = DMG_PALETTE(dungeon_tileset_palettes[3], dungeon_tileset_palettes[1], dungeon_tileset_palettes[2], dungeon_tileset_palettes[0]);
+    00000000 FAr00r00         [16]   50 	ld	a, (#_dungeon_tileset_palettes + 0)
+    00000003 E6 03            [ 8]   51 	and	a, #0x03
+    00000005 0F               [ 4]   52 	rrca
+    00000006 0F               [ 4]   53 	rrca
+    00000007 E6 C0            [ 8]   54 	and	a, #0xc0
+    00000009 4F               [ 4]   55 	ld	c, a
+    0000000A FAr04r00         [16]   56 	ld	a, (#(_dungeon_tileset_palettes + 4) + 0)
+    0000000D CB 37            [ 8]   57 	swap a
+    0000000F E6 30            [ 8]   58 	and	a, #0x30
+    00000011 B1               [ 4]   59 	or	a, c
+    00000012 4F               [ 4]   60 	ld	c, a
+    00000013 FAr02r00         [16]   61 	ld	a, (#(_dungeon_tileset_palettes + 2) + 0)
+    00000016 E6 03            [ 8]   62 	and	a, #0x03
+    00000018 87               [ 4]   63 	add	a, a
+    00000019 87               [ 4]   64 	add	a, a
+    0000001A B1               [ 4]   65 	or	a, c
+    0000001B 4F               [ 4]   66 	ld	c, a
+    0000001C FAr06r00         [16]   67 	ld	a, (#(_dungeon_tileset_palettes + 6) + 0)
+    0000001F E6 03            [ 8]   68 	and	a, #0x03
+    00000021 B1               [ 4]   69 	or	a, c
+    00000022 E0r00            [12]   70 	ldh	(_BGP_REG + 0), a
+                                     71 ;src/main.c:9: DISPLAY_ON;
+    00000024 F0r00            [12]   72 	ldh	a, (_LCDC_REG + 0)
+    00000026 F6 80            [ 8]   73 	or	a, #0x80
+    00000028 E0r00            [12]   74 	ldh	(_LCDC_REG + 0), a
+                                     75 ;src/main.c:10: SHOW_BKG;
+    0000002A F0r00            [12]   76 	ldh	a, (_LCDC_REG + 0)
+    0000002C F6 01            [ 8]   77 	or	a, #0x01
+    0000002E E0r00            [12]   78 	ldh	(_LCDC_REG + 0), a
+                                     79 ;src/main.c:12: SPRITES_8x8;
+    00000030 F0r00            [12]   80 	ldh	a, (_LCDC_REG + 0)
+    00000032 E6 FB            [ 8]   81 	and	a, #0xfb
+    00000034 E0r00            [12]   82 	ldh	(_LCDC_REG + 0), a
+                                     83 ;src/main.c:13: set_bkg_data(0, dungeon_tileset_TILE_COUNT, dungeon_tileset_tiles);
+    00000036 11r00r00         [12]   84 	ld	de, #_dungeon_tileset_tiles
+    00000039 D5               [16]   85 	push	de
+    0000003A 21 00 1D         [12]   86 	ld	hl, #0x1d00
+    0000003D E5               [16]   87 	push	hl
+    0000003E CDr00r00         [24]   88 	call	_set_bkg_data
+    00000041 E8 04            [16]   89 	add	sp, #4
+                                     90 ;src/main.c:14: set_bkg_tiles(0, 0, 20, 18, dungeon_map_map);
+    00000043 11r00r00         [12]   91 	ld	de, #_dungeon_map_map
+    00000046 D5               [16]   92 	push	de
+    00000047 21 14 12         [12]   93 	ld	hl, #0x1214
+    0000004A E5               [16]   94 	push	hl
+    0000004B AF               [ 4]   95 	xor	a, a
+    0000004C 0F               [ 4]   96 	rrca
+    0000004D F5               [16]   97 	push	af
+    0000004E CDr00r00         [24]   98 	call	_set_bkg_tiles
+    00000051 E8 06            [16]   99 	add	sp, #6
+                                    100 ;src/main.c:16: }
+    00000053 C9               [16]  101 	ret
+                                    102 	.area _CODE
+                                    103 	.area _INITIALIZER
+                                    104 	.area _CABS (ABS)
