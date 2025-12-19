@@ -20,10 +20,10 @@ all: $(C_FILES)
 spaceship_sprite.c: $(PNG_DIR)/spaceship_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
 
-rock16x16_sprite.c: $(PNG_DIR)/spaceship_sprite.png
+rock16x16_sprite.c: $(PNG_DIR)/rock16x16_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
 
-ennemy16x16_sprite.c: $(PNG_DIR)/spaceship_sprite.png
+ennemy16x16_sprite.c: $(PNG_DIR)/ennemy16x16_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
 
 # Nettoyer les fichiers générés

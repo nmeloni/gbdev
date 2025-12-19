@@ -19,49 +19,49 @@
 #define KEY_RELEASED(K)    (!(current_joypad & (K)) && (previous_joypad & (K)))
 
 #define SPACESHIP_TILE_OFFSET   (1)
-#define NORMAL_SPEED            (3<<4)
-#define BOOST_SPEED             (10<<5)
-#define BOOST_LAG               (24)
+#define NORMAL_SPEED            (14<<4)
+#define BOOST_SPEED             (10<<7)
+#define BOOST_LAG               (30)
 #define BOOST_DURATION          (4)
 
 #define MAX_SHOTS               (3)
 #define SHOOT_LAG               (8)
 
-#define RESET_PLAYER() {    PLAYER.x = 72<<6; \
-    PLAYER.y = 100<<6;			      \
-    PLAYER.dx = NORMAL_SPEED;			      \
-    PLAYER.dy = NORMAL_SPEED;			      \
-    PLAYER.power = 1;			      \
-    PLAYER.last_shot = 0;			      \
-    PLAYER.last_boost = 0;			      \
-    PLAYER.boost = 0;			      \
+//Constantes de flags
+#define PLAYER_FLAG_SHIELD          (1<<0)
+#define PLAYER_FLAG_INVINCIBLE      (1<<1)
+
+#define RESET_PLAYER() {    PLAYER.x = 72<<8; \
+	PLAYER.y = 100<<8;			      \
+	PLAYER.dxy = NORMAL_SPEED;		      \
+	PLAYER.power = 1;			      \
+	PLAYER.last_shot = 0;			      \
+	PLAYER.last_boost = 0;			      \
+	PLAYER.boost = 0;			      \
+	PLAYER.flags = 0;			      \
     }
 
 typedef struct {
-    uint16_t x,y,dx,dy;
+    uint16_t x,y,dxy;
     uint8_t power;
     uint8_t lives;
     uint8_t last_shot;
     uint8_t last_boost;
     uint8_t boost;
-    uint8_t const * bbx;
-    metasprite_t * const * sprites;
+    uint8_t flags;
 } player_t;
 
 
 
 extern uint8_t current_joypad, previous_joypad;
 extern player_t PLAYER;
-
 extern uint8_t oam;
 
 void init_player(void);
 void handle_player(void);
-uint8_t player_collision(uint16_t x, uint16_t y, uint8_t *bbox);
-void handle_collisions(void);
+//uint8_t player_collision(uint16_t x, uint16_t y, uint8_t *bbox);
+//void handle_collisions(void);
 void shoot(void);
 void draw_player(void);
-
-
 
 #endif

@@ -11,10 +11,10 @@
 #include "ennemy16x16_sprite.h"
 #include "ennemybullet_sprite.h"
 
-#define ENNEMY_1_TILE_OFFSET      (6)
-#define ENNEMY_1_SPEED            (1<<5)
+#define ENNEMY_1_TILE_OFFSET      (7)
+#define ENNEMY_1_SPEED            (1<<4)
 #define ENNEMY_PATTERN_SIZE       (12)
-#define MAX_ENNEMY                (8)
+#define MAX_ENNEMY                (6)
 
 enum {ENNEMY_1};
 
@@ -29,9 +29,10 @@ typedef struct {
 
 void init_enemies(void);
 void handle_ennemies(void);
+void add_ennemy(uint8_t x, uint8_t y, uint8_t type);
 void draw_ennemies(void);
 
-extern int8_t ennemy_1_bounding_box[];
+extern const int8_t ennemy_1_bounding_box[];
 extern ennemy_t ENNEMIES[MAX_ENNEMY];
 extern uint8_t oam;
 

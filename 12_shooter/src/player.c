@@ -1,7 +1,7 @@
 #include "player.h"
 
 uint8_t current_joypad, previous_joypad;
-uint8_t spaceship_bounding_box[] = {6,1,4,14};
+//const uint8_t spaceship_bounding_box[] = {6,1,4,14};
 
     
 player_t PLAYER;
@@ -9,18 +9,14 @@ player_t PLAYER;
 void init_player(void){
     RESET_PLAYER();
     PLAYER.lives = 3;
-    PLAYER.bbx = spaceship_bounding_box;
-    PLAYER.sprites = spaceship_sprite_metasprites;
 }
 
 void handle_player(void){
-    if (PLAYER.boost) {
-	PLAYER.dx = BOOST_SPEED;
-	PLAYER.dy = BOOST_SPEED;
+    if (PLAYER.boost){ 
+	PLAYER.dxy = BOOST_SPEED;
 	PLAYER.boost --;
     } else {
-	PLAYER.dx = NORMAL_SPEED;
-	PLAYER.dy = NORMAL_SPEED;
+	PLAYER.dxy = NORMAL_SPEED;
     }
     if (PLAYER.last_boost) PLAYER.last_boost--;
     if (KEY_PRESSED(J_A)){
@@ -30,16 +26,20 @@ void handle_player(void){
 	}
     }
     if (KEY_PRESSED(J_LEFT)){
-	PLAYER.x -= PLAYER.dx;
+	if (PLAYER.x > PLAYER.dxy+ (16<<8)) PLAYER.x -= PLAYER.dxy;
+	else PLAYER.x = 16<<8;
     }
     if (KEY_PRESSED(J_RIGHT)){
-	PLAYER.x += PLAYER.dx;
+	if (PLAYER.x < (120<<8) - PLAYER.dxy ) PLAYER.x += PLAYER.dxy;
+	else PLAYER.x = ((uint16_t)120<<8);
     }
     if (KEY_PRESSED(J_UP)){
-	PLAYER.y -= PLAYER.dy;
+	if (PLAYER.y > PLAYER.dxy+ (24<<8)) PLAYER.y -= PLAYER.dxy;
+	else PLAYER.y = 24<<8;
     }
     if (KEY_PRESSED(J_DOWN)){
-	PLAYER.y += PLAYER.dy;
+	if (PLAYER.y < (144<<8) - PLAYER.dxy ) PLAYER.y += PLAYER.dxy;
+	else PLAYER.y = ((uint16_t)144<<8);
     }
     if (KEY_PRESSED(J_B)){
 	if (PLAYER.last_shot) PLAYER.last_shot--;
@@ -47,6 +47,7 @@ void handle_player(void){
     }
 }
 
+/*
 uint8_t player_collision(uint16_t x, uint16_t y, uint8_t *bbox){
     int16_t ax = (PLAYER.x >> 6) - (spaceship_sprite_PIVOT_X>>1) + spaceship_bounding_box[0];
     int16_t ay = (PLAYER.y >> 6) - (spaceship_sprite_PIVOT_Y>>1) + spaceship_bounding_box[1];
@@ -74,63 +75,69 @@ void handle_collisions(void){
 	    }
 	}
     }
+    for (uint8_t i=0; i<MAX_ENNEMY; i++){
+	if (ENNEMIES[i].isactive){
+	    if (player_collision(ENNEMIES[i].x, ENNEMIES[i].y, ennemy_1_bounding_box)){
+		EMU_printf("Player hit!\n");
+		RESET_PLAYER();
+		ENNEMIES[i].isactive = 0;
+		PLAYER.lives--;
+	    }
+	}
+    }
 }
-
+*/
 
 
 void shoot(void){
     uint8_t nb_bullets = PLAYER.power;
-    uint8_t free_bullets[3]={255,255,255};
-
+    if (PLAYER.last_shot){
+	PLAYER.last_shot--;
+	return;
+    } 
     //on recupère les sprite disponible
     for (uint8_t i=0; i<MAX_BULLETS; i++){
+	if (!BULLETS[i][0].isactive){
+	    PLAYER.last_shot = SHOOT_LAG;
+	    switch (PLAYER.power){
+	    case 1:
+		BULLETS[i][0].isactive = 1;
+		BULLETS[i][0].x = PLAYER.x;
+		BULLETS[i][0].y = PLAYER.y;
+		break;
+	    case 2:	
+		BULLETS[i][0].isactive = 1;
+		BULLETS[i][0].x = PLAYER.x - (4<<8);
+		BULLETS[i][0].y = PLAYER.y;
 	
-	if (!BULLETS[i].isactive){
-	    free_bullets[nb_bullets-1]=i;
-	    nb_bullets--;
-	    
+		BULLETS[i][1].isactive = 1;
+		BULLETS[i][1].x = PLAYER.x + (4<<8);
+		BULLETS[i][1].y = PLAYER.y;
+		break;
+	    case 3:	
+		BULLETS[i][0].isactive = 1;
+		BULLETS[i][0].x = PLAYER.x - (6<<8);
+		BULLETS[i][0].y = PLAYER.y;
+	
+		BULLETS[i][1].isactive = 1;
+		BULLETS[i][1].x = PLAYER.x + (6<<8);
+		BULLETS[i][1].y = PLAYER.y;
+	
+		BULLETS[i][2].isactive = 1;
+		BULLETS[i][2].x = PLAYER.x;
+		BULLETS[i][2].y = PLAYER.y;
+		break;
+	    default:
+		break;
+	    }
+	    return;
 	}
-	if (nb_bullets == 0) break;
     }
-    //pas assez de sprites de libre
-    if (nb_bullets) return;
-    
-    if (PLAYER.power == 1){
-	BULLETS[free_bullets[0]].isactive = 1;
-	BULLETS[free_bullets[0]].x = PLAYER.x;
-	BULLETS[free_bullets[0]].y = PLAYER.y;
-	PLAYER.last_shot = SHOOT_LAG;
-    }
-    if (PLAYER.power == 2){	
-	BULLETS[free_bullets[0]].isactive = 1;
-	BULLETS[free_bullets[0]].x = PLAYER.x - (4<<6);
-	BULLETS[free_bullets[0]].y = PLAYER.y;
-	
-	BULLETS[free_bullets[1]].isactive = 1;
-	BULLETS[free_bullets[1]].x = PLAYER.x + (4<<6);
-	BULLETS[free_bullets[1]].y = PLAYER.y;
-	PLAYER.last_shot = SHOOT_LAG;
-    }
-    if (PLAYER.power == 3){	
-	BULLETS[free_bullets[0]].isactive = 1;
-	BULLETS[free_bullets[0]].x = PLAYER.x - (6<<6);
-	BULLETS[free_bullets[0]].y = PLAYER.y;
-	
-	BULLETS[free_bullets[1]].isactive = 1;
-	BULLETS[free_bullets[1]].x = PLAYER.x + (6<<6);
-	BULLETS[free_bullets[1]].y = PLAYER.y;
-	
-	BULLETS[free_bullets[2]].isactive = 1;
-	BULLETS[free_bullets[2]].x = PLAYER.x;
-	BULLETS[free_bullets[2]].y = PLAYER.y;
-	PLAYER.last_shot = SHOOT_LAG;
-
-    }
-    
 }
 
 void draw_player(void){
-    oam+=move_metasprite_ex(PLAYER.sprites[0],
-		       SPACESHIP_TILE_OFFSET,0,0,
-		       PLAYER.x>>6, PLAYER.y>>6);
-}
+    oam+=move_metasprite_ex(spaceship_sprite_metasprites[0],
+			    SPACESHIP_TILE_OFFSET,0,oam,
+			    PLAYER.x>>8, PLAYER.y>>8);
+    
+   }

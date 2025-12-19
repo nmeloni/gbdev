@@ -1,21 +1,21 @@
 #include "ennemy.h"
 
-int8_t ennemy_1_bounding_box[]={-6,-6,12,12};
-int8_t ennemy_pattern[][12][3] ={
+const int8_t ennemy_1_bounding_box[]={2,2,12,12};
+const int8_t ennemy_pattern[][12][3] ={
     {
 	//ENNEMY 1
-	{-4, 1, 30},
-	{-3, 1, 30},
-	{-1, 1, 30},
-	{ 0,    1, 30},
-	{ 1, 1, 30},
-	{ 3, 1, 30},
-	{ 4, 1, 30},
-	{ 3, 1, 30},
-	{ 1, 1, 30},
-	{ 0,    1, 30},
-	{-1, 1, 30},
-	{-3, 1, 30}
+	{-4, 1, 20},
+	{-3, 1, 20},
+	{-1, 1, 20},
+	{ 0, 1, 20},
+	{ 1, 1, 20},
+	{ 3, 1, 20},
+	{ 4, 1, 20},
+	{ 3, 1, 20},
+	{ 1, 1, 20},
+	{ 0, 1, 20},
+	{-1, 1, 20},
+	{-3, 1, 20}
     }
     
 };
@@ -42,6 +42,8 @@ void add_ennemy(uint8_t x, uint8_t y, uint8_t type){
 	    ENNEMIES[i].isactive = 1;
 	    ENNEMIES[i].x = x<<6;
 	    ENNEMIES[i].y = y<<6;
+	    ENNEMIES[i].dx = ENNEMY_1_SPEED;
+	    ENNEMIES[i].dy = ENNEMY_1_SPEED;
 	    ENNEMIES[i].activepattern = 0;
 	    ENNEMIES[i].type = type;
 	    ENNEMIES[i].framecount = ennemy_pattern[type][0][2];
@@ -67,6 +69,8 @@ void handle_ennemies(void){
 	}
     }
 }
+
+
 
 void draw_ennemies(void){
     for (uint8_t i=0; i<MAX_ENNEMY; i++){
