@@ -26,25 +26,28 @@ void handle_player(void){
 	}
     }
     if (KEY_PRESSED(J_LEFT)){
-	if (PLAYER.x > PLAYER.dxy+ (16<<8)) PLAYER.x -= PLAYER.dxy;
-	else PLAYER.x = 16<<8;
+	if (PLAYER.x > PLAYER.dxy+ (8<<8)) PLAYER.x -= PLAYER.dxy;
+	else PLAYER.x = 8<<8;
     }
     if (KEY_PRESSED(J_RIGHT)){
-	if (PLAYER.x < (120<<8) - PLAYER.dxy ) PLAYER.x += PLAYER.dxy;
-	else PLAYER.x = ((uint16_t)120<<8);
+	if (PLAYER.x < (135<<8) - PLAYER.dxy ) PLAYER.x += PLAYER.dxy;
+	else PLAYER.x = ((uint16_t)135<<8);
     }
     if (KEY_PRESSED(J_UP)){
 	if (PLAYER.y > PLAYER.dxy+ (24<<8)) PLAYER.y -= PLAYER.dxy;
 	else PLAYER.y = 24<<8;
     }
     if (KEY_PRESSED(J_DOWN)){
-	if (PLAYER.y < (144<<8) - PLAYER.dxy ) PLAYER.y += PLAYER.dxy;
-	else PLAYER.y = ((uint16_t)144<<8);
+	if (PLAYER.y < (160<<8) - PLAYER.dxy ) PLAYER.y += PLAYER.dxy;
+	else PLAYER.y = ((uint16_t)160<<8);
     }
     if (KEY_PRESSED(J_B)){
 	if (PLAYER.last_shot) PLAYER.last_shot--;
 	else shoot();
     }
+    PLAYER.px = PLAYER.x >> 8;
+    PLAYER.py = PLAYER.y >> 8;
+    PLAYER.column = (PLAYER.px + 8) >> 4;
 }
 
 /*
@@ -138,6 +141,6 @@ void shoot(void){
 void draw_player(void){
     oam+=move_metasprite_ex(spaceship_sprite_metasprites[0],
 			    SPACESHIP_TILE_OFFSET,0,oam,
-			    PLAYER.x>>8, PLAYER.y>>8);
+			    PLAYER.px, PLAYER.py);
     
    }

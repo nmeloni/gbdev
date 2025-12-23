@@ -36,6 +36,8 @@ void add_ennemy_bullet(uint8_t x, uint8_t y, int16_t dx, int16_t dy){
 	    ENNEMYBULLETS[i].y = y<<8;
 	    ENNEMYBULLETS[i].dx = dx;
 	    ENNEMYBULLETS[i].dy = dy;
+	    ENNEMYBULLETS[i].px = x;
+	    ENNEMYBULLETS[i].py = y;
 	    break;
 	}
     }
@@ -44,18 +46,18 @@ void add_ennemy_bullet(uint8_t x, uint8_t y, int16_t dx, int16_t dy){
 void aim_at_player(uint8_t x, uint8_t y){
     uint8_t adx,ady;
     //On décide de la direction du tir
-    if (PLAYER.x>>8 < x){
-	adx = x - (PLAYER.x>>8);
+    if (PLAYER.px < x){
+	adx = x - (PLAYER.px);
 	quadrant = 2;
     } else {
-	adx = (PLAYER.x>>8) - x;
+	adx = (PLAYER.px) - x;
 	quadrant = 0;
     }
-    if (PLAYER.y>>8 > y){
-	ady = (PLAYER.y>>8) - y;
+    if (PLAYER.py > y){
+	ady = (PLAYER.py) - y;
 	quadrant |= 1;
     } else {
-	ady = y - (PLAYER.y>>8);
+	ady = y - (PLAYER.py);
     }
 
     //On choisit l'angle le plus proche
@@ -87,33 +89,42 @@ void handle_ennemy_bullets(void){
 	    //Déplacement
 	    ENNEMYBULLETS[i].x += ENNEMYBULLETS[i].dx;
 	    ENNEMYBULLETS[i].y += ENNEMYBULLETS[i].dy;
+	    ENNEMYBULLETS[i].px = ENNEMYBULLETS[i].x>>8;
+	    ENNEMYBULLETS[i].py = ENNEMYBULLETS[i].y>>8;
+	    ENNEMYBULLETS[i].column = (ENNEMYBULLETS[i].px+8) >> 4;
 	    //Hors écran ?
-	    if (ENNEMYBULLETS[i].x>>8 > 168 || ENNEMYBULLETS[i].y>>8 > 160 ){
+	    if (ENNEMYBULLETS[i].px > 168 || ENNEMYBULLETS[i].py > 160 ){
 		ENNEMYBULLETS[i].isactive = 0;
 	    }
-	    if ( ((PLAYER.y>>8) < (ENNEMYBULLETS[i].y>>8)+4) &&
-		 ((PLAYER.y>>8) > (ENNEMYBULLETS[i].y>>8)-4) )
-		if ( ((PLAYER.x>>8) < (ENNEMYBULLETS[i].x>>8)+4) &&
-		     ((PLAYER.x>>8) > (ENNEMYBULLETS[i].x>>8)-4)){
-		     //Collision avec le joueur
-		     //EMU_printf("Player hit by ennemy bullet at %d,%d\n", ENNEMYBULLETS[i].x, ENNEMYBULLETS[i].y);
-		     ENNEMYBULLETS[i].isactive = 0;
-		     //Gérer les dégats au joueur
-		     if (!(PLAYER.flags & PLAYER_FLAG_INVINCIBLE)){
-			 PLAYER.lives--;
-			 //PLAYER.flags |= PLAYER_FLAG_INVINCIBLE;
-			 EMU_printf("Player hit! Lives left: %d\n", PLAYER.x>>8);
-		     }
-		 }
+
+
+	    //Gestion de la moitié des bullets pour alléger le rendu
+	    if ( (level_framecounter - i )%2 ) continue;
 	    
+	    if ( ((PLAYER.px) < (ENNEMYBULLETS[i].px)+4) &&
+		 ((PLAYER.px) > (ENNEMYBULLETS[i].px)-4))
+		if ( ((PLAYER.py) < (ENNEMYBULLETS[i].py)+4) &&
+		     ((PLAYER.py) > (ENNEMYBULLETS[i].py)-4) ){
+		    //Collision avec le joueur
+		    //EMU_printf("Player hit by ennemy bullet at %d,%d\n", ENNEMYBULLETS[i].x, ENNEMYBULLETS[i].y);
+		    ENNEMYBULLETS[i].isactive = 0;
+		    //Gérer les dégats au joueur
+		    if (!(PLAYER.flags & PLAYER_FLAG_INVINCIBLE)){
+			PLAYER.lives--;
+			//PLAYER.flags |= PLAYER_FLAG_INVINCIBLE;
+			//EMU_printf("Player hit! Lives left: %d\n", PLAYER.x>>8);
+		    }
+		}
+
 	    if (ENNEMYBULLETS[i].isactive){
 		//Affichage
 		//EMU_printf("Draw ennemy bullet at %d,%d\n", ENNEMYBULLETS[i].x, ENNEMYBULLETS[i].y);
 		oam+=move_metasprite_ex(ennemybullet_sprite_metasprites[0],
 					ENNEMYBULLET_TILE_OFFSET,0,oam,
-					ENNEMYBULLETS[i].x>>8, ENNEMYBULLETS[i].y>>8);
+					ENNEMYBULLETS[i].px, ENNEMYBULLETS[i].py);
+
+					}
 	    
-	    }
 	}
     }
 }

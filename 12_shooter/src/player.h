@@ -43,12 +43,14 @@
 
 typedef struct {
     uint16_t x,y,dxy;
+    uint8_t px, py;
     uint8_t power;
     uint8_t lives;
     uint8_t last_shot;
     uint8_t last_boost;
     uint8_t boost;
     uint8_t flags;
+    uint8_t column;
 } player_t;
 
 

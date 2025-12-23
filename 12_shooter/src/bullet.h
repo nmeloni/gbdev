@@ -9,6 +9,7 @@
 #include <gbdk/emu_debug.h>
 
 #include "player.h"
+#include "ennemy.h"
 #include "bullet_sprite.h"
 
 
@@ -19,6 +20,7 @@
 
 typedef struct {
     uint16_t x,y;
+    uint8_t px, py;
     uint8_t isactive;
 } bullet_t;
 

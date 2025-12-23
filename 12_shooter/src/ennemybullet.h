@@ -11,14 +11,16 @@
 #include "player.h"
 
 
-#define ENNEMYBULLET_TILE_OFFSET      (10)
+#define ENNEMYBULLET_TILE_OFFSET      (11)
 #define ENNEMYBULLET_SPEED            (4<<5)
 #define MAX_ENNEMYBULLETS             (12)
 
 typedef struct {
     uint16_t x,y;
     int16_t dx,dy;
+    uint8_t px, py;
     uint8_t isactive;
+    uint8_t column;
 } ennemybullet_t;
 
 void init_ennemy_bullets(void);
@@ -32,4 +34,5 @@ extern uint8_t quadrant;
 extern uint8_t angle;
 extern const int8_t dir16_vx[4][5];
 extern const int8_t dir16_vy[4][5];
+extern uint16_t level_framecounter;
 #endif

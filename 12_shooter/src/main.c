@@ -27,10 +27,10 @@ void main(void){
     set_sprite_data(ENNEMYBULLET_TILE_OFFSET, ennemybullet_sprite_TILE_COUNT, ennemybullet_sprite_tiles);    
     set_sprite_data(BULLET_TILE_OFFSET, bullet_sprite_TILE_COUNT, bullet_sprite_tiles);
     set_sprite_data(POWERUP_TILE_OFFSET, powerup_sprite_TILE_COUNT, powerup_sprite_tiles);
-    //set_sprite_data(ENNEMY_1_TILE_OFFSET, ennemy16x16_sprite_TILE_COUNT, ennemy16x16_sprite_tiles);
+    set_sprite_data(ENNEMY_1_TILE_OFFSET, ennemy16x16_sprite_TILE_COUNT, ennemy16x16_sprite_tiles);
     
     //int8_t ix,iy;
-    uint8_t spi = 0,spx,spy;
+    uint8_t spi=0,spx,spy;
     const uint8_t starting_points[16][2]= {
 	{0,0}, {0,32}, {0,64}, {0,128},
 	{0,144}, {32,0}, {64,0}, {96,0},
@@ -51,7 +51,8 @@ void main(void){
 	// Mise à jour des entrées
 	UPDATE_KEYS();
 	if (KEY_RELEASED(J_START)){
-	    RESET_PLAYER();
+	    //add_ennemy(80,0,ENNEMY_1);
+	    EMU_printf("position: %d, %d\n",  PLAYER.px, PLAYER.column);
 	}
 	if (KEY_RELEASED(J_SELECT)){
 	    add_powerup(80,10,POWERUP_FLAG_POWER_UP);
@@ -59,7 +60,8 @@ void main(void){
 	    
 	//Gestion du niveau
 	
-	if (level_framecounter % 16 == 0){
+	spx = starting_points[spi][0];
+	if (level_framecounter % 8 == 0){
 	    spi = (spi+7)%16;
 	    spx = starting_points[spi][0];
 	    spy = starting_points[spi][1];
@@ -68,14 +70,16 @@ void main(void){
 			      dir16_vx[quadrant][angle]<<2,
 			      dir16_vy[quadrant][angle]<<2);
 			      }
-
+	
+	
 	//level_events();
 	//Gestion des ennemis
-	//handle_ennemies();
+	
 	handle_player();
+	//handle_ennemies();
 	handle_ennemy_bullets();
 	handle_bullets();
-	handle_powerup();
+	//handle_powerup();
 	//Physique
 	//handle_collisions();
 	
