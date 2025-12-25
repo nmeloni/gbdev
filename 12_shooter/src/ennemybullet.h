@@ -27,8 +27,10 @@ void init_ennemy_bullets(void);
 void add_ennemy_bullet(uint8_t x, uint8_t y, int16_t dx, int16_t dy);
 void aim_at_player(uint8_t x, uint8_t y  );
 void handle_ennemy_bullets(void); // Déplace les bullets actives et affiche
+void kill_active_ennemybullet(uint8_t j);
 
 extern ennemybullet_t ENNEMYBULLETS[MAX_ENNEMYBULLETS];
+extern uint8_t ACTIVE_ENNEMYBULLETS[MAX_ENNEMYBULLETS];
 extern uint8_t oam;
 extern uint8_t quadrant;
 extern uint8_t angle;

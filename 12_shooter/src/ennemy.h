@@ -23,18 +23,23 @@ enum {ENNEMY_1};
 typedef struct {
     uint16_t x,y;
     uint16_t dx,dy;
+    uint8_t px,py;
     uint8_t framecount;
     uint8_t activepattern;
     uint8_t type;
+    int8_t hp;
     uint8_t isactive;
 } ennemy_t;
 
 void init_enemies(void);
 void handle_ennemies(void);
-void add_ennemy(uint8_t x, uint8_t y, uint8_t type);
+void add_ennemy(uint8_t x, uint8_t y, uint8_t type, int8_t hp);
+void kill_active_ennemy(uint8_t j);
 
 //extern const int8_t ennemy_1_bounding_box[];
 extern ennemy_t ENNEMIES[MAX_ENNEMY];
+extern uint8_t  ACTIVE_ENNEMIES[MAX_ENNEMY];
+extern uint8_t  active_ennemies_index;
 extern uint8_t oam;
 
 

@@ -9,17 +9,6 @@
 
 uint8_t oam = 0;
 uint16_t level_framecounter = 0;
-uint16_t level_next_event = 0;
-
-#define LEVEL_EVENT_COUNT 3
-
-const uint8_t level[LEVEL_EVENT_COUNT][4] = {
-    {60,80,0,ENNEMY_1},
-    {60,80,0,ENNEMY_1},
-    {60,80,0,ENNEMY_1}
-};
-
-void level_events(void);
 
 void main(void){
     //Initialisation des gfx
@@ -42,6 +31,7 @@ void main(void){
     DISPLAY_ON;
     
     init_player();
+    init_enemies();
     init_ennemy_bullets();
     while(1) {
 	// On attend la prochaine frame
@@ -51,7 +41,7 @@ void main(void){
 	// Mise à jour des entrées
 	UPDATE_KEYS();
 	if (KEY_RELEASED(J_START)){
-	    //add_ennemy(80,0,ENNEMY_1);
+	    add_ennemy(80,0,ENNEMY_1,3);
 	    EMU_printf("position: %d, %d\n",  PLAYER.px, PLAYER.column);
 	}
 	if (KEY_RELEASED(J_SELECT)){
@@ -59,7 +49,8 @@ void main(void){
 	}
 	    
 	//Gestion du niveau
-	
+
+	/*
 	spx = starting_points[spi][0];
 	if (level_framecounter % 8 == 0){
 	    spi = (spi+7)%16;
@@ -70,13 +61,13 @@ void main(void){
 			      dir16_vx[quadrant][angle]<<2,
 			      dir16_vy[quadrant][angle]<<2);
 			      }
-	
+	*/
 	
 	//level_events();
 	//Gestion des ennemis
 	
 	handle_player();
-	//handle_ennemies();
+	handle_ennemies();
 	handle_ennemy_bullets();
 	handle_bullets();
 	//handle_powerup();
@@ -94,15 +85,3 @@ void main(void){
     
 }
 
-void level_events(void){
-    level_framecounter++;
-    if (level_next_event >= LEVEL_EVENT_COUNT) return;
-    if (level_framecounter == level[level_next_event][0]){
-	add_ennemy(level[level_next_event][1],
-		    level[level_next_event][2],
-		    level[level_next_event][3]);
-	level_framecounter = 0;
-	level_next_event++;
-    } 
-    
-}

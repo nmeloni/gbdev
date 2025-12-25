@@ -15,7 +15,7 @@
 
 #define BULLET_TILE_OFFSET      (5)
 #define BULLET_SPEED            (6<<7)
-#define MAX_BULLETS             (3)
+#define MAX_BULLETS             (4)
 
 
 typedef struct {
@@ -27,9 +27,11 @@ typedef struct {
 
 void init_bullets(void);
 void handle_bullets(void);
+void kill_active_bullet(uint8_t j);
 
-extern const uint8_t bullet_bounding_box[];
-extern bullet_t BULLETS[MAX_BULLETS][3];
+extern bullet_t BULLETS[MAX_BULLETS];
+extern uint8_t ACTIVE_BULLETS[MAX_BULLETS];
+extern uint8_t active_bullet_index;
 extern uint8_t oam;
 
 #endif

@@ -93,46 +93,21 @@ void handle_collisions(void){
 
 
 void shoot(void){
-    uint8_t nb_bullets = PLAYER.power;
     if (PLAYER.last_shot){
 	PLAYER.last_shot--;
 	return;
     } 
     //on recupère les sprite disponible
     for (uint8_t i=0; i<MAX_BULLETS; i++){
-	if (!BULLETS[i][0].isactive){
+	if (!BULLETS[i].isactive){
 	    PLAYER.last_shot = SHOOT_LAG;
-	    switch (PLAYER.power){
-	    case 1:
-		BULLETS[i][0].isactive = 1;
-		BULLETS[i][0].x = PLAYER.x;
-		BULLETS[i][0].y = PLAYER.y;
-		break;
-	    case 2:	
-		BULLETS[i][0].isactive = 1;
-		BULLETS[i][0].x = PLAYER.x - (4<<8);
-		BULLETS[i][0].y = PLAYER.y;
-	
-		BULLETS[i][1].isactive = 1;
-		BULLETS[i][1].x = PLAYER.x + (4<<8);
-		BULLETS[i][1].y = PLAYER.y;
-		break;
-	    case 3:	
-		BULLETS[i][0].isactive = 1;
-		BULLETS[i][0].x = PLAYER.x - (6<<8);
-		BULLETS[i][0].y = PLAYER.y;
-	
-		BULLETS[i][1].isactive = 1;
-		BULLETS[i][1].x = PLAYER.x + (6<<8);
-		BULLETS[i][1].y = PLAYER.y;
-	
-		BULLETS[i][2].isactive = 1;
-		BULLETS[i][2].x = PLAYER.x;
-		BULLETS[i][2].y = PLAYER.y;
-		break;
-	    default:
-		break;
-	    }
+	    BULLETS[i].isactive = 1;
+	    BULLETS[i].x = PLAYER.x;
+	    BULLETS[i].y = PLAYER.y;
+	    BULLETS[i].px = PLAYER.px;
+	    BULLETS[i].py = PLAYER.py;
+
+	    ACTIVE_BULLETS[active_bullet_index++] = i;
 	    return;
 	}
     }
