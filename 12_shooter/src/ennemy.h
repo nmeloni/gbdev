@@ -13,7 +13,7 @@
 #include "ennemy16x16_sprite.h"
 #include "ennemybullet_sprite.h"
 
-#define ENNEMY_1_TILE_OFFSET      (7)
+#define ENNEMY_1_TILE_OFFSET      (64)
 #define ENNEMY_1_SPEED            (1<<6)
 #define ENNEMY_PATTERN_SIZE       (12)
 #define MAX_ENNEMY                (8)

@@ -3,7 +3,7 @@
 uint8_t current_joypad, previous_joypad;
 //const uint8_t spaceship_bounding_box[] = {6,1,4,14};
 
-    
+
 player_t PLAYER;
 
 void init_player(void){
@@ -48,48 +48,8 @@ void handle_player(void){
     PLAYER.px = PLAYER.x >> 8;
     PLAYER.py = PLAYER.y >> 8;
     PLAYER.column = (PLAYER.px + 8) >> 4;
-}
 
-/*
-uint8_t player_collision(uint16_t x, uint16_t y, uint8_t *bbox){
-    int16_t ax = (PLAYER.x >> 6) - (spaceship_sprite_PIVOT_X>>1) + spaceship_bounding_box[0];
-    int16_t ay = (PLAYER.y >> 6) - (spaceship_sprite_PIVOT_Y>>1) + spaceship_bounding_box[1];
-    int16_t aw = spaceship_bounding_box[2];
-    int16_t ah = spaceship_bounding_box[3];
-
-    int16_t bx = (x >> 6) + bbox[0];
-    int16_t by = (y >> 6) + bbox[1];
-    int16_t bw = bbox[2];
-    int16_t bh = bbox[3];
-    if( (ax < bx + bw) && (ax + aw > bx) && (ay < by + bh) && (ay + ah > by) ) {
-	return 1;
-    }
-    return 0;
 }
-
-void handle_collisions(void){
-    for (uint8_t i=0; i<MAX_POWERUPS; i++){
-	if (POWERUPS[i].isactive){
-	    if (player_collision(POWERUPS[i].x, POWERUPS[i].y,powerup_bounding_box)){
-		POWERUPS[i].isactive = 0;
-		if (PLAYER.power < 3){
-		    PLAYER.power++;
-		}
-	    }
-	}
-    }
-    for (uint8_t i=0; i<MAX_ENNEMY; i++){
-	if (ENNEMIES[i].isactive){
-	    if (player_collision(ENNEMIES[i].x, ENNEMIES[i].y, ennemy_1_bounding_box)){
-		EMU_printf("Player hit!\n");
-		RESET_PLAYER();
-		ENNEMIES[i].isactive = 0;
-		PLAYER.lives--;
-	    }
-	}
-    }
-}
-*/
 
 
 void shoot(void){
@@ -118,4 +78,4 @@ void draw_player(void){
 			    SPACESHIP_TILE_OFFSET,0,oam,
 			    PLAYER.px, PLAYER.py);
     
-   }
+}

@@ -31,14 +31,18 @@
 #define PLAYER_FLAG_SHIELD          (1<<0)
 #define PLAYER_FLAG_INVINCIBLE      (1<<1)
 
-#define RESET_PLAYER() {    PLAYER.x = 72<<8; \
+#define RESET_PLAYER() {    PLAYER.x = 72<<8;	      \
 	PLAYER.y = 100<<8;			      \
 	PLAYER.dxy = NORMAL_SPEED;		      \
 	PLAYER.power = 1;			      \
-	PLAYER.last_shot = 0;			      \
-	PLAYER.last_boost = 0;			      \
-	PLAYER.boost = 0;			      \
-	PLAYER.flags = 0;			      \
+	PLAYER.last_shot = 0;					      \
+	PLAYER.last_boost = 0;					      \
+	PLAYER.boost = 0;					      \
+	PLAYER.flags = 0;					      \
+	PLAYER.bullet_metasprites = bullet_lvl1_sprite_metasprites;   \
+	PLAYER.bullet_sprite_offset = BULLET_LVL1_TILE_OFFSET;        \
+	PLAYER.bullet_frame_counter = 0;			      \
+	PLAYER.bullet_frame = 0;				      \
     }
 
 typedef struct {
@@ -51,6 +55,11 @@ typedef struct {
     uint8_t boost;
     uint8_t flags;
     uint8_t column;
+
+    const metasprite_t * const * bullet_metasprites;
+    uint8_t bullet_sprite_offset;
+    uint8_t bullet_frame_counter;
+    uint8_t bullet_frame;
 } player_t;
 
 

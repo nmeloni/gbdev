@@ -12,9 +12,12 @@ uint16_t level_framecounter = 0;
 
 void main(void){
     //Initialisation des gfx
+    uint8_t sprite_offset=0;
     set_sprite_data(SPACESHIP_TILE_OFFSET, spaceship_sprite_TILE_COUNT, spaceship_sprite_tiles);
     set_sprite_data(ENNEMYBULLET_TILE_OFFSET, ennemybullet_sprite_TILE_COUNT, ennemybullet_sprite_tiles);    
-    set_sprite_data(BULLET_TILE_OFFSET, bullet_sprite_TILE_COUNT, bullet_sprite_tiles);
+    set_sprite_data(BULLET_LVL1_TILE_OFFSET, bullet_lvl1_sprite_TILE_COUNT, bullet_lvl1_sprite_tiles);
+    set_sprite_data(BULLET_LVL2_TILE_OFFSET, bullet_lvl2_sprite_TILE_COUNT, bullet_lvl2_sprite_tiles);
+    set_sprite_data(BULLET_LVL3_TILE_OFFSET, bullet_lvl3_sprite_TILE_COUNT, bullet_lvl3_sprite_tiles);
     set_sprite_data(POWERUP_TILE_OFFSET, powerup_sprite_TILE_COUNT, powerup_sprite_tiles);
     set_sprite_data(ENNEMY_1_TILE_OFFSET, ennemy16x16_sprite_TILE_COUNT, ennemy16x16_sprite_tiles);
     
@@ -70,15 +73,13 @@ void main(void){
 	handle_ennemies();
 	handle_ennemy_bullets();
 	handle_bullets();
-	//handle_powerup();
+	handle_powerup();
 	//Physique
 	//handle_collisions();
 	
 	//Affichage
 	draw_player();
-	//draw_bullets();
-	//draw_powerups();
-	//draw_ennemies();
+	
 	//On cache les sprites non utilisés
 	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
     }

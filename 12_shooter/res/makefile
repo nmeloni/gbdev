@@ -17,6 +17,12 @@ all: $(C_FILES)
 	@echo "Converting $< to $@"
 	$(PNG2ASSET) $< -c $@ -sw 8 -sh 8 -spr8x8 -noflip -keep_palette_order
 
+bullet_lvl2_sprite.c: $(PNG_DIR)/bullet_lvl2_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 8 -spr8x8 -noflip -keep_palette_order
+
+bullet_lvl3_sprite.c: $(PNG_DIR)/bullet_lvl3_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 8 -spr8x8 -noflip -keep_palette_order
+
 spaceship_sprite.c: $(PNG_DIR)/spaceship_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
 

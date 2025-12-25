@@ -11,7 +11,7 @@
 #include "player.h"
 
 
-#define ENNEMYBULLET_TILE_OFFSET      (11)
+#define ENNEMYBULLET_TILE_OFFSET      (48)
 #define ENNEMYBULLET_SPEED            (4<<5)
 #define MAX_ENNEMYBULLETS             (12)
 

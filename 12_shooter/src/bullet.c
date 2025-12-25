@@ -4,6 +4,7 @@ bullet_t BULLETS[MAX_BULLETS];
 uint8_t ACTIVE_BULLETS[MAX_BULLETS];
 uint8_t active_bullet_index=0;
 
+
 void init_bullets(void){
     for (uint8_t i=0; i<MAX_BULLETS; i++){
 	BULLETS[i].isactive = 0;
@@ -15,6 +16,7 @@ void init_bullets(void){
 }
 
 void handle_bullets(void){
+        
     for (uint8_t j=0; j<active_bullet_index; j++){
 	uint8_t i = ACTIVE_BULLETS[j];
 	uint8_t k;
@@ -37,10 +39,10 @@ void handle_bullets(void){
 	} else {
 	    kill_active_bullet(j);
 	}
-	//if ( (level_framecounter - i )%4 ) continue;
+
 	if (BULLETS[i].isactive){
-	    oam+=move_metasprite_ex(bullet_sprite_metasprites[0],
-				    BULLET_TILE_OFFSET,0,oam,
+	    oam+=move_metasprite_ex(PLAYER.bullet_metasprites[0],
+				    PLAYER.bullet_sprite_offset,0,oam,
 				    BULLETS[i].px, BULLETS[i].py);
 	}
     }

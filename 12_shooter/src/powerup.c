@@ -38,22 +38,32 @@ void handle_powerup(void){
 	POWERUP.framecount--;
 	POWERUP.x += powerup_pattern[POWERUP.activepattern][0];
 	POWERUP.y += powerup_pattern[POWERUP.activepattern][1];
-	if (POWERUP.y>>8 > 160){
+	POWERUP.px = POWERUP.x >> 8;
+	POWERUP.py = POWERUP.y >> 8;
+	if (POWERUP.py > 168){
 	    POWERUP.isactive = 0;
 	    return;
 	}
 	
-	if ( ((PLAYER.y>>8) < (POWERUP.y>>8)+4) &&
-	     ((PLAYER.y>>8) > (POWERUP.y>>8)-4) )
-	    if ( ((PLAYER.x>>8) < (POWERUP.x>>8)+4) &&
-		 ((PLAYER.x>>8) > (POWERUP.x>>8)-4)){
+	if ( ((PLAYER.py) < (POWERUP.py)+4) &&
+	     ((PLAYER.py) > (POWERUP.py)-4) )
+	    if ( ((PLAYER.px) < (POWERUP.px)+4) &&
+		 ((PLAYER.px) > (POWERUP.px)-4)){
 		//Collision avec le joueur
 		POWERUP.isactive = 0;
 		//Application de l'effet
 		switch (POWERUP.flag){
 		    case POWERUP_FLAG_POWER_UP:
-			if (PLAYER.power < 3){
+			if (PLAYER.power < 4){
 			    PLAYER.power += 1;
+			    if (PLAYER.power == 2){
+				PLAYER.bullet_metasprites = bullet_lvl2_sprite_metasprites;
+				PLAYER.bullet_sprite_offset = BULLET_LVL2_TILE_OFFSET;
+			    }
+			    else {
+				PLAYER.bullet_metasprites = bullet_lvl3_sprite_metasprites;
+				PLAYER.bullet_sprite_offset = BULLET_LVL3_TILE_OFFSET;
+			    } 
 			}
 			break;
 		    case POWERUP_FLAG_EXTRA_LIFE:
@@ -68,7 +78,7 @@ void handle_powerup(void){
     if (POWERUP.isactive){
 	oam+=move_metasprite_ex(powerup_sprite_metasprites[0],
 				POWERUP_TILE_OFFSET,0,oam,
-				POWERUP.x>>8, POWERUP.y>>8);
+				POWERUP.px, POWERUP.py);
     }
     
 }
@@ -79,6 +89,8 @@ void add_powerup(uint8_t x, uint8_t y, uint8_t flag){
 	POWERUP.isactive = 1;
 	POWERUP.x = x<<8;
 	POWERUP.y = y<<8;
+	POWERUP.px = x;
+	POWERUP.py = y;
 	POWERUP.flag = flag;
 	POWERUP.activepattern = 0;
 	POWERUP.framecount = powerup_pattern[0][2];
