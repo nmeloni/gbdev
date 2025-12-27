@@ -33,6 +33,7 @@ void handle_bullets(void){
 			 ((ENNEMIES[k].px) > (BULLETS[i].px)-8)){
 			//Collision with ennemy
 			ENNEMIES[k].hp -= PLAYER.power;
+			ENNEMIES[k].ishit = 4;
 			kill_active_bullet(j);
 		    }
 	    }

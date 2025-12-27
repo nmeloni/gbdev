@@ -11,16 +11,16 @@
 #include "player.h"
 #include "powerup_sprite.h"
 
-#define POWERUP_FLAG_SHIELD        (1<<2)
-#define POWERUP_FLAG_EXTRA_LIFE    (1<<1)
-#define POWERUP_FLAG_POWER_UP      (1<<0)
+#define POWERUP_TYPE_SHIELD        (1)
+#define POWERUP_TYPE_EXTRA_LIFE    (2)
+#define POWERUP_TYPE_POWER_UP      (0)
 #define POWERUP_TILE_OFFSET        (32)
 #define POWERUP_PATTERN_COUNT      (12)
 
 typedef struct {
     uint16_t x,y;
     uint8_t px,py;
-    uint8_t flag;
+    uint8_t type;
     uint8_t isactive;
     uint8_t activepattern;
     uint16_t framecount;

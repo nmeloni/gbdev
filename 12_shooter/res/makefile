@@ -15,22 +15,34 @@ all: $(C_FILES)
 # Règle générique pour la plupart des sprites 8x8
 %.c: $(PNG_DIR)/%.png
 	@echo "Converting $< to $@"
-	$(PNG2ASSET) $< -c $@ -sw 8 -sh 8 -spr8x8 -noflip -keep_palette_order
+	$(PNG2ASSET) $< -c $@ -sw 8 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+shield_sprite.c:  $(PNG_DIR)/shield_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+powerup_sprite.c:  $(PNG_DIR)/powerup_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+explosion_sprite.c:  $(PNG_DIR)/explosion_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+ennemylargebullet_sprite.c: $(PNG_DIR)/ennemylargebullet_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
 bullet_lvl2_sprite.c: $(PNG_DIR)/bullet_lvl2_sprite.png
-	$(PNG2ASSET) $< -c $@ -sw 16 -sh 8 -spr8x8 -noflip -keep_palette_order
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
 bullet_lvl3_sprite.c: $(PNG_DIR)/bullet_lvl3_sprite.png
-	$(PNG2ASSET) $< -c $@ -sw 16 -sh 8 -spr8x8 -noflip -keep_palette_order
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
 spaceship_sprite.c: $(PNG_DIR)/spaceship_sprite.png
-	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
 rock16x16_sprite.c: $(PNG_DIR)/rock16x16_sprite.png
-	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
 ennemy16x16_sprite.c: $(PNG_DIR)/ennemy16x16_sprite.png
-	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x8 -noflip -keep_palette_order
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
 # Nettoyer les fichiers générés
 clean:

@@ -16,6 +16,13 @@ const int8_t dir16_vy[4][5] = {
 
 uint8_t quadrant, angle;
 
+const metasprite_t * const * ennemybullet_metasprites[] = {ennemybullet_sprite_metasprites, ennemylargebullet_sprite_metasprites};
+const uint8_t ennemybullet_tile_offset[] = {ENNEMYBULLET_TILE_OFFSET, ENNEMYLARGEBULLET_TILE_OFFSET};
+const int8_t ennemybullet_bbox[][4]= {
+    {-6,6,-6,6},
+    {-10,10,-10,10}
+};
+
 ennemybullet_t ENNEMYBULLETS[ MAX_ENNEMYBULLETS ];
 uint8_t ACTIVE_ENNEMYBULLETS[ MAX_ENNEMYBULLETS ];
 uint8_t active_ennemybullet_index = 0;
@@ -27,12 +34,12 @@ void init_ennemy_bullets(void){
 	ENNEMYBULLETS[i].y = 0;
 	ENNEMYBULLETS[i].dx = 0;
 	ENNEMYBULLETS[i].dy = 0;
-
+	ENNEMYBULLETS[i].type = 0;
 	ACTIVE_ENNEMYBULLETS[i] = 255;
 	}
 }
 
-void add_ennemy_bullet(uint8_t x, uint8_t y, int16_t dx, int16_t dy){
+void add_ennemy_bullet(uint8_t x, uint8_t y, int16_t dx, int16_t dy, uint8_t type){
     for (uint8_t i=0; i<MAX_ENNEMYBULLETS; i++){
 	if (!ENNEMYBULLETS[i].isactive){
 	    ENNEMYBULLETS[i].isactive = 1;
@@ -42,7 +49,9 @@ void add_ennemy_bullet(uint8_t x, uint8_t y, int16_t dx, int16_t dy){
 	    ENNEMYBULLETS[i].dy = dy;
 	    ENNEMYBULLETS[i].px = x;
 	    ENNEMYBULLETS[i].py = y;
+	    ENNEMYBULLETS[i].type = type;
 
+	    EMU_printf("Adding bullet type %d\n", ENNEMYBULLETS[i].type);
 	    ACTIVE_ENNEMYBULLETS[active_ennemybullet_index++] = i;
 	    break;
 	}
@@ -98,7 +107,6 @@ void handle_ennemy_bullets(void){
 	ENNEMYBULLETS[i].y += ENNEMYBULLETS[i].dy;
 	ENNEMYBULLETS[i].px = ENNEMYBULLETS[i].x>>8;
 	ENNEMYBULLETS[i].py = ENNEMYBULLETS[i].y>>8;
-	ENNEMYBULLETS[i].column = (ENNEMYBULLETS[i].px+8) >> 4;
 	//Hors écran ?
 	if (ENNEMYBULLETS[i].px > 168 || ENNEMYBULLETS[i].py > 160 ){
 	    kill_active_ennemybullet(j);
@@ -107,31 +115,35 @@ void handle_ennemy_bullets(void){
 
 	//Gestion de la moitié des bullets pour alléger le rendu
 	if ( (level_framecounter - i )%2 ) continue;
-	    
-	if ( ((PLAYER.px) < (ENNEMYBULLETS[i].px)+4) &&
-	     ((PLAYER.px) > (ENNEMYBULLETS[i].px)-4))
-	    if ( ((PLAYER.py) < (ENNEMYBULLETS[i].py)+4) &&
-		 ((PLAYER.py) > (ENNEMYBULLETS[i].py)-4) ){
+	
+	uint8_t type = ENNEMYBULLETS[i].type;
+	if ( ((PLAYER.px) < (ENNEMYBULLETS[i].px)+ennemybullet_bbox[type][1]) &&
+	     ((PLAYER.px) > (ENNEMYBULLETS[i].px)+ennemybullet_bbox[type][0]))
+	    if ( ((PLAYER.py) < (ENNEMYBULLETS[i].py)+ennemybullet_bbox[type][3]) &&
+		 ((PLAYER.py) > (ENNEMYBULLETS[i].py)+ennemybullet_bbox[type][2]) ){
 		//Collision avec le joueur
 		//EMU_printf("Player hit by ennemy bullet at %d,%d\n", ENNEMYBULLETS[i].x, ENNEMYBULLETS[i].y);
 		kill_active_ennemybullet(j);
 		//Gérer les dégats au joueur
-		if (!(PLAYER.flags & PLAYER_FLAG_INVINCIBLE)){
-		    PLAYER.lives--;
-		    //PLAYER.flags |= PLAYER_FLAG_INVINCIBLE;
-		    //EMU_printf("Player hit! Lives left: %d\n", PLAYER.x>>8);
+		if (PLAYER.flags & PLAYER_FLAG_SHIELD){
+		    PLAYER.flags &= (~PLAYER_FLAG_SHIELD);
+		    PLAYER.invinsibility_timer = INVINSIBILITY_DURATION;
+		} else {
+		    if (!PLAYER.invinsibility_timer){
+			PLAYER.lives--;
+			add_exploision(PLAYER.px, PLAYER.py);
+			RESET_PLAYER();
+			//kill_active_ennemy(j);
+		    }
 		}
 	    }
-
 	if (ENNEMYBULLETS[i].isactive){
 	    //Affichage
 	    //EMU_printf("Draw ennemy bullet at %d,%d\n", ENNEMYBULLETS[i].x, ENNEMYBULLETS[i].y);
-	    oam+=move_metasprite_ex(ennemybullet_sprite_metasprites[0],
-				    ENNEMYBULLET_TILE_OFFSET,0,oam,
+	    oam+=move_metasprite_ex(ennemybullet_metasprites[type][0],
+				    ennemybullet_tile_offset[type],0,oam,
 				    ENNEMYBULLETS[i].px, ENNEMYBULLETS[i].py);
-
 	}
-	    
     }
 }
 

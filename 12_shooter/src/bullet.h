@@ -15,10 +15,10 @@
 #include "bullet_lvl2_sprite.h"
 #include "bullet_lvl3_sprite.h"
 
-#define BULLET_LVL1_TILE_OFFSET      (5)
+#define BULLET_LVL1_TILE_OFFSET      (4)
 #define BULLET_LVL2_TILE_OFFSET      (6)
-#define BULLET_LVL3_TILE_OFFSET      (8)
-#define LASER_TILE_OFFSET            (10)
+#define BULLET_LVL3_TILE_OFFSET      (10)
+
 #define BULLET_SPEED            (6<<7)
 #define MAX_BULLETS             (4)
 

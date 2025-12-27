@@ -18,6 +18,7 @@ void handle_player(void){
     } else {
 	PLAYER.dxy = NORMAL_SPEED;
     }
+    if (PLAYER.invinsibility_timer) PLAYER.invinsibility_timer--;
     if (PLAYER.last_boost) PLAYER.last_boost--;
     if (KEY_PRESSED(J_A)){
 	if (!PLAYER.last_boost){
@@ -74,8 +75,14 @@ void shoot(void){
 }
 
 void draw_player(void){
+    if (PLAYER.invinsibility_timer&8) return;
     oam+=move_metasprite_ex(spaceship_sprite_metasprites[0],
 			    SPACESHIP_TILE_OFFSET,0,oam,
 			    PLAYER.px, PLAYER.py);
+    if ( (PLAYER.flags & PLAYER_FLAG_SHIELD) && (level_framecounter & 4) ){
+	oam+=move_metasprite_ex(shield_sprite_metasprites[0],
+				SHIELD_TILE_OFFSET,0,oam,
+				PLAYER.px, PLAYER.py);
+    }
     
 }

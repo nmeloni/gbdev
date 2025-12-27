@@ -9,6 +9,7 @@
 #include <gbdk/emu_debug.h>
 
 #include "spaceship_sprite.h"
+#include "shield_sprite.h"
 
 #include "bullet.h"
 #include "powerup.h"
@@ -18,11 +19,14 @@
 #define KEY_PRESSED(K)  (current_joypad & (K))
 #define KEY_RELEASED(K)    (!(current_joypad & (K)) && (previous_joypad & (K)))
 
-#define SPACESHIP_TILE_OFFSET   (1)
+#define SPACESHIP_TILE_OFFSET   (0)
+#define SHIELD_TILE_OFFSET      (14)
+
 #define NORMAL_SPEED            (14<<4)
 #define BOOST_SPEED             (10<<7)
 #define BOOST_LAG               (30)
 #define BOOST_DURATION          (4)
+#define INVINSIBILITY_DURATION  (120)
 
 #define MAX_SHOTS               (3)
 #define SHOOT_LAG               (8)
@@ -43,6 +47,7 @@
 	PLAYER.bullet_sprite_offset = BULLET_LVL1_TILE_OFFSET;        \
 	PLAYER.bullet_frame_counter = 0;			      \
 	PLAYER.bullet_frame = 0;				      \
+	PLAYER.invinsibility_timer = INVINSIBILITY_DURATION;	      \
     }
 
 typedef struct {
@@ -52,6 +57,7 @@ typedef struct {
     uint8_t lives;
     uint8_t last_shot;
     uint8_t last_boost;
+    uint8_t invinsibility_timer;
     uint8_t boost;
     uint8_t flags;
     uint8_t column;
@@ -66,6 +72,7 @@ typedef struct {
 
 extern uint8_t current_joypad, previous_joypad;
 extern player_t PLAYER;
+extern uint16_t level_framecounter;
 extern uint8_t oam;
 
 void init_player(void);
