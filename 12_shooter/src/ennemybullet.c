@@ -16,12 +16,23 @@ const int8_t dir16_vy[4][5] = {
 
 uint8_t quadrant, angle;
 
-const metasprite_t * const * ennemybullet_metasprites[] = {ennemybullet_sprite_metasprites, ennemylargebullet_sprite_metasprites};
-const uint8_t ennemybullet_tile_offset[] = {ENNEMYBULLET_TILE_OFFSET, ENNEMYLARGEBULLET_TILE_OFFSET};
+const metasprite_t * const * ennemybullet_metasprites[] = {
+    ennemybullet_sprite_metasprites,
+    ennemylargebullet_sprite_metasprites,
+    ennemylaser_sprite_metasprites
+};
+const uint8_t ennemybullet_tile_offset[] = {
+    ENNEMYBULLET_TILE_OFFSET,
+    ENNEMYLARGEBULLET_TILE_OFFSET,
+    ENNEMYLASER_TILE_OFFSET
+};
 const int8_t ennemybullet_bbox[][4]= {
     {-6,6,-6,6},
-    {-10,10,-10,10}
+    {-10,10,-10,10},
+    {-2,2,-10,20}
 };
+
+const uint8_t ennemybullet_speed[]={2,1,3};
 
 ennemybullet_t ENNEMYBULLETS[ MAX_ENNEMYBULLETS ];
 uint8_t ACTIVE_ENNEMYBULLETS[ MAX_ENNEMYBULLETS ];
@@ -45,8 +56,8 @@ void add_ennemy_bullet(uint8_t x, uint8_t y, int16_t dx, int16_t dy, uint8_t typ
 	    ENNEMYBULLETS[i].isactive = 1;
 	    ENNEMYBULLETS[i].x = x<<8;
 	    ENNEMYBULLETS[i].y = y<<8;
-	    ENNEMYBULLETS[i].dx = dx;
-	    ENNEMYBULLETS[i].dy = dy;
+	    ENNEMYBULLETS[i].dx = dx<<(ennemybullet_speed[type]);
+	    ENNEMYBULLETS[i].dy = dy<<(ennemybullet_speed[type]);
 	    ENNEMYBULLETS[i].px = x;
 	    ENNEMYBULLETS[i].py = y;
 	    ENNEMYBULLETS[i].type = type;

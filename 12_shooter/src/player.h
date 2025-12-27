@@ -10,6 +10,7 @@
 
 #include "spaceship_sprite.h"
 #include "shield_sprite.h"
+#include "booster_sprite.h"
 
 #include "bullet.h"
 #include "powerup.h"
@@ -21,10 +22,11 @@
 
 #define SPACESHIP_TILE_OFFSET   (0)
 #define SHIELD_TILE_OFFSET      (14)
+#define BOOSTER_TILE_OFFSET     (0x12)
 
 #define NORMAL_SPEED            (14<<4)
 #define BOOST_SPEED             (10<<7)
-#define BOOST_LAG               (30)
+#define BOOST_LAG               (16)
 #define BOOST_DURATION          (4)
 #define INVINSIBILITY_DURATION  (120)
 

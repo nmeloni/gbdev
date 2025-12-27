@@ -19,13 +19,15 @@ void handle_player(void){
 	PLAYER.dxy = NORMAL_SPEED;
     }
     if (PLAYER.invinsibility_timer) PLAYER.invinsibility_timer--;
-    if (PLAYER.last_boost) PLAYER.last_boost--;
+    
     if (KEY_PRESSED(J_A)){
 	if (!PLAYER.last_boost){
 	    PLAYER.boost = BOOST_DURATION;
 	    PLAYER.last_boost = BOOST_LAG;
 	}
     }
+    if (PLAYER.last_boost) PLAYER.last_boost--;
+
     if (KEY_PRESSED(J_LEFT)){
 	if (PLAYER.x > PLAYER.dxy+ (8<<8)) PLAYER.x -= PLAYER.dxy;
 	else PLAYER.x = 8<<8;
@@ -83,6 +85,11 @@ void draw_player(void){
 	oam+=move_metasprite_ex(shield_sprite_metasprites[0],
 				SHIELD_TILE_OFFSET,0,oam,
 				PLAYER.px, PLAYER.py);
+    }
+    if (PLAYER.last_boost){
+	oam+=move_metasprite_ex(booster_sprite_metasprites[(PLAYER.last_boost&12)>>2],
+				BOOSTER_TILE_OFFSET,0,oam,
+				PLAYER.px, PLAYER.py+6);
     }
     
 }

@@ -9,16 +9,19 @@
 
 #include "ennemybullet_sprite.h"
 #include "ennemylargebullet_sprite.h"
+#include "ennemylaser_sprite.h"
 #include "player.h"
 
 
 #define ENNEMYBULLET_TILE_OFFSET      (48)
-#define ENNEMYLARGEBULLET_TILE_OFFSET      (50)
+#define ENNEMYLARGEBULLET_TILE_OFFSET (50)
+#define ENNEMYLASER_TILE_OFFSET       (54)
 #define ENNEMYBULLET_SPEED            (4<<5)
-#define MAX_ENNEMYBULLETS             (12)
+#define MAX_ENNEMYBULLETS             (16)
 
 #define ENNEMYBULLET_TYPE_NORMAL      (0)
 #define ENNEMYBULLET_TYPE_LARGE       (1)
+#define ENNEMYBULLET_TYPE_LASER       (2)
 
 typedef struct {
     uint16_t x,y;
