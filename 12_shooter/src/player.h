@@ -1,24 +1,17 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <gb/gb.h>
-#include <stdint.h>
-
-#include <gbdk/platform.h>
-#include <gbdk/metasprites.h>
-#include <gbdk/emu_debug.h>
+#include "global.h"
 
 #include "spaceship_sprite.h"
 #include "shield_sprite.h"
 #include "booster_sprite.h"
 
-#include "bullet.h"
-#include "powerup.h"
-#include "ennemy.h"
 
-#define UPDATE_KEYS()   previous_joypad = current_joypad; current_joypad = joypad()
-#define KEY_PRESSED(K)  (current_joypad & (K))
-#define KEY_RELEASED(K)    (!(current_joypad & (K)) && (previous_joypad & (K)))
+#define PLAYER_MIN_X            ((GAMESCREEN_X_ORIGIN+8)<<8)
+#define PLAYER_MAX_X            ((GAMESCREEN_X_END-8)<<8)
+#define PLAYER_MIN_Y            ((GAMESCREEN_Y_ORIGIN+8)<<8)
+#define PLAYER_MAX_Y            ((GAMESCREEN_Y_END-8)<<8)
 
 #define SPACESHIP_TILE_OFFSET   (0)
 #define SHIELD_TILE_OFFSET      (14)
@@ -71,16 +64,10 @@ typedef struct {
 } player_t;
 
 
-
-extern uint8_t current_joypad, previous_joypad;
 extern player_t PLAYER;
-extern uint16_t level_framecounter;
-extern uint8_t oam;
 
 void init_player(void);
 void handle_player(void);
-//uint8_t player_collision(uint16_t x, uint16_t y, uint8_t *bbox);
-//void handle_collisions(void);
 void shoot(void);
 void draw_player(void);
 

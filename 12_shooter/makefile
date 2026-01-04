@@ -31,7 +31,7 @@ resources:
 	@$(MAKE) -C $(RESDIR)
 
 # Compile .c files in "src/" to .o object files
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c 
 	$(LCC) $(LCCFLAGS) -c -o $@ $<
 
 # Compile .c files in "res/" to .o object files
@@ -44,7 +44,7 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.s
 
 # If needed, compile .c files in "src/" to .s assembly files
 # (not required if .c is compiled directly to .o)
-$(OBJDIR)/%.s:	$(SRCDIR)/%.c
+$(OBJDIR)/%.s:	$(SRCDIR)/%.c 
 	$(LCC) $(LCCFLAGS) -S -o $@ $<
 
 # Link the compiled object files into a .gb ROM file

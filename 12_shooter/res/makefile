@@ -12,7 +12,7 @@ H_FILES = $(patsubst $(PNG_DIR)/%.png,%.h,$(PNG_FILES))
 # Cible par défaut : générer tous les fichiers C
 all: $(C_FILES)
 
-# Règle générique pour la plupart des sprites 8x8
+# Règle générique pour la plupart des sprites 8x16
 %.c: $(PNG_DIR)/%.png
 	@echo "Converting $< to $@"
 	$(PNG2ASSET) $< -c $@ -sw 8 -sh 16 -spr8x16 -noflip -keep_palette_order
@@ -49,6 +49,18 @@ ennemy_2_sprite.c: $(PNG_DIR)/ennemy_2_sprite.png
 
 ennemy_3_sprite.c: $(PNG_DIR)/ennemy_3_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+# regles spécifiques pour les tilesmap
+space_bkg_tileset.c: $(PNG_DIR)/space_bkg_tileset.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only
+
+early_gameboyfont.c: $(PNG_DIR)/early_gameboyfont.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only
+
+space_bkg_map.c: $(PNG_DIR)/space_bkg_map.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -maps_only -source_tileset $(PNG_DIR)/space_bkg_tileset.png
+
+
 
 # Nettoyer les fichiers générés
 clean:
