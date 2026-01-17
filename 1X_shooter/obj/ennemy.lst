@@ -1,0 +1,541 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module ennemy
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _active_ennemies_index
+                                     11 	.globl _ennemy_metasprites
+                                     12 	.globl _ACTIVE_ENNEMIES
+                                     13 	.globl _ENNEMIES
+                                     14 	.globl _ennemy_pattern
+                                     15 	.globl _ennemy_bbox
+                                     16 	.globl _ennemy_tile_offset
+                                     17 	.globl _init_enemies
+                                     18 	.globl _add_ennemy
+                                     19 	.globl _handle_ennemies
+                                     20 	.globl _kill_active_ennemy
+                                     21 ;--------------------------------------------------------
+                                     22 ; special function registers
+                                     23 ;--------------------------------------------------------
+                                     24 ;--------------------------------------------------------
+                                     25 ; ram data
+                                     26 ;--------------------------------------------------------
+                                     27 	.area _DATA
+    00000000                         28 _ENNEMIES::
+    00000000                         29 	.ds 136
+    00000088                         30 _ACTIVE_ENNEMIES::
+    00000088                         31 	.ds 8
+                                     32 ;--------------------------------------------------------
+                                     33 ; ram data
+                                     34 ;--------------------------------------------------------
+                                     35 	.area _INITIALIZED
+    00000000                         36 ___EMU_PROFILER_INIT:
+    00000000                         37 	.ds 2
+    00000002                         38 _ennemy_metasprites::
+    00000002                         39 	.ds 6
+    00000008                         40 _active_ennemies_index::
+    00000008                         41 	.ds 1
+                                     42 ;--------------------------------------------------------
+                                     43 ; absolute external ram data
+                                     44 ;--------------------------------------------------------
+                                     45 	.area _DABS (ABS)
+                                     46 ;--------------------------------------------------------
+                                     47 ; global & static initialisations
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _HOME
+                                     50 	.area _GSINIT
+                                     51 	.area _GSFINAL
+                                     52 	.area _GSINIT
+                                     53 ;--------------------------------------------------------
+                                     54 ; Home
+                                     55 ;--------------------------------------------------------
+                                     56 	.area _HOME
+                                     57 	.area _HOME
+                                     58 ;--------------------------------------------------------
+                                     59 ; code
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _CODE
+                                     62 ;src/ennemy.c:46: void init_enemies(void){
+                                     63 ;	---------------------------------
+                                     64 ; Function init_enemies
+                                     65 ; ---------------------------------
+    00000000                         66 _init_enemies::
+                                     67 ;src/ennemy.c:47: for (uint8_t i=0; i<MAX_ENNEMY; i++){
+    00000000 0E 00            [ 8]   68 	ld	c, #0x00
+    00000002                         69 00103$:
+    00000002 79               [ 4]   70 	ld	a, c
+    00000003 D6 08            [ 8]   71 	sub	a, #0x08
+    00000005 D0               [20]   72 	ret	NC
+                                     73 ;src/ennemy.c:48: ENNEMIES[i].isactive = 0;
+    00000006 06 00            [ 8]   74 	ld	b, #0x00
+    00000008 69               [ 4]   75 	ld	l, c
+    00000009 60               [ 4]   76 	ld	h, b
+    0000000A 29               [ 8]   77 	add	hl, hl
+    0000000B 29               [ 8]   78 	add	hl, hl
+    0000000C 29               [ 8]   79 	add	hl, hl
+    0000000D 29               [ 8]   80 	add	hl, hl
+    0000000E 09               [ 8]   81 	add	hl, bc
+    0000000F 7D               [ 4]   82 	ld	a, l
+    00000010 C6r00            [ 8]   83 	add	a, #<(_ENNEMIES)
+    00000012 5F               [ 4]   84 	ld	e, a
+    00000013 7C               [ 4]   85 	ld	a, h
+    00000014 CEs00            [ 8]   86 	adc	a, #>(_ENNEMIES)
+    00000016 57               [ 4]   87 	ld	d, a
+    00000017 21 10 00         [12]   88 	ld	hl, #0x0010
+    0000001A 19               [ 8]   89 	add	hl, de
+    0000001B 36 00            [12]   90 	ld	(hl), #0x00
+                                     91 ;src/ennemy.c:49: ENNEMIES[i].x = 0;
+    0000001D 6B               [ 4]   92 	ld	l, e
+    0000001E 62               [ 4]   93 	ld	h, d
+    0000001F AF               [ 4]   94 	xor	a, a
+    00000020 22               [ 8]   95 	ld	(hl+), a
+    00000021 77               [ 8]   96 	ld	(hl), a
+                                     97 ;src/ennemy.c:50: ENNEMIES[i].y = 0;
+    00000022 6B               [ 4]   98 	ld	l, e
+    00000023 62               [ 4]   99 	ld	h, d
+    00000024 23               [ 8]  100 	inc	hl
+    00000025 23               [ 8]  101 	inc	hl
+    00000026 AF               [ 4]  102 	xor	a, a
+    00000027 22               [ 8]  103 	ld	(hl+), a
+    00000028 77               [ 8]  104 	ld	(hl), a
+                                    105 ;src/ennemy.c:51: ENNEMIES[i].dx = 0;
+    00000029 21 04 00         [12]  106 	ld	hl, #0x0004
+    0000002C 19               [ 8]  107 	add	hl, de
+    0000002D AF               [ 4]  108 	xor	a, a
+    0000002E 22               [ 8]  109 	ld	(hl+), a
+    0000002F 77               [ 8]  110 	ld	(hl), a
+                                    111 ;src/ennemy.c:52: ENNEMIES[i].dy = 0;
+    00000030 21 06 00         [12]  112 	ld	hl, #0x0006
+    00000033 19               [ 8]  113 	add	hl, de
+    00000034 AF               [ 4]  114 	xor	a, a
+    00000035 22               [ 8]  115 	ld	(hl+), a
+    00000036 77               [ 8]  116 	ld	(hl), a
+                                    117 ;src/ennemy.c:53: ENNEMIES[i].framecount = 0;
+    00000037 21 0A 00         [12]  118 	ld	hl, #0x000a
+    0000003A 19               [ 8]  119 	add	hl, de
+    0000003B 36 00            [12]  120 	ld	(hl), #0x00
+                                    121 ;src/ennemy.c:54: ENNEMIES[i].activepattern = 0;
+    0000003D 21 0B 00         [12]  122 	ld	hl, #0x000b
+    00000040 19               [ 8]  123 	add	hl, de
+    00000041 36 00            [12]  124 	ld	(hl), #0x00
+                                    125 ;src/ennemy.c:55: ENNEMIES[i].type = ENNEMY_1;
+    00000043 21 0C 00         [12]  126 	ld	hl, #0x000c
+    00000046 19               [ 8]  127 	add	hl, de
+    00000047 36 00            [12]  128 	ld	(hl), #0x00
+                                    129 ;src/ennemy.c:56: ENNEMIES[i].ishit = 0;
+    00000049 21 0F 00         [12]  130 	ld	hl, #0x000f
+    0000004C 19               [ 8]  131 	add	hl, de
+    0000004D 36 00            [12]  132 	ld	(hl), #0x00
+                                    133 ;src/ennemy.c:58: ACTIVE_ENNEMIES[i]=255;
+    0000004F 21r88r00         [12]  134 	ld	hl, #_ACTIVE_ENNEMIES
+    00000052 06 00            [ 8]  135 	ld	b, #0x00
+    00000054 09               [ 8]  136 	add	hl, bc
+    00000055 36 FF            [12]  137 	ld	(hl), #0xff
+                                    138 ;src/ennemy.c:47: for (uint8_t i=0; i<MAX_ENNEMY; i++){
+    00000057 0C               [ 4]  139 	inc	c
+                                    140 ;src/ennemy.c:60: }
+    00000058 18 A8            [12]  141 	jr	00103$
+    0000005A                        142 _ennemy_tile_offset:
+    0000005A 40                     143 	.db #0x40	; 64
+    0000005B 44                     144 	.db #0x44	; 68	'D'
+    0000005C 48                     145 	.db #0x48	; 72	'H'
+    0000005D                        146 _ennemy_bbox:
+    0000005D F6                     147 	.db #0xf6	; -10
+    0000005E 0A                     148 	.db #0x0a	;  10
+    0000005F F6                     149 	.db #0xf6	; -10
+    00000060 0A                     150 	.db #0x0a	;  10
+    00000061 F6                     151 	.db #0xf6	; -10
+    00000062 0A                     152 	.db #0x0a	;  10
+    00000063 F6                     153 	.db #0xf6	; -10
+    00000064 0A                     154 	.db #0x0a	;  10
+    00000065 F6                     155 	.db #0xf6	; -10
+    00000066 0A                     156 	.db #0x0a	;  10
+    00000067 F6                     157 	.db #0xf6	; -10
+    00000068 0A                     158 	.db #0x0a	;  10
+    00000069                        159 _ennemy_pattern:
+    00000069 FC                     160 	.db #0xfc	; -4
+    0000006A 01                     161 	.db #0x01	;  1
+    0000006B 14                     162 	.db #0x14	;  20
+    0000006C 00                     163 	.db #0x00	;  0
+    0000006D 00                     164 	.db #0x00	;  0
+    0000006E FD                     165 	.db #0xfd	; -3
+    0000006F 01                     166 	.db #0x01	;  1
+    00000070 14                     167 	.db #0x14	;  20
+    00000071 00                     168 	.db #0x00	;  0
+    00000072 00                     169 	.db #0x00	;  0
+    00000073 FF                     170 	.db #0xff	; -1
+    00000074 01                     171 	.db #0x01	;  1
+    00000075 14                     172 	.db #0x14	;  20
+    00000076 00                     173 	.db #0x00	;  0
+    00000077 00                     174 	.db #0x00	;  0
+    00000078 00                     175 	.db #0x00	;  0
+    00000079 01                     176 	.db #0x01	;  1
+    0000007A 14                     177 	.db #0x14	;  20
+    0000007B 00                     178 	.db #0x00	;  0
+    0000007C 00                     179 	.db #0x00	;  0
+    0000007D 01                     180 	.db #0x01	;  1
+    0000007E 01                     181 	.db #0x01	;  1
+    0000007F 14                     182 	.db #0x14	;  20
+    00000080 00                     183 	.db #0x00	;  0
+    00000081 00                     184 	.db #0x00	;  0
+    00000082 03                     185 	.db #0x03	;  3
+    00000083 01                     186 	.db #0x01	;  1
+    00000084 14                     187 	.db #0x14	;  20
+    00000085 00                     188 	.db #0x00	;  0
+    00000086 00                     189 	.db #0x00	;  0
+    00000087 04                     190 	.db #0x04	;  4
+    00000088 01                     191 	.db #0x01	;  1
+    00000089 09                     192 	.db #0x09	;  9
+    0000008A 00                     193 	.db #0x00	;  0
+    0000008B 00                     194 	.db #0x00	;  0
+    0000008C 04                     195 	.db #0x04	;  4
+    0000008D 01                     196 	.db #0x01	;  1
+    0000008E 01                     197 	.db #0x01	;  1
+    0000008F 00                     198 	.db #0x00	;  0
+    00000090 00                     199 	.db #0x00	;  0
+    00000091 04                     200 	.db #0x04	;  4
+    00000092 01                     201 	.db #0x01	;  1
+    00000093 01                     202 	.db #0x01	;  1
+    00000094 00                     203 	.db #0x00	;  0
+    00000095 00                     204 	.db #0x00	;  0
+    00000096 04                     205 	.db #0x04	;  4
+    00000097 01                     206 	.db #0x01	;  1
+    00000098 01                     207 	.db #0x01	;  1
+    00000099 00                     208 	.db #0x00	;  0
+    0000009A 00                     209 	.db #0x00	;  0
+    0000009B 04                     210 	.db #0x04	;  4
+    0000009C 01                     211 	.db #0x01	;  1
+    0000009D 08                     212 	.db #0x08	;  8
+    0000009E 00                     213 	.db #0x00	;  0
+    0000009F 00                     214 	.db #0x00	;  0
+    000000A0 03                     215 	.db #0x03	;  3
+    000000A1 01                     216 	.db #0x01	;  1
+    000000A2 14                     217 	.db #0x14	;  20
+    000000A3 00                     218 	.db #0x00	;  0
+    000000A4 00                     219 	.db #0x00	;  0
+    000000A5 01                     220 	.db #0x01	;  1
+    000000A6 01                     221 	.db #0x01	;  1
+    000000A7 14                     222 	.db #0x14	;  20
+    000000A8 00                     223 	.db #0x00	;  0
+    000000A9 00                     224 	.db #0x00	;  0
+    000000AA 00                     225 	.db #0x00	;  0
+    000000AB 01                     226 	.db #0x01	;  1
+    000000AC 14                     227 	.db #0x14	;  20
+    000000AD 00                     228 	.db #0x00	;  0
+    000000AE 00                     229 	.db #0x00	;  0
+    000000AF FF                     230 	.db #0xff	; -1
+    000000B0 01                     231 	.db #0x01	;  1
+    000000B1 14                     232 	.db #0x14	;  20
+    000000B2 00                     233 	.db #0x00	;  0
+    000000B3 00                     234 	.db #0x00	;  0
+    000000B4 FD                     235 	.db #0xfd	; -3
+    000000B5 01                     236 	.db #0x01	;  1
+    000000B6 14                     237 	.db #0x14	;  20
+    000000B7 00                     238 	.db #0x00	;  0
+    000000B8 00                     239 	.db #0x00	;  0
+                                    240 ;src/ennemy.c:62: void add_ennemy(uint8_t x, uint8_t y, uint8_t type, uint8_t pattern, uint16_t speed, int8_t hp){
+                                    241 ;	---------------------------------
+                                    242 ; Function add_ennemy
+                                    243 ; ---------------------------------
+    000000B9                        244 _add_ennemy::
+    000000B9 E8 F9            [16]  245 	add	sp, #-7
+    000000BB F8 06            [12]  246 	ldhl	sp,	#6
+    000000BD 32               [ 8]  247 	ld	(hl-), a
+    000000BE 73               [ 8]  248 	ld	(hl), e
+                                    249 ;src/ennemy.c:64: for (i=0; i<MAX_ENNEMY; i++) {
+    000000BF F8 02            [12]  250 	ldhl	sp,	#2
+    000000C1 AF               [ 4]  251 	xor	a, a
+    000000C2 22               [ 8]  252 	ld	(hl+), a
+    000000C3 23               [ 8]  253 	inc	hl
+    000000C4 36 00            [12]  254 	ld	(hl), #0x00
+    000000C6                        255 00104$:
+                                    256 ;src/ennemy.c:65: if (!ENNEMIES[i].isactive){
+    000000C6 F8 04            [12]  257 	ldhl	sp,	#4
+    000000C8 4E               [ 8]  258 	ld	c, (hl)
+    000000C9 06 00            [ 8]  259 	ld	b, #0x00
+    000000CB 69               [ 4]  260 	ld	l, c
+    000000CC 60               [ 4]  261 	ld	h, b
+    000000CD 29               [ 8]  262 	add	hl, hl
+    000000CE 29               [ 8]  263 	add	hl, hl
+    000000CF 29               [ 8]  264 	add	hl, hl
+    000000D0 29               [ 8]  265 	add	hl, hl
+    000000D1 09               [ 8]  266 	add	hl, bc
+    000000D2 01r00r00         [12]  267 	ld	bc, #_ENNEMIES
+    000000D5 09               [ 8]  268 	add	hl, bc
+    000000D6 4D               [ 4]  269 	ld	c, l
+    000000D7 44               [ 4]  270 	ld	b, h
+    000000D8 21 10 00         [12]  271 	ld	hl, #0x0010
+    000000DB 09               [ 8]  272 	add	hl, bc
+    000000DC 7E               [ 8]  273 	ld	a, (hl)
+    000000DD B7               [ 4]  274 	or	a, a
+    000000DE C2r99r01         [16]  275 	jp	NZ, 00105$
+                                    276 ;src/ennemy.c:66: ENNEMIES[i].isactive = 1;
+    000000E1 36 01            [12]  277 	ld	(hl), #0x01
+                                    278 ;src/ennemy.c:67: ENNEMIES[i].x = x<<8;
+    000000E3 33               [ 8]  279 	inc	sp
+    000000E4 33               [ 8]  280 	inc	sp
+    000000E5 C5               [16]  281 	push	bc
+    000000E6 F8 06            [12]  282 	ldhl	sp,	#6
+    000000E8 5E               [ 8]  283 	ld	e, (hl)
+    000000E9 AF               [ 4]  284 	xor	a, a
+    000000EA F8 03            [12]  285 	ldhl	sp,	#3
+    000000EC 22               [ 8]  286 	ld	(hl+), a
+    000000ED 73               [ 8]  287 	ld	(hl), e
+    000000EE D1               [12]  288 	pop	de
+    000000EF D5               [16]  289 	push	de
+    000000F0 AF               [ 4]  290 	xor	a, a
+    000000F1 12               [ 8]  291 	ld	(de), a
+    000000F2 13               [ 8]  292 	inc	de
+                                    293 ;src/ennemy.c:68: ENNEMIES[i].y = y<<8;
+    000000F3 2A               [ 8]  294 	ld	a, (hl+)
+    000000F4 12               [ 8]  295 	ld	(de), a
+    000000F5 59               [ 4]  296 	ld	e, c
+    000000F6 50               [ 4]  297 	ld	d, b
+    000000F7 13               [ 8]  298 	inc	de
+    000000F8 13               [ 8]  299 	inc	de
+    000000F9 3A               [ 8]  300 	ld	a, (hl-)
+    000000FA 2B               [ 8]  301 	dec	hl
+    000000FB 22               [ 8]  302 	ld	(hl+), a
+    000000FC AF               [ 4]  303 	xor	a, a
+    000000FD 32               [ 8]  304 	ld	(hl-), a
+    000000FE 2A               [ 8]  305 	ld	a, (hl+)
+    000000FF 32               [ 8]  306 	ld	(hl-), a
+    00000100 AF               [ 4]  307 	xor	a, a
+    00000101 22               [ 8]  308 	ld	(hl+), a
+    00000102 12               [ 8]  309 	ld	(de), a
+    00000103 13               [ 8]  310 	inc	de
+    00000104 7E               [ 8]  311 	ld	a, (hl)
+    00000105 12               [ 8]  312 	ld	(de), a
+                                    313 ;src/ennemy.c:69: ENNEMIES[i].dx = speed;
+    00000106 21 04 00         [12]  314 	ld	hl, #0x0004
+    00000109 09               [ 8]  315 	add	hl, bc
+    0000010A 5D               [ 4]  316 	ld	e, l
+    0000010B 54               [ 4]  317 	ld	d, h
+    0000010C F8 0B            [12]  318 	ldhl	sp,	#11
+    0000010E 2A               [ 8]  319 	ld	a, (hl+)
+    0000010F 12               [ 8]  320 	ld	(de), a
+    00000110 13               [ 8]  321 	inc	de
+    00000111 7E               [ 8]  322 	ld	a, (hl)
+    00000112 12               [ 8]  323 	ld	(de), a
+                                    324 ;src/ennemy.c:70: ENNEMIES[i].dy = speed;
+    00000113 21 06 00         [12]  325 	ld	hl, #0x0006
+    00000116 09               [ 8]  326 	add	hl, bc
+    00000117 5D               [ 4]  327 	ld	e, l
+    00000118 54               [ 4]  328 	ld	d, h
+    00000119 F8 0B            [12]  329 	ldhl	sp,	#11
+    0000011B 2A               [ 8]  330 	ld	a, (hl+)
+    0000011C 12               [ 8]  331 	ld	(de), a
+    0000011D 13               [ 8]  332 	inc	de
+    0000011E 7E               [ 8]  333 	ld	a, (hl)
+    0000011F 12               [ 8]  334 	ld	(de), a
+                                    335 ;src/ennemy.c:71: ENNEMIES[i].px = x;
+    00000120 21 08 00         [12]  336 	ld	hl, #0x0008
+    00000123 09               [ 8]  337 	add	hl, bc
+    00000124 5D               [ 4]  338 	ld	e, l
+    00000125 54               [ 4]  339 	ld	d, h
+    00000126 F8 06            [12]  340 	ldhl	sp,	#6
+    00000128 7E               [ 8]  341 	ld	a, (hl)
+    00000129 12               [ 8]  342 	ld	(de), a
+                                    343 ;src/ennemy.c:72: ENNEMIES[i].py = y;
+    0000012A 21 09 00         [12]  344 	ld	hl, #0x0009
+    0000012D 09               [ 8]  345 	add	hl, bc
+    0000012E 5D               [ 4]  346 	ld	e, l
+    0000012F 54               [ 4]  347 	ld	d, h
+    00000130 F8 05            [12]  348 	ldhl	sp,	#5
+    00000132 7E               [ 8]  349 	ld	a, (hl)
+    00000133 12               [ 8]  350 	ld	(de), a
+                                    351 ;src/ennemy.c:73: ENNEMIES[i].hp = hp;
+    00000134 21 0E 00         [12]  352 	ld	hl, #0x000e
+    00000137 09               [ 8]  353 	add	hl, bc
+    00000138 5D               [ 4]  354 	ld	e, l
+    00000139 54               [ 4]  355 	ld	d, h
+    0000013A F8 0D            [12]  356 	ldhl	sp,	#13
+    0000013C 7E               [ 8]  357 	ld	a, (hl)
+    0000013D 12               [ 8]  358 	ld	(de), a
+                                    359 ;src/ennemy.c:74: ENNEMIES[i].pattern = pattern;
+    0000013E 21 0D 00         [12]  360 	ld	hl, #0x000d
+    00000141 09               [ 8]  361 	add	hl, bc
+    00000142 5D               [ 4]  362 	ld	e, l
+    00000143 54               [ 4]  363 	ld	d, h
+    00000144 F8 0A            [12]  364 	ldhl	sp,	#10
+    00000146 7E               [ 8]  365 	ld	a, (hl)
+    00000147 12               [ 8]  366 	ld	(de), a
+                                    367 ;src/ennemy.c:75: ENNEMIES[i].activepattern = 0;
+    00000148 21 0B 00         [12]  368 	ld	hl, #0x000b
+    0000014B 09               [ 8]  369 	add	hl, bc
+    0000014C 36 00            [12]  370 	ld	(hl), #0x00
+                                    371 ;src/ennemy.c:76: ENNEMIES[i].type = type;
+    0000014E 21 0C 00         [12]  372 	ld	hl, #0x000c
+    00000151 09               [ 8]  373 	add	hl, bc
+    00000152 5D               [ 4]  374 	ld	e, l
+    00000153 54               [ 4]  375 	ld	d, h
+    00000154 F8 09            [12]  376 	ldhl	sp,	#9
+    00000156 7E               [ 8]  377 	ld	a, (hl)
+    00000157 12               [ 8]  378 	ld	(de), a
+                                    379 ;src/ennemy.c:77: ENNEMIES[i].framecount = ennemy_pattern[pattern][0][2];
+    00000158 21 0A 00         [12]  380 	ld	hl, #0x000a
+    0000015B 09               [ 8]  381 	add	hl, bc
+    0000015C 4D               [ 4]  382 	ld	c, l
+    0000015D 44               [ 4]  383 	ld	b, h
+    0000015E F8 0A            [12]  384 	ldhl	sp,	#10
+    00000160 5E               [ 8]  385 	ld	e, (hl)
+    00000161 16 00            [ 8]  386 	ld	d, #0x00
+    00000163 6B               [ 4]  387 	ld	l, e
+    00000164 62               [ 4]  388 	ld	h, d
+    00000165 29               [ 8]  389 	add	hl, hl
+    00000166 29               [ 8]  390 	add	hl, hl
+    00000167 19               [ 8]  391 	add	hl, de
+    00000168 29               [ 8]  392 	add	hl, hl
+    00000169 29               [ 8]  393 	add	hl, hl
+    0000016A 29               [ 8]  394 	add	hl, hl
+    0000016B 29               [ 8]  395 	add	hl, hl
+    0000016C E5               [16]  396 	push	hl
+    0000016D 7D               [ 4]  397 	ld	a, l
+    0000016E F8 05            [12]  398 	ldhl	sp,	#5
+    00000170 77               [ 8]  399 	ld	(hl), a
+    00000171 E1               [12]  400 	pop	hl
+    00000172 7C               [ 4]  401 	ld	a, h
+    00000173 F8 04            [12]  402 	ldhl	sp,	#4
+    00000175 32               [ 8]  403 	ld	(hl-), a
+    00000176 2A               [ 8]  404 	ld	a, (hl+)
+    00000177 5F               [ 4]  405 	ld	e, a
+    00000178 56               [ 8]  406 	ld	d, (hl)
+    00000179 21r6Ar00         [12]  407 	ld	hl,#_ennemy_pattern + 1
+    0000017C 19               [ 8]  408 	add	hl,de
+    0000017D 23               [ 8]  409 	inc	hl
+    0000017E 5D               [ 4]  410 	ld	e, l
+    0000017F 54               [ 4]  411 	ld	d, h
+    00000180 1A               [ 8]  412 	ld	a, (de)
+    00000181 02               [ 8]  413 	ld	(bc), a
+                                    414 ;src/ennemy.c:79: ACTIVE_ENNEMIES[active_ennemies_index++] = i;
+    00000182 FAr08r00         [16]  415 	ld	a, (_active_ennemies_index)
+    00000185 4F               [ 4]  416 	ld	c, a
+    00000186 21r08r00         [12]  417 	ld	hl, #_active_ennemies_index
+    00000189 34               [12]  418 	inc	(hl)
+    0000018A 79               [ 4]  419 	ld	a, c
+    0000018B C6r88            [ 8]  420 	add	a, #<(_ACTIVE_ENNEMIES)
+    0000018D 4F               [ 4]  421 	ld	c, a
+    0000018E 3E 00            [ 8]  422 	ld	a, #0x00
+    00000190 CEs00            [ 8]  423 	adc	a, #>(_ACTIVE_ENNEMIES)
+    00000192 47               [ 4]  424 	ld	b, a
+    00000193 F8 02            [12]  425 	ldhl	sp,	#2
+    00000195 7E               [ 8]  426 	ld	a, (hl)
+    00000196 02               [ 8]  427 	ld	(bc), a
+                                    428 ;src/ennemy.c:81: return;	    
+    00000197 18 0D            [12]  429 	jr	00106$
+    00000199                        430 00105$:
+                                    431 ;src/ennemy.c:64: for (i=0; i<MAX_ENNEMY; i++) {
+    00000199 F8 04            [12]  432 	ldhl	sp,	#4
+    0000019B 34               [12]  433 	inc	(hl)
+    0000019C 3A               [ 8]  434 	ld	a, (hl-)
+    0000019D 2B               [ 8]  435 	dec	hl
+    0000019E 22               [ 8]  436 	ld	(hl+), a
+    0000019F 23               [ 8]  437 	inc	hl
+    000001A0 7E               [ 8]  438 	ld	a, (hl)
+    000001A1 D6 08            [ 8]  439 	sub	a, #0x08
+    000001A3 DArC6r00         [16]  440 	jp	C, 00104$
+    000001A6                        441 00106$:
+                                    442 ;src/ennemy.c:84: }
+    000001A6 E8 07            [16]  443 	add	sp, #7
+    000001A8 E1               [12]  444 	pop	hl
+    000001A9 E8 05            [16]  445 	add	sp, #5
+    000001AB E9               [ 4]  446 	jp	(hl)
+                                    447 ;src/ennemy.c:86: void handle_ennemies(void){
+                                    448 ;	---------------------------------
+                                    449 ; Function handle_ennemies
+                                    450 ; ---------------------------------
+    000001AC                        451 _handle_ennemies::
+                                    452 ;src/ennemy.c:87: for (uint8_t j=0; j < active_ennemies_index; j++){
+    000001AC 0E 00            [ 8]  453 	ld	c, #0x00
+    000001AE                        454 00106$:
+    000001AE 79               [ 4]  455 	ld	a, c
+    000001AF 21r08r00         [12]  456 	ld	hl, #_active_ennemies_index
+    000001B2 96               [ 8]  457 	sub	a, (hl)
+    000001B3 D0               [20]  458 	ret	NC
+                                    459 ;src/ennemy.c:88: uint8_t i = ACTIVE_ENNEMIES[j];
+    000001B4 21r88r00         [12]  460 	ld	hl, #_ACTIVE_ENNEMIES
+    000001B7 06 00            [ 8]  461 	ld	b, #0x00
+    000001B9 09               [ 8]  462 	add	hl, bc
+                                    463 ;src/ennemy.c:89: if (ENNEMIES[i].hp <= 0){
+    000001BA 5E               [ 8]  464 	ld	e, (hl)
+    000001BB 16 00            [ 8]  465 	ld	d, #0x00
+    000001BD 6B               [ 4]  466 	ld	l, e
+    000001BE 62               [ 4]  467 	ld	h, d
+    000001BF 29               [ 8]  468 	add	hl, hl
+    000001C0 29               [ 8]  469 	add	hl, hl
+    000001C1 29               [ 8]  470 	add	hl, hl
+    000001C2 29               [ 8]  471 	add	hl, hl
+    000001C3 19               [ 8]  472 	add	hl, de
+    000001C4 11r00r00         [12]  473 	ld	de, #_ENNEMIES
+    000001C7 19               [ 8]  474 	add	hl, de
+    000001C8 11 0E 00         [12]  475 	ld	de, #0x000e
+    000001CB 19               [ 8]  476 	add	hl, de
+    000001CC 46               [ 8]  477 	ld	b, (hl)
+    000001CD 58               [ 4]  478 	ld	e, b
+    000001CE AF               [ 4]  479 	xor	a, a
+    000001CF 57               [ 4]  480 	ld	d, a
+    000001D0 90               [ 4]  481 	sub	a, b
+    000001D1 CB 7B            [ 8]  482 	bit	7, e
+    000001D3 28 07            [12]  483 	jr	Z, 00131$
+    000001D5 CB 7A            [ 8]  484 	bit	7, d
+    000001D7 20 08            [12]  485 	jr	NZ, 00132$
+    000001D9 BF               [ 4]  486 	cp	a, a
+    000001DA 18 05            [12]  487 	jr	00132$
+    000001DC                        488 00131$:
+    000001DC CB 7A            [ 8]  489 	bit	7, d
+    000001DE 28 01            [12]  490 	jr	Z, 00132$
+    000001E0 37               [ 4]  491 	scf
+    000001E1                        492 00132$:
+    000001E1 38 06            [12]  493 	jr	C, 00103$
+                                    494 ;src/ennemy.c:90: kill_active_ennemy(j);
+    000001E3 C5               [16]  495 	push	bc
+    000001E4 79               [ 4]  496 	ld	a, c
+    000001E5 CDrECr01         [24]  497 	call	_kill_active_ennemy
+    000001E8 C1               [12]  498 	pop	bc
+                                    499 ;src/ennemy.c:91: continue;
+    000001E9                        500 00103$:
+                                    501 ;src/ennemy.c:87: for (uint8_t j=0; j < active_ennemies_index; j++){
+    000001E9 0C               [ 4]  502 	inc	c
+                                    503 ;src/ennemy.c:163: }
+    000001EA 18 C2            [12]  504 	jr	00106$
+                                    505 ;src/ennemy.c:165: void kill_active_ennemy(uint8_t j){
+                                    506 ;	---------------------------------
+                                    507 ; Function kill_active_ennemy
+                                    508 ; ---------------------------------
+    000001EC                        509 _kill_active_ennemy::
+    000001EC 4F               [ 4]  510 	ld	c, a
+                                    511 ;src/ennemy.c:166: ENNEMIES[ACTIVE_ENNEMIES[j]].isactive = 0;
+    000001ED 21r88r00         [12]  512 	ld	hl, #_ACTIVE_ENNEMIES
+    000001F0 06 00            [ 8]  513 	ld	b, #0x00
+    000001F2 09               [ 8]  514 	add	hl, bc
+    000001F3 4E               [ 8]  515 	ld	c, (hl)
+    000001F4 06 00            [ 8]  516 	ld	b, #0x00
+    000001F6 69               [ 4]  517 	ld	l, c
+    000001F7 60               [ 4]  518 	ld	h, b
+    000001F8 29               [ 8]  519 	add	hl, hl
+    000001F9 29               [ 8]  520 	add	hl, hl
+    000001FA 29               [ 8]  521 	add	hl, hl
+    000001FB 29               [ 8]  522 	add	hl, hl
+    000001FC 09               [ 8]  523 	add	hl, bc
+    000001FD 11r00r00         [12]  524 	ld	de, #_ENNEMIES
+    00000200 19               [ 8]  525 	add	hl, de
+    00000201 01 10 00         [12]  526 	ld	bc, #0x0010
+    00000204 09               [ 8]  527 	add	hl, bc
+    00000205 36 00            [12]  528 	ld	(hl), #0x00
+                                    529 ;src/ennemy.c:173: }
+    00000207 C9               [16]  530 	ret
+                                    531 	.area _CODE
+                                    532 	.area _INITIALIZER
+    00000000                        533 __xinit____EMU_PROFILER_INIT:
+    00000000r00r00                  534 	.dw _EMU_profiler_message
+    00000002                        535 __xinit__ennemy_metasprites:
+    00000002r00r00                  536 	.dw _ennemy_1_sprite_metasprites
+    00000004r00r00                  537 	.dw _ennemy_2_sprite_metasprites
+    00000006r00r00                  538 	.dw _ennemy_3_sprite_metasprites
+    00000008                        539 __xinit__active_ennemies_index:
+    00000008 00                     540 	.db #0x00	; 0
+                                    541 	.area _CABS (ABS)

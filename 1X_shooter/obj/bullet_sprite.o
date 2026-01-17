@@ -1,0 +1,41 @@
+XL4
+H 9 areas 7 global symbols
+M bullet_sprite
+S ___bank_bullet_sprite Def00000000
+S .__.ABS. Def00000000
+A _CODE size 32 flags 0 addr 0
+S _bullet_sprite_tiles Def00000008
+S _bullet_sprite_palettes Def00000000
+S ___func_bullet_sprite Def00000000
+S _bullet_sprite_metasprite0 Def00000028
+S _bullet_sprite_metasprites Def00000030
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00 00
+R 00 00 00 00
+T 00 00 00 00
+R 00 00 00 00
+T 00 00 00 00 FF 7F B5 56 4A 29 00 00
+R 00 00 00 00
+T 08 00 00 00
+R 00 00 00 00
+T 08 00 00 00 00 00 00 18 18 24 18 24 3C 24 18 18
+R 00 00 00 00
+T 14 00 00 00 00 18 00 00 00 00 80 40 38 10 2C 31
+R 00 00 00 00
+T 20 00 00 00 C4 E6 CC E6 C4 E6 CC E6
+R 00 00 00 00
+T 28 00 00 00
+R 00 00 00 00
+T 28 00 00 00 F8 FC 00 00 80 00 00 00
+R 00 00 00 00
+T 30 00 00 00
+R 00 00 00 00
+T 30 00 00 00 28 00
+R 00 00 00 00 00 04 00 00
