@@ -4,19 +4,25 @@
 #include <gbdk/metasprites.h>
 #include <gbdk/emu_debug.h>
 
-uint8_t oam; // OAM index
+#include "game.h"
+#include "input.h"
+#include "player.h"
+#include "gfx.h"
 
 void main(void){
-    while(1) {
-	// Boucle principale
+    // Initialisation du jeu
+    gfx_init();
+    game_init();
+    init_player();
 
+    // Activation des sprites
+    SHOW_SPRITES;
+    
+    while(1) {
 	// On attend la prochaine frame
 	vsync();
-	oam = 0;
+	// Mise à jour du jeu
+	game_update();
 
-	
-	
-	// On cache les sprites non utilises	
-	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
     }
 }
