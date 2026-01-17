@@ -14,6 +14,16 @@ const uint16_t boost_speed_table[24] = {
     80, 80 , 72, 48
 };
 
+const uint16_t boost_speed_table_normalized[24] = {
+    1,1,0,1,
+    2,1,2,1,
+    2,2,2,3,
+    3, 4, 8, 9,
+    11, 11, 22, 45,
+    56, 57 , 51, 34
+};
+
+
 player_t PLAYER;
 void init_player(void) {
     PLAYER.x =  0;
@@ -47,8 +57,12 @@ inline void update_player_input(void) {
     // Si le boost est actif, on ignore les input
     if (PLAYER.boost) {
 	PLAYER.boost--;
-	speed = boost_speed_table[ (PLAYER.boost & 62)>>1];
-	
+	if (PLAYER.dx && PLAYER.dy) {
+	    // Mouvement diagonal, on normalise la vitesse
+	    speed = boost_speed_table_normalized[ (PLAYER.boost & 62)>>1];
+	} else {
+	    speed = boost_speed_table[ (PLAYER.boost & 62)>>1];
+	}
 	if (PLAYER.dx > 0){
 	    PLAYER.dx = speed;
 	} else if (PLAYER.dx < 0){
