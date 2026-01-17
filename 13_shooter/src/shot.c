@@ -73,7 +73,8 @@ inline void check_shot_bounds(uint8_t i) {
 
 inline void draw_shot(uint8_t i) {
     // Mise à jour du sprite du tir
-    set_sprite_tile(oam, SHOT_TILE_OFFSET);
+    // Chaque tir utilise un seul sprite choisi en fonction de shoot_power du joueur
+    set_sprite_tile(oam, SHOT_TILE_OFFSET + PLAYER.shoot_power);
     move_sprite(oam++,
 		SHOTS_POOL[i].x+SHOT_ONSCREEN_OFFSET,
 		SHOTS_POOL[i].y+SHOT_ONSCREEN_OFFSET);

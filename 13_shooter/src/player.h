@@ -17,6 +17,8 @@
 #define PLAYER_ANIMATION_FRAME_RIGHT 2
 
 #define PLAYER_SHOOT_COOLDOWN_FRAMES 12
+#define PLAYER_BOOST_DURATION_FRAMES 48
+#define PLAYER_INVINCIBILITY_FRAMES  180
 
 #define PLAYER_MIN_X            ((uint8_t) (GAMESCREEN_X_ORIGIN+8))
 #define PLAYER_MAX_X            ((uint8_t) (GAMESCREEN_X_END-8))
@@ -24,12 +26,16 @@
 #define PLAYER_MAX_Y            ((uint8_t) (GAMESCREEN_Y_END-8))
 
 #define PLAYER_SPEED            12
+#define BOOST_SPEED             24
 
 typedef struct {
     uint8_t x, y;
     int8_t dx, dy;
     int8_t fx, fy;
     uint8_t shoot_cooldown;
+    uint8_t shoot_power;
+    uint8_t invincibility_timer;
+    uint8_t boost;
     const  metasprite_t * const * metasprites;
 } player_t;
 

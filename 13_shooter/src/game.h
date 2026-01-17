@@ -8,6 +8,8 @@
 
 #include "input.h"
 #include "player.h"
+#include "shot.h"
+#include "background.h"
 
 #define SCREEN_WIDTH  160
 #define SCREEN_HEIGHT 144

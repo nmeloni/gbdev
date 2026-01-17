@@ -7,6 +7,8 @@
 #include "game.h"
 #include "input.h"
 #include "player.h"
+#include "shot.h"
+#include "background.h"
 #include "gfx.h"
 
 void main(void){
@@ -15,6 +17,7 @@ void main(void){
     game_init();
     init_player();
     init_shots();
+    init_background();
     
     // Activation des sprites
     SHOW_SPRITES;

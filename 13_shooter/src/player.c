@@ -5,6 +5,15 @@ inline void update_player_position(void);
 inline void check_player_bounds(void);
 inline void draw_player(void);
 
+const uint16_t boost_speed_table[24] = {
+    1,1,1,1,
+    2,2,2,2,
+    3,3,4,4,
+    4, 5, 12, 12,
+    16, 16, 32, 64,
+    80, 80 , 72, 48
+};
+
 player_t PLAYER;
 void init_player(void) {
     PLAYER.x =  0;
@@ -14,6 +23,9 @@ void init_player(void) {
     PLAYER.fx = 0;
     PLAYER.fy = 0;
     PLAYER.shoot_cooldown = 0;
+    PLAYER.shoot_power = 0;
+    PLAYER.invincibility_timer = 0;
+    PLAYER.boost = 0;
     PLAYER.metasprites = player_sprite_metasprites;
 }
 
@@ -26,31 +38,67 @@ void update_player(void){
 }
 
 inline void update_player_input(void) {
-    uint8_t speed = PLAYER_SPEED;
-    // Gestions des mouvements
-    PLAYER.dx = 0;
-    PLAYER.dy = 0;
 
-    if (KEY_PRESSED(J_LEFT)){
-	PLAYER.dx = -speed;
+    if (PLAYER.invincibility_timer) {
+	PLAYER.invincibility_timer--;
     }
-    if (KEY_PRESSED(J_RIGHT)){
-	PLAYER.dx = speed;
+    // Gestions des mouvements
+    uint8_t speed = PLAYER_SPEED;
+    // Si le boost est actif, on ignore les input
+    if (PLAYER.boost) {
+	PLAYER.boost--;
+	speed = boost_speed_table[ (PLAYER.boost & 62)>>1];
+	
+	if (PLAYER.dx > 0){
+	    PLAYER.dx = speed;
+	} else if (PLAYER.dx < 0){
+	    PLAYER.dx = -speed;
+	}
+	
+	if (PLAYER.dy > 0){
+	    PLAYER.dy = speed;
+	} else if (PLAYER.dy < 0){
+	    PLAYER.dy = -speed;
+	}
+    } else {
+	// Mouvement normal
+	PLAYER.dx = 0;
+	PLAYER.dy = 0;
+
+	if (KEY_RELEASED(J_A)){
+	    PLAYER.boost = PLAYER_BOOST_DURATION_FRAMES;
+	    speed = BOOST_SPEED;
+	}
+	
+	if (KEY_PRESSED(J_LEFT)){
+	    PLAYER.dx = -speed;
+	}
+	if (KEY_PRESSED(J_RIGHT)){
+	    PLAYER.dx = speed;
+	}
+	if (KEY_PRESSED(J_UP)){
+	    PLAYER.dy = -speed;
+	}
+	if (KEY_PRESSED(J_DOWN)){
+	    PLAYER.dy = speed;
+	}
+
     }
-    if (KEY_PRESSED(J_UP)){
-	PLAYER.dy = -speed;
+
+    if (KEY_PRESSED(J_SELECT)){
+	PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
     }
-    if (KEY_PRESSED(J_DOWN)){
-	PLAYER.dy = speed;
-    }
+    
     // Gestion du tir
     if (PLAYER.shoot_cooldown) {
 	PLAYER.shoot_cooldown--;
-    } else if (KEY_PRESSED(J_A)) {
+    } else if (KEY_PRESSED(J_B)) {
 	fire_shot(PLAYER.x, PLAYER.y-8, 0, -SHOT_SPEED);
 	PLAYER.shoot_cooldown = PLAYER_SHOOT_COOLDOWN_FRAMES;
     }
+    
 }
+
 
 inline void update_player_position(void) {
      // Mise à jour des parties fractionnaires pour un mouvement plus fluide
@@ -89,7 +137,17 @@ inline void check_player_bounds(void) {
 
 inline void draw_player(void) {
     // Mise à jour du sprite du joueur
-    oam+=move_metasprite_ex(PLAYER.metasprites[0],
+    if (PLAYER.invincibility_timer & 16) return;
+
+    uint8_t frame = PLAYER_ANIMATION_FRAME_TOP;
+    if (PLAYER.boost){
+	if (PLAYER.dx < 0) {
+	    frame = PLAYER_ANIMATION_FRAME_LEFT;
+	} else if (PLAYER.dx > 0) {
+	    frame = PLAYER_ANIMATION_FRAME_RIGHT;
+	}
+    }
+    oam+=move_metasprite_ex(PLAYER.metasprites[frame],
 			    PLAYER_TILE_OFFSET,0,oam,
 			    PLAYER.x, PLAYER.y);
 }
