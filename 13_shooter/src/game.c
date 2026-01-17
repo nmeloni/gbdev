@@ -19,15 +19,18 @@ void game_update(void) {
     case GAME_STATE_PLAY:
 	frame_counter++;
 	oam = 0;
-	handle_player();
+	update_player();
+	update_shots();
+
+	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
 	break;
     case GAME_STATE_PAUSE:
 	// Handle pause state
-	handle_player();
+	update_player();
 	break;
     case GAME_STATE_GAME_OVER:
 	// Handle game over state
-	handle_player();
+	update_player();
 	break;
     }
 

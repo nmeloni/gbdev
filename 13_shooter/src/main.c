@@ -14,7 +14,8 @@ void main(void){
     gfx_init();
     game_init();
     init_player();
-
+    init_shots();
+    
     // Activation des sprites
     SHOW_SPRITES;
     

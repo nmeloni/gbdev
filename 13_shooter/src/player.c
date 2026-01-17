@@ -1,5 +1,10 @@
 #include "player.h"
 
+inline void update_player_input(void);
+inline void update_player_position(void);
+inline void check_player_bounds(void);
+inline void draw_player(void);
+
 player_t PLAYER;
 void init_player(void) {
     PLAYER.x =  0;
@@ -8,11 +13,19 @@ void init_player(void) {
     PLAYER.dy = 0;
     PLAYER.fx = 0;
     PLAYER.fy = 0;
+    PLAYER.shoot_cooldown = 0;
     PLAYER.metasprites = player_sprite_metasprites;
 }
 
-void handle_player(void){
+void update_player(void){
+    // gestion du joueur décomposée en plusieurs fonctions inline pour plus de clarté    
+    update_player_input();
+    update_player_position();
+    check_player_bounds();
+    draw_player();     
+}
 
+inline void update_player_input(void) {
     uint8_t speed = PLAYER_SPEED;
     // Gestions des mouvements
     PLAYER.dx = 0;
@@ -30,8 +43,17 @@ void handle_player(void){
     if (KEY_PRESSED(J_DOWN)){
 	PLAYER.dy = speed;
     }
+    // Gestion du tir
+    if (PLAYER.shoot_cooldown) {
+	PLAYER.shoot_cooldown--;
+    } else if (KEY_PRESSED(J_A)) {
+	fire_shot(PLAYER.x, PLAYER.y-8, 0, -SHOT_SPEED);
+	PLAYER.shoot_cooldown = PLAYER_SHOOT_COOLDOWN_FRAMES;
+    }
+}
 
-    // Mise à jour des parties fractionnaires pour un mouvement plus fluide
+inline void update_player_position(void) {
+     // Mise à jour des parties fractionnaires pour un mouvement plus fluide
     PLAYER.fx += PLAYER.dx;
     PLAYER.fy += PLAYER.dy;
     
@@ -40,7 +62,9 @@ void handle_player(void){
 
     PLAYER.fx &= 0x0F;
     PLAYER.fy &= 0x0F;
-   
+}
+
+inline void check_player_bounds(void) {
     // Limitation aux bords de l'écran de jeu
     if (PLAYER.x < PLAYER_MIN_X) {
 	PLAYER.x = PLAYER_MIN_X;
@@ -60,11 +84,12 @@ void handle_player(void){
     if (PLAYER.y > PLAYER_MAX_Y) {
 	PLAYER.y = PLAYER_MAX_Y;
 	PLAYER.fy = 0;
-    }
-    
+    }    	
+}
+
+inline void draw_player(void) {
     // Mise à jour du sprite du joueur
     oam+=move_metasprite_ex(PLAYER.metasprites[0],
 			    PLAYER_TILE_OFFSET,0,oam,
 			    PLAYER.x, PLAYER.y);
-
 }
