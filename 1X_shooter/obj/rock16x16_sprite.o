@@ -1,0 +1,47 @@
+XL4
+H 9 areas 7 global symbols
+M rock16x16_sprite
+S ___bank_rock16x16_sprite Def00000000
+S .__.ABS. Def00000000
+A _CODE size 56 flags 0 addr 0
+S _rock16x16_sprite_tiles Def00000008
+S _rock16x16_sprite_palettes Def00000000
+S ___func_rock16x16_sprite Def00000000
+S _rock16x16_sprite_metasprite0 Def00000048
+S _rock16x16_sprite_metasprites Def00000054
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00 00
+R 00 00 00 00
+T 00 00 00 00
+R 00 00 00 00
+T 00 00 00 00 FF 7F B5 56 4A 29 00 00
+R 00 00 00 00
+T 08 00 00 00
+R 00 00 00 00
+T 08 00 00 00 00 00 1F 1F 39 3F 52 7D 9C E3 BC C3
+R 00 00 00 00
+T 14 00 00 00 BF C1 CF B2 C6 FB CC BB 7F 31 7F 40
+R 00 00 00 00
+T 20 00 00 00 3F 20 1F 1B 07 07 00 00 00 00 E8 F0
+R 00 00 00 00
+T 2C 00 00 00 78 FC 36 CC 79 86 3E C1 DF 39 EE 1D
+R 00 00 00 00
+T 38 00 00 00 C7 3D 0E FD 17 F9 6E F2 FC 0C F0 F0
+R 00 00 00 00
+T 44 00 00 00 E0 E0 00 00
+R 00 00 00 00
+T 48 00 00 00
+R 00 00 00 00
+T 48 00 00 00 F8 F8 00 00 00 08 02 00 80 00 00 00
+R 00 00 00 00
+T 54 00 00 00
+R 00 00 00 00
+T 54 00 00 00 48 00
+R 00 00 00 00 00 04 00 00
