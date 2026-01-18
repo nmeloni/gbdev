@@ -8,7 +8,13 @@
 #include "gfx.h"
 
 void init_background(void);
-void draw_background(void);
+void scroll_background(void);
 
+typedef struct {
+    int8_t dx,fx;
+    int8_t dy,fy;
+} background_t;
+
+extern background_t BACKGROUND;
 
 #endif // BACKGROUND_H

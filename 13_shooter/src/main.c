@@ -21,14 +21,15 @@ void main(void){
     init_bullets();
     init_enemies();
     init_powerup();
-    
+    init_background();
+
     game_init();
     // Activation des sprites
     SHOW_SPRITES;
     SHOW_BKG;
 
     PLAYER.shield = 1;
-    add_enemy(80, 20, ENEMY_TYPE_1, 3, MOVE_PATTERN_ZIGZAG, SHOOT_PATTERN_AIMED);
+    add_enemy(80, 20, ENEMY_TYPE_1, 12, MOVE_PATTERN_ZIGZAG, SHOOT_PATTERN_AIMED);
     while(1) {
 	// On attend la prochaine frame
 	vsync();

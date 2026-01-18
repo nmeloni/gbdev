@@ -25,15 +25,15 @@ Prototype jouable – Construction du premier niveau
 - [x] Système d’ennemis générique
 - [x] 1 type d’ennemi fonctionnel
 - [ ] 2–3 variations d’ennemis
-- [ ] Patterns de déplacement
-- [ ] Patterns de tirs
-- [ ] Comportements combinés (move + shoot décalés)
+- [x] Patterns de déplacement
+- [x] Patterns de tirs
+- [x] Comportements combinés (move + shoot décalés)
 - [ ] Mini-boss
 - [ ] Boss de fin de niveau
 
 ---
-
-## 💥 Collisions & règles
+q
+s## 💥 Collisions & règles
 
 - [x] Collision joueur ↔ ennemis
 - [x] Collision joueur ↔ bullets ennemies
@@ -63,6 +63,7 @@ Prototype jouable – Construction du premier niveau
 - [ ] Animations simples (2–3 frames)
 - [ ] Effets visuels (explosions, flash)
 - [ ] Lisibilité écran (contraste, tailles)
+- [x] Background défilant
 
 ---
 

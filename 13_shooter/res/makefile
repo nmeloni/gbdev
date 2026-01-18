@@ -29,6 +29,14 @@ powerup_sprite.c: $(PNG_DIR)/powerup_sprite.png
 enemy_1_sprite.c: $(PNG_DIR)/enemy_1_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
+# regles spécifiques pour les tilesmap
+space_bkg_tileset.c: $(PNG_DIR)/space_bkg_tileset.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only
+
+space_bkg_tilemap.c: $(PNG_DIR)/space_bkg_tilemap.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -maps_only -source_tileset $(PNG_DIR)/space_bkg_tileset.png
+
+
 # Nettoyer les fichiers générés
 clean:
 	rm -f $(C_FILES) $(H_FILES)

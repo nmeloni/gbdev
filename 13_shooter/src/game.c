@@ -28,6 +28,8 @@ void game_update(void) {
 	update_player();
 	update_powerup();
 	
+	scroll_background();
+	
 	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
 	break;
     case GAME_STATE_PAUSE:

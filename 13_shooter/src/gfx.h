@@ -12,6 +12,15 @@
 #include "bullet.h"
 #include "bullet_sprite.h"
 
+#include "enemy.h"
+#include "enemy_1_sprite.h"
+
+#include "powerup.h"
+#include "powerup_sprite.h"
+
+#include "background.h"
+#include "space_bkg_tileset.h"
+#include "space_bkg_tilemap.h"
 
 // Fonction d'initialisation de toutes les ressources graphiques
 void gfx_init(void);
