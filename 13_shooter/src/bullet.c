@@ -39,6 +39,8 @@ void update_bullets(void) {
 	update_bullet_position(i);
 	// Vérification des limites de l'écran
 	check_bullet_bounds(i);
+	// Vérification de collision avec le joueur
+	
 	
 	if (BULLETS_POOL[i].active) {	    // Dessiner le tir
 	    draw_bullet(i);

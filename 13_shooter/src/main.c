@@ -5,6 +5,7 @@
 #include <gbdk/emu_debug.h>
 
 #include "game.h"
+#include "utils.h"
 #include "input.h"
 #include "player.h"
 #include "shot.h"
@@ -22,6 +23,7 @@ void main(void){
     game_init();
     // Activation des sprites
     SHOW_SPRITES;
+
     
     while(1) {
 	// On attend la prochaine frame
