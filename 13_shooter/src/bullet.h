@@ -6,16 +6,23 @@
 #include <gbdk/metasprites.h>
 
 #include "game.h"
+#include "utils.h"
 #include "bullet_sprite.h"
 
 
 #define BULLET_TILE_OFFSET         32
 #define BULLET_SPRITE_X_OFFSET     (-4)
 #define BULLET_SPRITE_Y_OFFSET     (-8)
-#define BULLET_TYPE_SMALL          0
+
 #define BULLET_TYPE_SMALL_SPRITE   BULLET_TILE_OFFSET
+#define BULLET_TYPE_LARGE_SPRITE   (BULLET_TILE_OFFSET + 2)
 
 #define MAX_BULLETS 16
+
+enum bullet_type {
+    BULLET_TYPE_SMALL = 0,
+    BULLET_TYPE_LARGE = 1
+};
 
 typedef struct {
     uint8_t active;

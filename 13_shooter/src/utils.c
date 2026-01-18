@@ -1,9 +1,23 @@
 #include "utils.h"
 
+const int8_t directions_dx[16] = {
+    16, 15, 11, 6,
+    0, -6, -11, -15,
+    -16, -15, -11, -6,
+    0, 6, 11, 15
+};
+
+const int8_t directions_dy[16] = {
+    0, -6, -11, -15,
+    -16, -15, -11, -6,
+    0, 6, 11, 15,
+    16, 15, 11, 6
+};
+
 inline uint8_t check_collision_box(uint8_t x1, uint8_t y1, uint8_t w1, uint8_t h1,
 				uint8_t x2, uint8_t y2, uint8_t w2, uint8_t h2) {
-    if ((x1 < x2 + w2) && (x1 + w1 > x2) )
-	if ((y1 < y2 + h2) && (y1 + h1 > y2))
+    if ((x2+w1+w2 >= x1) && (x2 <= x1+w1+w2) )
+	if ((y2+h1+h2 >= y1) && ( y2 <= y1+h1+h2) )
 	    return 1;
     return 0;
 }

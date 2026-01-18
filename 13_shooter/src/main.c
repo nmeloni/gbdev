@@ -23,8 +23,7 @@ void main(void){
     game_init();
     // Activation des sprites
     SHOW_SPRITES;
-
-    
+   
     while(1) {
 	// On attend la prochaine frame
 	vsync();
