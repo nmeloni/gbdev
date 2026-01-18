@@ -21,6 +21,12 @@ const uint8_t shot_power_table[3] = {
 	4   // POWER_3_SHOT
 };
 
+const uint8_t shot_tile_offsets[] = {
+	SHOT_TILE_OFFSET,
+	SHOT_TILE_OFFSET + 2,
+	SHOT_TILE_OFFSET + 4
+};
+
 void init_shots(void) {
     for (uint8_t i = 0; i < MAX_SHOTS; i++) {
 	SHOTS_POOL[i].active = 0;
@@ -86,7 +92,7 @@ inline void check_shot_bounds(uint8_t i) {
 inline void draw_shot(uint8_t i) {
     // Mise à jour du sprite du tir
     // Chaque tir utilise un seul sprite choisi en fonction de shoot_power du joueur
-    set_sprite_tile(oam, SHOT_TILE_OFFSET + PLAYER.shoot_power);
+    set_sprite_tile(oam, shot_tile_offsets[PLAYER.shoot_power]);
     move_sprite(oam++,
 		SHOTS_POOL[i].x+SHOT_ONSCREEN_OFFSET,
 		SHOTS_POOL[i].y+SHOT_ONSCREEN_OFFSET);

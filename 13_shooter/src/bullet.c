@@ -53,12 +53,15 @@ void update_bullets(void) {
 				bullet_bbox[type][0], bullet_bbox[type][1],
 				PLAYER.x, PLAYER.y, 0, 0) ) {
 	    // Collision détectée avec le joueur
+	    if (PLAYER.shield) {
+		PLAYER.shield = 0;
+		PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
+	    }
 	    if (PLAYER.invincibility_timer == 0) {
 		kill_player();
-		kill_active_bullet(j);
-		continue; // Passer au tir suivant
 	    }
-	    
+	    kill_active_bullet(j);
+	    continue; // Passer au tir suivant	    
 	}		
 	    
 	if (BULLETS_POOL[i].active) {	    // Dessiner le tir

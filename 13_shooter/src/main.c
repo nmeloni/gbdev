@@ -20,18 +20,20 @@ void main(void){
     init_background();
     init_bullets();
     init_enemies();
+    init_powerup();
     
     game_init();
     // Activation des sprites
     SHOW_SPRITES;
+    SHOW_BKG;
 
-    add_enemy(81, 16, ENEMY_TYPE_1, 12, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_AIMED);
-    
+    PLAYER.shield = 1;
+    add_enemy(80, 20, ENEMY_TYPE_1, 3, MOVE_PATTERN_ZIGZAG, SHOOT_PATTERN_AIMED);
     while(1) {
 	// On attend la prochaine frame
 	vsync();
 	// Mise à jour du jeu
 	game_update();
-
+	
     }
 }

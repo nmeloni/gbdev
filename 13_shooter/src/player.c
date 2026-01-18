@@ -35,7 +35,9 @@ void init_player(void) {
     PLAYER.shoot_cooldown = 0;
     PLAYER.shoot_power = 0;
     PLAYER.invincibility_timer = 0;
+    PLAYER.shield = 0;
     PLAYER.boost = 0;
+    PLAYER.lives = 3;
     PLAYER.metasprites = player_sprite_metasprites;
 }
 
@@ -129,6 +131,7 @@ void reset_player(uint8_t x, uint8_t y) {
 void kill_player(void) {
     reset_player(PLAYER_MIN_X + (PLAYER_MAX_X - PLAYER_MIN_X)/2, PLAYER_MAX_Y - 16);
     PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
+    PLAYER.lives--;
 }
 
 
@@ -169,7 +172,7 @@ inline void check_player_bounds(void) {
 
 inline void draw_player(void) {
     // Mise à jour du sprite du joueur
-    if (PLAYER.invincibility_timer & 16) return;
+    if (PLAYER.invincibility_timer & 8) return;
 
     uint8_t frame = PLAYER_ANIMATION_FRAME_TOP;
     if (PLAYER.boost){
@@ -182,4 +185,9 @@ inline void draw_player(void) {
     oam+=move_metasprite_ex(PLAYER.metasprites[frame],
 			    PLAYER_TILE_OFFSET,0,oam,
 			    PLAYER.x, PLAYER.y);
+    if (PLAYER.shield && (frame_counter & 1)) {
+	oam+=move_metasprite_ex(shield_sprite_metasprites[0],
+				SHIELD_TILE_OFFSET,0,oam,
+				PLAYER.x, PLAYER.y);
+    }
 }

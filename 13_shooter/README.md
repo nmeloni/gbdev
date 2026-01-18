@@ -16,7 +16,7 @@ Prototype jouable – Construction du premier niveau
 - [x] Déplacement optimisé des bullets ennemies
 - [x] Hitbox précises (indépendantes des sprites)
 - [x] Invincibilité temporaire après hit
-- [ ] Feedback visuel de dégâts (clignotement / flash)
+- [x] Feedback visuel de dégâts (clignotement / flash)
 
 ---
 
@@ -40,7 +40,8 @@ Prototype jouable – Construction du premier niveau
 - [x] Collision bullets joueur ↔ ennemis
 - [x] Gestion des dégâts (PV ennemis)
 - [ ] Destruction ennemis + explosion
-- [ ] Gestion des vies joueur
+- [x] Gestion des vies joueur
+- [x] Gestion des powerup
 - [ ] Game Over
 
 ---

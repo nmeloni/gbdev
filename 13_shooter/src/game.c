@@ -26,6 +26,7 @@ void game_update(void) {
 	update_bullets();
 	update_enemies();
 	update_player();
+	update_powerup();
 	
 	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
 	break;

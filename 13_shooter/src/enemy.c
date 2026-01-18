@@ -8,6 +8,7 @@ inline void  handle_move_pattern(uint8_t i);
 inline void  handle_shoot_pattern(uint8_t i);
 inline void  update_enemy_position(uint8_t i);
 inline void  check_enemy_bounds(uint8_t i);
+inline void  check_collision_with_player(uint8_t i);
 inline void  draw_enemy(uint8_t i);
 inline void  kill_active_enemy(uint8_t j);
 inline void  check_enemy_hitshots(uint8_t i);
@@ -80,17 +81,10 @@ void update_enemies(void) {
 	    kill_active_enemy(j);
 	    continue; //Passer à l'ennemi suivant
 	}
-	
+
 	//collision avec le joueur
-	uint8_t type = ENEMY_POOL[i].type;
-	if (check_collision_box(ENEMY_POOL[i].x, ENEMY_POOL[i].y
-				,enemy_bbox[type][0], enemy_bbox[type][1],
-				PLAYER.x, PLAYER.y, 0, 0) ) {
-	    // Collision détectée avec le joueur
-	    if (PLAYER.invincibility_timer == 0) {
-		kill_player();
-	    }
-	}	
+	check_collision_with_player(i);
+	
 	//Dessin de l'ennemi
 	draw_enemy(i);
     }
@@ -184,7 +178,23 @@ inline void  check_enemy_hitshots(uint8_t i){
 	}
     }
 }
-	
+
+inline void  check_collision_with_player(uint8_t i){
+    uint8_t type = ENEMY_POOL[i].type;
+    if (check_collision_box(ENEMY_POOL[i].x, ENEMY_POOL[i].y
+			    ,enemy_bbox[type][0], enemy_bbox[type][1],
+			    PLAYER.x, PLAYER.y, 0, 0) ) {
+	// Collision détectée avec le joueur
+	if (PLAYER.shield) {
+	    PLAYER.shield = 0;
+	    PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
+	}
+	if (PLAYER.invincibility_timer == 0) {
+	    kill_player();
+	}
+    }
+}
+
 
 inline void  check_enemy_bounds(uint8_t i){
     // Désactiver l'ennemi s'il sort de l'écran

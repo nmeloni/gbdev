@@ -13,6 +13,7 @@
 #include "gfx.h"
 #include "enemy.h"
 #include "bullet.h"
+#include "powerup.h"
 
 #define SCREEN_WIDTH  160
 #define SCREEN_HEIGHT 144

@@ -20,6 +20,12 @@ all: $(C_FILES)
 player_sprite.c: $(PNG_DIR)/player_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
+shield_sprite.c: $(PNG_DIR)/shield_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+powerup_sprite.c: $(PNG_DIR)/powerup_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
 enemy_1_sprite.c: $(PNG_DIR)/enemy_1_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
