@@ -100,7 +100,7 @@ inline void update_player_input(void) {
     }
 
     if (KEY_PRESSED(J_SELECT)){
-	PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
+	kill_player();
     }
     
     // Gestion du tir
@@ -111,6 +111,24 @@ inline void update_player_input(void) {
 	PLAYER.shoot_cooldown = PLAYER_SHOOT_COOLDOWN_FRAMES;
     }
     
+}
+
+void reset_player(uint8_t x, uint8_t y) {
+	PLAYER.x = x;
+	PLAYER.y = y;
+	PLAYER.dx = 0;
+	PLAYER.dy = 0;
+	PLAYER.fx = 0;
+	PLAYER.fy = 0;
+	PLAYER.shoot_cooldown = 0;
+	PLAYER.shoot_power = 0;
+	PLAYER.invincibility_timer = 0;
+	PLAYER.boost = 0;
+}
+
+void kill_player(void) {
+    reset_player(PLAYER_MIN_X + (PLAYER_MAX_X - PLAYER_MIN_X)/2, PLAYER_MAX_Y - 16);
+    PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
 }
 
 

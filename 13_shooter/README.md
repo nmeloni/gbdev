@@ -8,14 +8,14 @@ Prototype jouable – Construction du premier niveau
 ## 🎮 Core gameplay
 
 - [ ] Boucle de jeu stable (`vsync`, update, draw)
-- [ ] Lecture des entrées joueur
-- [ ] Déplacement du vaisseau joueur
-- [ ] Boost (accélération / décélération)
-- [ ] Tir joueur de base
-- [ ] Pool statique de bullets
+- [x] Lecture des entrées joueur
+- [x] Déplacement du vaisseau joueur
+- [x] Boost (accélération / décélération)
+- [x] Tir joueur de base
+- [x] Pool statique de bullets
 - [ ] Déplacement optimisé des bullets ennemies
 - [ ] Hitbox précises (indépendantes des sprites)
-- [ ] Invincibilité temporaire après hit
+- [x] Invincibilité temporaire après hit
 - [ ] Feedback visuel de dégâts (clignotement / flash)
 
 ---
@@ -57,7 +57,7 @@ Prototype jouable – Construction du premier niveau
 
 ## 🎨 Graphismes
 
-- [ ] Sprites définitifs joueur
+- [x] Sprites définitifs joueur
 - [ ] Sprites ennemis cohérents
 - [ ] Animations simples (2–3 frames)
 - [ ] Effets visuels (explosions, flash)
@@ -78,8 +78,8 @@ Prototype jouable – Construction du premier niveau
 
 ## ⚙️ Technique & optimisation
 
-- [ ] Aucun calcul flottant
-- [ ] Pas de 16 bits dans la boucle critique
+- [x] Aucun calcul flottant
+- [x] Pas de 16 bits dans la boucle critique
 - [ ] Tables pré-calculées (directions, patterns)
 - [ ] Limites CPU testées (stress test bullets)
 - [ ] Nettoyage du code mort

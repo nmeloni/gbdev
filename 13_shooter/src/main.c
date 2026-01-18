@@ -14,11 +14,12 @@
 void main(void){
     // Initialisation du jeu
     gfx_init();
-    game_init();
     init_player();
     init_shots();
     init_background();
+    init_bullets();
     
+    game_init();
     // Activation des sprites
     SHOW_SPRITES;
     

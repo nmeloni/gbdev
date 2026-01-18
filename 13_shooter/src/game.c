@@ -9,6 +9,8 @@ void game_init(void) {
     game_state = GAME_STATE_PLAY;
     oam = 0;
     frame_counter = 0;
+
+    reset_player(PLAYER_MIN_X + (PLAYER_MAX_X - PLAYER_MIN_X)/2, PLAYER_MAX_Y - 16);
 }
 
 void game_update(void) {
@@ -21,6 +23,7 @@ void game_update(void) {
 	oam = 0;
 	update_player();
 	update_shots();
+	update_bullets();
 
 	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
 	break;

@@ -1,0 +1,37 @@
+#ifndef BULLET_H
+#define BULLET_H
+
+#include <gb/gb.h>
+#include <stdint.h>
+#include <gbdk/metasprites.h>
+
+#include "game.h"
+#include "bullet_sprite.h"
+
+
+#define BULLET_TILE_OFFSET         32
+#define BULLET_SPRITE_X_OFFSET     (-4)
+#define BULLET_SPRITE_Y_OFFSET     (-8)
+#define BULLET_TYPE_SMALL          0
+#define BULLET_TYPE_SMALL_SPRITE   BULLET_TILE_OFFSET
+
+#define MAX_BULLETS 16
+
+typedef struct {
+    uint8_t active;
+    uint8_t type;
+    uint8_t x, y;
+    int8_t dx, dy;
+    int8_t fx, fy;
+} bullet_t;
+
+extern bullet_t BULLETS_POOL[MAX_BULLETS];
+extern uint8_t ACTIVE_BULLETS[MAX_BULLETS];
+extern uint8_t active_bullet_index;
+
+void init_bullets(void);
+void fire_bullet(uint8_t type, uint8_t x, uint8_t y, int8_t dx, int8_t dy);
+void update_bullets(void);
+
+
+#endif // BULLET_H
