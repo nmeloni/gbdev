@@ -19,11 +19,14 @@ void main(void){
     init_shots();
     init_background();
     init_bullets();
+    init_enemies();
     
     game_init();
     // Activation des sprites
     SHOW_SPRITES;
-   
+
+    add_enemy(81, 16, ENEMY_TYPE_1, 12, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_AIMED);
+    
     while(1) {
 	// On attend la prochaine frame
 	vsync();

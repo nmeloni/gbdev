@@ -12,6 +12,7 @@
 #include "bullet.h"
 #include "bullet_sprite.h"
 
+
 // Fonction d'initialisation de toutes les ressources graphiques
 void gfx_init(void);
 

@@ -21,10 +21,12 @@ void game_update(void) {
     case GAME_STATE_PLAY:
 	frame_counter++;
 	oam = 0;
-	update_player();
+	
 	update_shots();
 	update_bullets();
-
+	update_enemies();
+	update_player();
+	
 	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
 	break;
     case GAME_STATE_PAUSE:

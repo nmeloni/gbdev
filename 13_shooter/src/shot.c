@@ -9,6 +9,18 @@ shot_t SHOTS_POOL[MAX_SHOTS];
 uint8_t ACTIVE_SHOTS[MAX_SHOTS];
 uint8_t active_shot_index = 0;
 
+const uint8_t shot_bbox[3][2] = {
+    {1, 2},   // POWER_1_SHOT
+    {3,2},   // POWER_2_SHOT
+    {3,3}   // POWER_3_SHOT
+};
+
+const uint8_t shot_power_table[3] = {
+	1,  // POWER_1_SHOT
+	2,  // POWER_2_SHOT
+	4   // POWER_3_SHOT
+};
+
 void init_shots(void) {
     for (uint8_t i = 0; i < MAX_SHOTS; i++) {
 	SHOTS_POOL[i].active = 0;

@@ -20,6 +20,7 @@
 #define MAX_BULLETS 16
 
 enum bullet_type {
+    BULLET_TYPE_NONE = 255,
     BULLET_TYPE_SMALL = 0,
     BULLET_TYPE_LARGE = 1
 };

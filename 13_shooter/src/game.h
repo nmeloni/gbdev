@@ -10,6 +10,9 @@
 #include "player.h"
 #include "shot.h"
 #include "background.h"
+#include "gfx.h"
+#include "enemy.h"
+#include "bullet.h"
 
 #define SCREEN_WIDTH  160
 #define SCREEN_HEIGHT 144

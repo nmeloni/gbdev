@@ -22,8 +22,8 @@ Prototype jouable – Construction du premier niveau
 
 ## 👾 Ennemis
 
-- [ ] Système d’ennemis générique
-- [ ] 1 type d’ennemi fonctionnel
+- [x] Système d’ennemis générique
+- [x] 1 type d’ennemi fonctionnel
 - [ ] 2–3 variations d’ennemis
 - [ ] Patterns de déplacement
 - [ ] Patterns de tirs
@@ -35,10 +35,10 @@ Prototype jouable – Construction du premier niveau
 
 ## 💥 Collisions & règles
 
-- [ ] Collision joueur ↔ ennemis
+- [x] Collision joueur ↔ ennemis
 - [x] Collision joueur ↔ bullets ennemies
-- [ ] Collision bullets joueur ↔ ennemis
-- [ ] Gestion des dégâts (PV ennemis)
+- [x] Collision bullets joueur ↔ ennemis
+- [x] Gestion des dégâts (PV ennemis)
 - [ ] Destruction ennemis + explosion
 - [ ] Gestion des vies joueur
 - [ ] Game Over
