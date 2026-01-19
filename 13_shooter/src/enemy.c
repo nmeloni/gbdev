@@ -77,7 +77,7 @@ void update_enemies(void) {
 	check_enemy_hitshots(i);
 
 	//Gestion de l'état d'ennemi touché
-	if (ENEMY_POOL[i].hp <= 0 || ENEMY_POOL[i].active == 0){
+	if (ENEMY_POOL[i].active == 0){
 	    kill_active_enemy(j);
 	    continue; //Passer à l'ennemi suivant
 	}
@@ -172,7 +172,10 @@ inline void  check_enemy_hitshots(uint8_t i){
 	    // Collision détectée avec un tir du joueur
 	    ENEMY_POOL[i].hp-= shot_power_table[PLAYER.shoot_power];
 	    ENEMY_POOL[i].ishit = HIT_FLASH_DURATION;
-
+	    if (ENEMY_POOL[i].hp <= 0){
+		add_explosion(ENEMY_POOL[i].x, ENEMY_POOL[i].y);
+		ENEMY_POOL[i].active = 0;
+	    }
 	    // Supprimer le tir du joueur
 	    kill_active_shot(j);
 	}

@@ -29,10 +29,13 @@ void main(void){
     SHOW_BKG;
 
     PLAYER.shield = 1;
-    add_enemy(80, 20, ENEMY_TYPE_1, 12, MOVE_PATTERN_ZIGZAG, SHOOT_PATTERN_AIMED);
+    add_enemy(80, 20, ENEMY_TYPE_1, 3, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_AIMED);
     while(1) {
 	// On attend la prochaine frame
 	vsync();
+	if (KEY_RELEASED(J_START)){
+	    add_enemy(80, 20, ENEMY_TYPE_1, 3, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_AIMED);
+	}
 	// Mise à jour du jeu
 	game_update();
 	

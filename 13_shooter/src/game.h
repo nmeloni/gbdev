@@ -14,6 +14,7 @@
 #include "enemy.h"
 #include "bullet.h"
 #include "powerup.h"
+#include "explosion.h"
 
 #define SCREEN_WIDTH  160
 #define SCREEN_HEIGHT 144

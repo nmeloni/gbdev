@@ -25,9 +25,9 @@ void game_update(void) {
 	update_shots();
 	update_bullets();
 	update_enemies();
-	update_player();
 	update_powerup();
-	
+	update_explosions();
+	update_player();
 	scroll_background();
 	
 	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);

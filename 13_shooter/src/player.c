@@ -129,6 +129,7 @@ void reset_player(uint8_t x, uint8_t y) {
 }
 
 void kill_player(void) {
+    add_explosion(PLAYER.x, PLAYER.y);
     reset_player(PLAYER_MIN_X + (PLAYER_MAX_X - PLAYER_MIN_X)/2, PLAYER_MAX_Y - 16);
     PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
     PLAYER.lives--;
