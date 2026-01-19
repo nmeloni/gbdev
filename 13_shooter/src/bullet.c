@@ -10,8 +10,8 @@ uint8_t ACTIVE_BULLETS[MAX_BULLETS];
 uint8_t active_bullet_index = 0;
 
 const uint8_t bullet_bbox[2][2] = {
-    {1, 1},   // BULLET_TYPE_SMALL
-    {3, 3}     // BULLET_TYPE_LARGE
+    {3, 3},   // BULLET_TYPE_SMALL
+    {5, 5}     // BULLET_TYPE_LARGE
 };
 
 void init_bullets(void) {
@@ -39,30 +39,37 @@ void fire_bullet(uint8_t type, uint8_t x, uint8_t y, int8_t dx, int8_t dy) {
 
 void update_bullets(void) {
     for (uint8_t j = 0; j < active_bullet_index; j++) {
-	// Mettre à jour les tirs tous les deux frames pour alléger le CPU
-	if ( (frame_counter + j)%2 ) continue;
 	
 	uint8_t i = ACTIVE_BULLETS[j];
+	// Gestion des tirs tous les deux frames pour alléger le CPU
+	if ( (frame_counter - j) & 1 ) continue;
 	// Mettre à jour la position du tir
 	update_bullet_position(i);
-	// Vérification des limites de l'écran
-	check_bullet_bounds(i);
-	// Vérification de collision avec le joueur
-	uint8_t type = BULLETS_POOL[i].type;
-	if (check_collision_box(BULLETS_POOL[i].x, BULLETS_POOL[i].y,
-				bullet_bbox[type][0], bullet_bbox[type][1],
-				PLAYER.x, PLAYER.y, 0, 0) ) {
-	    // Collision détectée avec le joueur
-	    if (PLAYER.shield) {
-		PLAYER.shield = 0;
-		PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
+	
+	// Verification des collisions et des limites toutes les 4 frames
+	// pour alléger le CPU
+	if ( (frame_counter - j) % 4 == 0)
+	{ 
+	    
+	    // Vérification des limites de l'écran
+	    check_bullet_bounds(i);
+	    // Vérification de collision avec le joueur
+	    uint8_t type = BULLETS_POOL[i].type;
+	    if (check_collision_box(BULLETS_POOL[i].x, BULLETS_POOL[i].y,
+				    bullet_bbox[type][0], bullet_bbox[type][1],
+				    PLAYER.x, PLAYER.y, 0, 0) ) {
+		// Collision détectée avec le joueur
+		if (PLAYER.shield) {
+		    PLAYER.shield = 0;
+		    PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
+		}
+		if (PLAYER.invincibility_timer == 0) {
+		    kill_player();
+		}
+		kill_active_bullet(j);
+		continue; // Passer au tir suivant	    
 	    }
-	    if (PLAYER.invincibility_timer == 0) {
-		kill_player();
-	    }
-	    kill_active_bullet(j);
-	    continue; // Passer au tir suivant	    
-	}		
+	}
 	    
 	if (BULLETS_POOL[i].active) {	    // Dessiner le tir
 	    draw_bullet(i);

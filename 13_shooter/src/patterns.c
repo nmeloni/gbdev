@@ -19,7 +19,7 @@ const int8_t (* const  shoot_patterns[])[4] = {
 
 // Pattern 0: Mouvement en ligne droite descendante
 const int8_t move_pattern_straight[][3] = {
-    {10, 0, 4}    
+    {60, 0, 4}    
 };
 
 // Pattern 1: Descend en zigzag
@@ -44,5 +44,5 @@ const int8_t move_pattern_zigzag[16][3] = {
 
 // Pattern 0: shoot straight down
 const int8_t shoot_pattern_aimed[1][4] = {
-    {60, BULLET_TYPE_SMALL, 0, 32},
+    {60, BULLET_TYPE_SMALL | AIMED_SHOT, 0, 32},
 };

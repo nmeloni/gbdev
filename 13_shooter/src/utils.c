@@ -60,12 +60,11 @@ inline uint8_t aimed_direction(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2) {
 	    angle = 2; //Moyen angle
 	}
     }
-
     // Ajustement de la direction finale
     if (direction & 4) {
-	return (direction + 4 - angle);
+	return (direction + 4 - angle)& 0x0F;
     } else {
-	return (direction + angle);
+	return (direction + angle) & 0x0F;
     }
 }
     

@@ -41,7 +41,7 @@ void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t hp, uint8_t move_patt
 	    ENEMY_POOL[i].dx = 0;
 	    ENEMY_POOL[i].dy = 0;
 	    ENEMY_POOL[i].fx = 0;
-	    ENEMY_POOL[i].fy = 0;
+	    ENEMY_POOL[i].fy = 0; 
 	    ENEMY_POOL[i].type = type;
 	    ENEMY_POOL[i].move_pattern = move_pattern;
 	    ENEMY_POOL[i].shoot_pattern = shoot_pattern;
@@ -69,22 +69,26 @@ void update_enemies(void) {
 	
 	//Mouvement de l'ennemi
 	update_enemy_position(i);
-	
-	//Vérification des limites de l'écran
-	check_enemy_bounds(i);
-	
-	//collision avec les tirs du joueur
-	check_enemy_hitshots(i);
 
+
+	// Verification des collisions et des limites toutes les deux frames
+	// pour alléger le CPU
+	if ( (frame_counter - j) % 4 == 0){ 
+	    //Vérification des limites de l'écran
+	    check_enemy_bounds(i);
+	
+	    //collision avec les tirs du joueur
+	    check_enemy_hitshots(i);
+	
+	    //collision avec le joueur
+	    check_collision_with_player(i);
+	}
 	//Gestion de l'état d'ennemi touché
 	if (ENEMY_POOL[i].active == 0){
 	    kill_active_enemy(j);
 	    continue; //Passer à l'ennemi suivant
 	}
 
-	//collision avec le joueur
-	check_collision_with_player(i);
-	
 	//Dessin de l'ennemi
 	draw_enemy(i);
     }
@@ -164,11 +168,13 @@ inline void  check_enemy_hitshots(uint8_t i){
     uint8_t type = ENEMY_POOL[i].type;
     for (uint8_t j=0; j<active_shot_index; j++){
 	uint8_t k = ACTIVE_SHOTS[j];
+
+	
 	if (check_collision_box(ENEMY_POOL[i].x, ENEMY_POOL[i].y,
 				enemy_bbox[type][0],
 				enemy_bbox[type][1],
 				SHOTS_POOL[k].x, SHOTS_POOL[k].y,
-				shot_bbox[PLAYER.shoot_power][0], shot_bbox[PLAYER.shoot_power][1]) ) {
+				shot_bbox[PLAYER.shoot_power][0], shot_bbox[PLAYER.shoot_power][1]) ){
 	    // Collision détectée avec un tir du joueur
 	    ENEMY_POOL[i].hp-= shot_power_table[PLAYER.shoot_power];
 	    ENEMY_POOL[i].ishit = HIT_FLASH_DURATION;

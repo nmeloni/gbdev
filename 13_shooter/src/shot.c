@@ -100,8 +100,5 @@ inline void draw_shot(uint8_t i) {
 
 inline void kill_active_shot(uint8_t j){
     SHOTS_POOL[ACTIVE_SHOTS[j]].active = 0;
-    for (uint8_t i=j; i<active_shot_index; i++){
-	ACTIVE_SHOTS[i] = ACTIVE_SHOTS[i+1];
-    }
-    active_shot_index--;
+    ACTIVE_SHOTS[j] = ACTIVE_SHOTS[--active_shot_index];
 }

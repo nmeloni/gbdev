@@ -39,7 +39,7 @@ s## 💥 Collisions & règles
 - [x] Collision joueur ↔ bullets ennemies
 - [x] Collision bullets joueur ↔ ennemis
 - [x] Gestion des dégâts (PV ennemis)
-- [ ] Destruction ennemis + explosion
+- [x] Destruction ennemis + explosion
 - [x] Gestion des vies joueur
 - [x] Gestion des powerup
 - [ ] Game Over
@@ -61,7 +61,7 @@ s## 💥 Collisions & règles
 - [x] Sprites définitifs joueur
 - [ ] Sprites ennemis cohérents
 - [ ] Animations simples (2–3 frames)
-- [ ] Effets visuels (explosions, flash)
+- [x] Effets visuels (explosions, flash)
 - [ ] Lisibilité écran (contraste, tailles)
 - [x] Background défilant
 
