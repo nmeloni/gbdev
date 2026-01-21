@@ -20,12 +20,19 @@
 #define HIT_FLASH_DURATION      6
 #define ENEMY_TILE_OFFSET    0x40
 #define ENEMY_1_TILE_OFFSET  ENEMY_TILE_OFFSET
+#define ENENY_2_TILE_OFFSET  (ENEMY_TILE_OFFSET + 8)
+#define ENEMY_3_TILE_OFFSET  (ENEMY_TILE_OFFSET + 16)
+
+#define SPRITE_FRAME_DURATION 8
+#define SPRITE_FRAME_DURATION_LOG2 3
 
 #define MAX_ENEMIES          8
 
 
 enum enemy_type {
     ENEMY_TYPE_1,
+    ENEMY_TYPE_2,
+    ENEMY_TYPE_3
 };
 
 typedef struct {
@@ -38,6 +45,7 @@ typedef struct {
     uint8_t shoot_activepattern;
     uint8_t move_framecounter;
     uint8_t shoot_framecounter;
+    uint8_t frame_timer;
     int8_t hp;
     uint8_t ishit;
 } enemy_t;

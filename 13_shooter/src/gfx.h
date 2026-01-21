@@ -14,6 +14,11 @@
 
 #include "enemy.h"
 #include "enemy_1_sprite.h"
+#include "enemy_2_sprite.h"
+#include "enemy_3_sprite.h"
+
+#include "explosion.h"
+#include "explosion_sprite.h"
 
 #include "powerup.h"
 #include "powerup_sprite.h"

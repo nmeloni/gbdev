@@ -12,16 +12,22 @@ inline void  draw_enemy(uint8_t i);
 inline void  kill_active_enemy(uint8_t j);
 inline void  check_enemy_hitshots(uint8_t i);
 
-const uint8_t enemy_bbox[1][2] = {
-	{7 , 7}   // ENEMY_TYPE_1
+const uint8_t enemy_bbox[][2] = {
+    {7 , 7},   // ENEMY_TYPE_1
+    {7 , 7},   // ENEMY_TYPE_2
+    {7 , 7}    // ENEMY_TYPE_3
 };
 
 const uint8_t enemy_tile_offsets[] = {
-	ENEMY_1_TILE_OFFSET
+    ENEMY_1_TILE_OFFSET,
+    ENENY_2_TILE_OFFSET,
+    ENEMY_3_TILE_OFFSET
 };
 
 const const metasprite_t* const * enemy_metasprites[] = {
-	enemy_1_sprite_metasprites
+    enemy_1_sprite_metasprites,
+    enemy_2_sprite_metasprites,
+    enemy_3_sprite_metasprites
 };
 
 void init_enemies(void) {
@@ -48,6 +54,7 @@ void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t hp, uint8_t move_patt
 	    ENEMY_POOL[i].shoot_activepattern = 0;
 	    ENEMY_POOL[i].move_framecounter = move_patterns[move_pattern][0][0];
 	    ENEMY_POOL[i].shoot_framecounter = shoot_patterns[shoot_pattern][0][0];
+	    ENEMY_POOL[i].frame_timer = 0;
 	    ENEMY_POOL[i].hp = hp;
 	    ENEMY_POOL[i].ishit = 0;
 	    ACTIVE_ENEMY_POOL[active_enemy_index++] = i;
@@ -205,12 +212,14 @@ inline void  check_enemy_bounds(uint8_t i){
 inline void  draw_enemy(uint8_t i){
     uint8_t type = ENEMY_POOL[i].type;
     uint8_t oam_prop = OAMF_PAL0;
+    uint8_t frame = (ENEMY_POOL[i].frame_timer & SPRITE_FRAME_DURATION) >> SPRITE_FRAME_DURATION_LOG2; 
+    ENEMY_POOL[i].frame_timer++;
     if (ENEMY_POOL[i].ishit){
 	ENEMY_POOL[i].ishit--;
 	oam_prop = OAMF_PAL1;
     }
     // Mise à jour du sprite de l'ennemi
-    oam+= move_metasprite_ex(enemy_metasprites[type][0],
+    oam+= move_metasprite_ex(enemy_metasprites[type][frame],
 			     enemy_tile_offsets[type],oam_prop ,oam,
 			     ENEMY_POOL[i].body.x,
 			     ENEMY_POOL[i].body.y);

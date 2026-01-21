@@ -26,7 +26,7 @@ shield_sprite.c: $(PNG_DIR)/shield_sprite.png
 powerup_sprite.c: $(PNG_DIR)/powerup_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
-enemy_1_sprite.c: $(PNG_DIR)/enemy_1_sprite.png
+enemy_%_sprite.c: $(PNG_DIR)/enemy_%_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
 explosion_sprite.c: $(PNG_DIR)/explosion_sprite.png

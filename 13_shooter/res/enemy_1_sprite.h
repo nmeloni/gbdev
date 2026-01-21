@@ -11,7 +11,7 @@
 #define enemy_1_sprite_TILE_H 16
 #define enemy_1_sprite_WIDTH 16
 #define enemy_1_sprite_HEIGHT 16
-#define enemy_1_sprite_TILE_COUNT 4
+#define enemy_1_sprite_TILE_COUNT 8
 #define enemy_1_sprite_PALETTE_COUNT 1
 #define enemy_1_sprite_COLORS_PER_PALETTE 4
 #define enemy_1_sprite_TOTAL_COLORS 4
@@ -19,11 +19,11 @@
 #define enemy_1_sprite_PIVOT_Y 8
 #define enemy_1_sprite_PIVOT_W 16
 #define enemy_1_sprite_PIVOT_H 16
-extern const metasprite_t* const enemy_1_sprite_metasprites[1];
+extern const metasprite_t* const enemy_1_sprite_metasprites[2];
 
 BANKREF_EXTERN(enemy_1_sprite)
 
 extern const palette_color_t enemy_1_sprite_palettes[4];
-extern const uint8_t enemy_1_sprite_tiles[64];
+extern const uint8_t enemy_1_sprite_tiles[128];
 
 #endif

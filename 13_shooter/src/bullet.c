@@ -8,9 +8,10 @@ bullet_t BULLETS_POOL[MAX_BULLETS];
 uint8_t ACTIVE_BULLETS[MAX_BULLETS];
 uint8_t active_bullet_index = 0;
 
-const uint8_t bullet_bbox[2][2] = {
+const uint8_t bullet_bbox[][2] = {
     {3, 3},   // BULLET_TYPE_SMALL
-    {5, 5}     // BULLET_TYPE_LARGE
+    {5, 5},     // BULLET_TYPE_LARGE
+    {6, 8}
 };
 
 void init_bullets(void) {
@@ -93,9 +94,14 @@ inline void draw_bullet(uint8_t i) {
     case BULLET_TYPE_SMALL:
 	set_sprite_tile(oam, BULLET_TYPE_SMALL_SPRITE);
 	break;
-    default:
+    case BULLET_TYPE_LARGE:
 	set_sprite_tile(oam, BULLET_TYPE_LARGE_SPRITE);
 	break;
+    case BULLET_TYPE_LASER:
+	set_sprite_tile(oam, BULLET_TYPE_LASER_SPRITE);
+	break;
+    default:
+	set_sprite_tile(oam, BULLET_TYPE_SMALL_SPRITE);
     }
     move_sprite(oam,
 		BULLETS_POOL[i].body.x + BULLET_SPRITE_X_OFFSET,

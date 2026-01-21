@@ -11,7 +11,7 @@
 #define bullet_sprite_TILE_H 16
 #define bullet_sprite_WIDTH 8
 #define bullet_sprite_HEIGHT 16
-#define bullet_sprite_TILE_COUNT 4
+#define bullet_sprite_TILE_COUNT 6
 #define bullet_sprite_PALETTE_COUNT 1
 #define bullet_sprite_COLORS_PER_PALETTE 4
 #define bullet_sprite_TOTAL_COLORS 4
@@ -19,6 +19,6 @@
 BANKREF_EXTERN(bullet_sprite)
 
 extern const palette_color_t bullet_sprite_palettes[4];
-extern const uint8_t bullet_sprite_tiles[64];
+extern const uint8_t bullet_sprite_tiles[96];
 
 #endif
