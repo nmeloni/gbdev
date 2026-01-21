@@ -1,6 +1,5 @@
 #include "bullet.h"
 
-inline void update_bullet_position(uint8_t i);
 inline void check_bullet_bounds(uint8_t i);
 inline void draw_bullet(uint8_t i);
 inline void kill_active_bullet(uint8_t j);
@@ -25,12 +24,10 @@ void fire_bullet(uint8_t type, uint8_t x, uint8_t y, int8_t dx, int8_t dy) {
 	if (!BULLETS_POOL[i].active) {
 	    BULLETS_POOL[i].active = 1;
 	    BULLETS_POOL[i].type = type;
-	    BULLETS_POOL[i].x = x;
-	    BULLETS_POOL[i].y = y;
-	    BULLETS_POOL[i].dx = dx;
-	    BULLETS_POOL[i].dy = dy;
-	    BULLETS_POOL[i].fx = 0;
-	    BULLETS_POOL[i].fy = 0;
+	    BULLETS_POOL[i].body.x = x;
+	    BULLETS_POOL[i].body.y = y;
+	    BULLETS_POOL[i].body.dx = dx;
+	    BULLETS_POOL[i].body.dy = dy;
 	    ACTIVE_BULLETS[active_bullet_index++] = i;
 	    break; // Tiré un seul tir à la fois
 	}
@@ -44,7 +41,7 @@ void update_bullets(void) {
 	// Gestion des tirs tous les deux frames pour alléger le CPU
 	if ( (frame_counter - j) & 1 ) continue;
 	// Mettre à jour la position du tir
-	update_bullet_position(i);
+	update_body_position(&BULLETS_POOL[i].body);
 	
 	// Verification des collisions et des limites toutes les 4 frames
 	// pour alléger le CPU
@@ -55,9 +52,9 @@ void update_bullets(void) {
 	    check_bullet_bounds(i);
 	    // Vérification de collision avec le joueur
 	    uint8_t type = BULLETS_POOL[i].type;
-	    if (check_collision_box(BULLETS_POOL[i].x, BULLETS_POOL[i].y,
+	    if (check_collision_box(BULLETS_POOL[i].body.x, BULLETS_POOL[i].body.y,
 				    bullet_bbox[type][0], bullet_bbox[type][1],
-				    PLAYER.x, PLAYER.y, 0, 0) ) {
+				    PLAYER.body.x, PLAYER.body.y, 0, 0) ) {
 		// Collision détectée avec le joueur
 		if (PLAYER.shield) {
 		    PLAYER.shield = 0;
@@ -80,24 +77,12 @@ void update_bullets(void) {
     }
 }
 
-inline void update_bullet_position(uint8_t i) {
-    // Mise à jour des parties fractionnaires pour un mouvement plus fluide
-    BULLETS_POOL[i].fx += BULLETS_POOL[i].dx;
-    BULLETS_POOL[i].fy += BULLETS_POOL[i].dy;
-	
-    BULLETS_POOL[i].x += BULLETS_POOL[i].fx >> 4;
-    BULLETS_POOL[i].y += BULLETS_POOL[i].fy >> 4;
-
-    BULLETS_POOL[i].fx &= 0x0F;
-    BULLETS_POOL[i].fy &= 0x0F;
-}
-
 inline void check_bullet_bounds(uint8_t i) {
     // Désactiver le tir s'il sort de l'écran
-    if (BULLETS_POOL[i].x < GAMESCREEN_X_ORIGIN ||
-	BULLETS_POOL[i].x > GAMESCREEN_X_END ||
-	BULLETS_POOL[i].y < GAMESCREEN_Y_ORIGIN ||
-	BULLETS_POOL[i].y > GAMESCREEN_Y_END) {
+    if (BULLETS_POOL[i].body.x < GAMESCREEN_X_ORIGIN ||
+	BULLETS_POOL[i].body.x > GAMESCREEN_X_END ||
+	BULLETS_POOL[i].body.y < GAMESCREEN_Y_ORIGIN ||
+	BULLETS_POOL[i].body.y > GAMESCREEN_Y_END) {
 	BULLETS_POOL[i].active = 0;
     }
 }
@@ -113,8 +98,8 @@ inline void draw_bullet(uint8_t i) {
 	break;
     }
     move_sprite(oam,
-		BULLETS_POOL[i].x + BULLET_SPRITE_X_OFFSET,
-		BULLETS_POOL[i].y + BULLET_SPRITE_Y_OFFSET);
+		BULLETS_POOL[i].body.x + BULLET_SPRITE_X_OFFSET,
+		BULLETS_POOL[i].body.y + BULLET_SPRITE_Y_OFFSET);
     oam++;
 }
 
