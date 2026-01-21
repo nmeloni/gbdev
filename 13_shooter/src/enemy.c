@@ -193,12 +193,13 @@ inline void  check_collision_with_player(uint8_t i){
 
 inline void  check_enemy_bounds(uint8_t i){
     // Désactiver l'ennemi s'il sort de l'écran
-    if (ENEMY_POOL[i].body.x < GAMESCREEN_X_ORIGIN ||
-	ENEMY_POOL[i].body.x > GAMESCREEN_X_END ||
-	ENEMY_POOL[i].body.y < GAMESCREEN_Y_ORIGIN ||
-	ENEMY_POOL[i].body.y > GAMESCREEN_Y_END) {
-	ENEMY_POOL[i].active = 0;
-    }
+    ENEMY_POOL[i].active = is_inside_bounds(ENEMY_POOL[i].body.x,
+					 GAMESCREEN_X_ORIGIN,
+					 GAMESCREEN_X_END) &
+			    is_inside_bounds(ENEMY_POOL[i].body.y,
+					     GAMESCREEN_Y_ORIGIN,
+					     GAMESCREEN_Y_END);
+    
 }
 
 inline void  draw_enemy(uint8_t i){

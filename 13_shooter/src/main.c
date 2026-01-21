@@ -36,6 +36,9 @@ void main(void){
 	if (KEY_RELEASED(J_START)){
 	    add_enemy(80, 20, ENEMY_TYPE_1, 3, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_AIMED);
 	}
+	if (KEY_RELEASED(J_SELECT)){
+	    spawn_powerup(POWERUP_TYPE_POWER_UP, 80, 20);
+	}
 	// Mise à jour du jeu
 	game_update();
 	

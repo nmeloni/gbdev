@@ -79,10 +79,10 @@ void update_bullets(void) {
 
 inline void check_bullet_bounds(uint8_t i) {
     // Désactiver le tir s'il sort de l'écran
-    if (BULLETS_POOL[i].body.x < GAMESCREEN_X_ORIGIN ||
-	BULLETS_POOL[i].body.x > GAMESCREEN_X_END ||
-	BULLETS_POOL[i].body.y < GAMESCREEN_Y_ORIGIN ||
-	BULLETS_POOL[i].body.y > GAMESCREEN_Y_END) {
+    if (is_outside_bounds(BULLETS_POOL[i].body.x,
+			  GAMESCREEN_X_ORIGIN, GAMESCREEN_X_END) ||
+	is_outside_bounds(BULLETS_POOL[i].body.y,
+			  GAMESCREEN_Y_ORIGIN, GAMESCREEN_Y_END)){
 	BULLETS_POOL[i].active = 0;
     }
 }

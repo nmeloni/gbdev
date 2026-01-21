@@ -25,7 +25,17 @@ inline void update_body_position(body_t* body) {
 
 inline uint8_t clamp(uint8_t value, uint8_t min, uint8_t max) {
     // Clamp arithmétique pour uint8_t sans conditionnelles
-    value = value  + ((min - value) & ((value-min) >> 7));
-    value = value  - ((value - max) & ((max-value) >> 7));
+    value = value  + ((min - value) & (min > value));
+    value = value  - ((value - max) & (max < value));
     return value;
+}
+
+inline uint8_t is_inside_bounds(uint8_t value, uint8_t min, uint8_t max) {
+	// Retourne 1 si value est dans les limites [min, max], sinon 0
+	return (value >= min) & (value <= max);
+}
+
+inline uint8_t is_outside_bounds(uint8_t value, uint8_t min, uint8_t max) {
+	// Retourne 1 si value est en dehors des limites [min, max], sinon 0
+	return (value < min) | (value > max);
 }

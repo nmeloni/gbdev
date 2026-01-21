@@ -67,12 +67,13 @@ void update_shots(void) {
 
 inline void check_shot_bounds(uint8_t i) {
     // Limitation aux bords de l'écran de jeu
-    if (SHOTS_POOL[i].body.x < GAMESCREEN_X_ORIGIN ||
-	SHOTS_POOL[i].body.x > GAMESCREEN_X_END ||
-	SHOTS_POOL[i].body.y < GAMESCREEN_Y_ORIGIN ||
-	SHOTS_POOL[i].body.y > GAMESCREEN_Y_END) {
-	SHOTS_POOL[i].active = 0;
-    }    	
+    SHOTS_POOL[i].active = is_inside_bounds(SHOTS_POOL[i].body.y,
+					      GAMESCREEN_Y_ORIGIN,
+					      GAMESCREEN_Y_END) &
+			   is_inside_bounds(SHOTS_POOL[i].body.x,
+					    GAMESCREEN_X_ORIGIN,
+					    GAMESCREEN_X_END);
+    	
 }
 
 inline void draw_shot(uint8_t i) {

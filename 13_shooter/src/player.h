@@ -22,12 +22,12 @@
 
 #define PLAYER_SHOOT_COOLDOWN_FRAMES 12
 #define PLAYER_BOOST_DURATION_FRAMES 48
-#define PLAYER_INVINCIBILITY_FRAMES  191
+#define PLAYER_INVINCIBILITY_FRAMES  191u
 
-#define PLAYER_MIN_X            ((uint8_t) (GAMESCREEN_X_ORIGIN+8))
-#define PLAYER_MAX_X            ((uint8_t) (GAMESCREEN_X_END-8))
-#define PLAYER_MIN_Y            ((uint8_t) (GAMESCREEN_Y_ORIGIN+8))
-#define PLAYER_MAX_Y            ((uint8_t) (GAMESCREEN_Y_END-8))
+#define PLAYER_MIN_X            ((uint8_t) (GAMESCREEN_X_ORIGIN+8u))
+#define PLAYER_MAX_X            ((uint8_t) (GAMESCREEN_X_END-8u))
+#define PLAYER_MIN_Y            ((uint8_t) (GAMESCREEN_Y_ORIGIN+8u))
+#define PLAYER_MAX_Y            ((uint8_t) (GAMESCREEN_Y_END-8u))
 
 #define PLAYER_SPEED            12
 #define BOOST_SPEED             24

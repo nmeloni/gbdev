@@ -44,5 +44,5 @@ const int8_t move_pattern_zigzag[16][3] = {
 
 // Pattern 0: shoot straight down
 const int8_t shoot_pattern_aimed[1][4] = {
-    {60, BULLET_TYPE_SMALL | AIMED_SHOT, 0, 32},
+    {60, BULLET_TYPE_SMALL , 0, 32},
 };

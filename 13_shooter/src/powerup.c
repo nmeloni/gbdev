@@ -88,14 +88,13 @@ inline void check_powerup_collision(void){
 	
 	
 inline void check_powerup_bounds(void){
-
-    // Vérification des limites de l'écran
-    if (POWERUP.body.x < GAMESCREEN_X_ORIGIN ||
-	POWERUP.body.x > GAMESCREEN_X_END ||
-	POWERUP.body.y < GAMESCREEN_Y_ORIGIN ||
-	POWERUP.body.y > GAMESCREEN_Y_END) {
-	POWERUP.active = 0;
-    }
+    POWERUP.active =
+	is_inside_bounds(POWERUP.body.y,
+				      GAMESCREEN_Y_ORIGIN,
+				      GAMESCREEN_Y_END) &
+	is_inside_bounds(POWERUP.body.x,
+			 GAMESCREEN_X_ORIGIN,
+			 GAMESCREEN_X_END);
 }
 
 inline void draw_powerup(void){

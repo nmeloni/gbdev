@@ -94,10 +94,7 @@ inline void update_player_input(void) {
 	}
 
     }
-
-    if (KEY_PRESSED(J_SELECT)){
-	kill_player();
-    }
+    
     
     // Gestion du tir
     if (PLAYER.shoot_cooldown) {
