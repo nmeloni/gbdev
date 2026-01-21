@@ -1,6 +1,6 @@
 #include "body.h"
 
-void init_body(body_t* body, uint8_t x, uint8_t y) {
+inline void init_body(body_t* body, uint8_t x, uint8_t y) {
 	body->x = x;
 	body->y = y;
 	body->dx = 0;
@@ -9,7 +9,7 @@ void init_body(body_t* body, uint8_t x, uint8_t y) {
 	body->fy = 0;
 }
 
-void update_body(body_t* body) {
+inline void update_body_position(body_t* body) {
 	// Mise à jour des parties fractionnaires
 	body->fx += body->dx;
 	body->fy += body->dy;

@@ -1,7 +1,6 @@
 #include "player.h"
 
 inline void update_player_input(void);
-inline void update_player_position(void);
 inline void check_player_bounds(void);
 inline void draw_player(void);
 
@@ -26,12 +25,7 @@ const uint16_t boost_speed_table_normalized[24] = {
 
 player_t PLAYER;
 void init_player(void) {
-    PLAYER.x =  0;
-    PLAYER.y =  0;
-    PLAYER.dx = 0;
-    PLAYER.dy = 0;
-    PLAYER.fx = 0;
-    PLAYER.fy = 0;
+    init_body(&PLAYER.body, 0, 0);
     PLAYER.shoot_cooldown = 0;
     PLAYER.shoot_power = 0;
     PLAYER.invincibility_timer = 0;
@@ -44,7 +38,7 @@ void init_player(void) {
 void update_player(void){
     // gestion du joueur décomposée en plusieurs fonctions inline pour plus de clarté    
     update_player_input();
-    update_player_position();
+    update_body_position(&PLAYER.body);
     check_player_bounds();
     draw_player();     
 }
@@ -59,27 +53,27 @@ inline void update_player_input(void) {
     // Si le boost est actif, on ignore les input
     if (PLAYER.boost) {
 	PLAYER.boost--;
-	if (PLAYER.dx && PLAYER.dy) {
+	if (PLAYER.body.dx && PLAYER.body.dy) {
 	    // Mouvement diagonal, on normalise la vitesse
 	    speed = boost_speed_table_normalized[ (PLAYER.boost & 62)>>1];
 	} else {
 	    speed = boost_speed_table[ (PLAYER.boost & 62)>>1];
 	}
-	if (PLAYER.dx > 0){
-	    PLAYER.dx = speed;
-	} else if (PLAYER.dx < 0){
-	    PLAYER.dx = -speed;
+	if (PLAYER.body.dx > 0){
+	    PLAYER.body.dx = speed;
+	} else if (PLAYER.body.dx < 0){
+	    PLAYER.body.dx = -speed;
 	}
 	
-	if (PLAYER.dy > 0){
-	    PLAYER.dy = speed;
-	} else if (PLAYER.dy < 0){
-	    PLAYER.dy = -speed;
+	if (PLAYER.body.dy > 0){
+	    PLAYER.body.dy = speed;
+	} else if (PLAYER.body.dy < 0){
+	    PLAYER.body.dy = -speed;
 	}
     } else {
 	// Mouvement normal
-	PLAYER.dx = 0;
-	PLAYER.dy = 0;
+	PLAYER.body.dx = 0;
+	PLAYER.body.dy = 0;
 
 	if (KEY_RELEASED(J_A)){
 	    PLAYER.boost = PLAYER_BOOST_DURATION_FRAMES;
@@ -87,16 +81,16 @@ inline void update_player_input(void) {
 	}
 	
 	if (KEY_PRESSED(J_LEFT)){
-	    PLAYER.dx = -speed;
+	    PLAYER.body.dx = -speed;
 	}
 	if (KEY_PRESSED(J_RIGHT)){
-	    PLAYER.dx = speed;
+	    PLAYER.body.dx = speed;
 	}
 	if (KEY_PRESSED(J_UP)){
-	    PLAYER.dy = -speed;
+	    PLAYER.body.dy = -speed;
 	}
 	if (KEY_PRESSED(J_DOWN)){
-	    PLAYER.dy = speed;
+	    PLAYER.body.dy = speed;
 	}
 
     }
@@ -109,19 +103,19 @@ inline void update_player_input(void) {
     if (PLAYER.shoot_cooldown) {
 	PLAYER.shoot_cooldown--;
     } else if (KEY_PRESSED(J_B)) {
-	fire_shot(PLAYER.x, PLAYER.y-8, 0, -SHOT_SPEED);
+	fire_shot(PLAYER.body.x, PLAYER.body.y-8, 0, -SHOT_SPEED);
 	PLAYER.shoot_cooldown = PLAYER_SHOOT_COOLDOWN_FRAMES;
     }
     
 }
 
 void reset_player(uint8_t x, uint8_t y) {
-	PLAYER.x = x;
-	PLAYER.y = y;
-	PLAYER.dx = 0;
-	PLAYER.dy = 0;
-	PLAYER.fx = 0;
-	PLAYER.fy = 0;
+	PLAYER.body.x = x;
+	PLAYER.body.y = y;
+	PLAYER.body.dx = 0;
+	PLAYER.body.dy = 0;
+	PLAYER.body.fx = 0;
+	PLAYER.body.fy = 0;
 	PLAYER.shoot_cooldown = 0;
 	PLAYER.shoot_power = 0;
 	PLAYER.invincibility_timer = 0;
@@ -129,45 +123,33 @@ void reset_player(uint8_t x, uint8_t y) {
 }
 
 void kill_player(void) {
-    add_explosion(PLAYER.x, PLAYER.y);
+    add_explosion(PLAYER.body.x, PLAYER.body.y);
     reset_player(PLAYER_MIN_X + (PLAYER_MAX_X - PLAYER_MIN_X)/2, PLAYER_MAX_Y - 16);
     PLAYER.invincibility_timer = PLAYER_INVINCIBILITY_FRAMES;
     PLAYER.lives--;
 }
 
 
-inline void update_player_position(void) {
-     // Mise à jour des parties fractionnaires pour un mouvement plus fluide
-    PLAYER.fx += PLAYER.dx;
-    PLAYER.fy += PLAYER.dy;
-    
-    PLAYER.x += PLAYER.fx >> 4;
-    PLAYER.y += PLAYER.fy >> 4;
-
-    PLAYER.fx &= 0x0F;
-    PLAYER.fy &= 0x0F;
-}
-
 inline void check_player_bounds(void) {
     // Limitation aux bords de l'écran de jeu
-    if (PLAYER.x < PLAYER_MIN_X) {
-	PLAYER.x = PLAYER_MIN_X;
-	PLAYER.fx = 0;
+    if (PLAYER.body.x < PLAYER_MIN_X) {
+	PLAYER.body.x = PLAYER_MIN_X;
+	PLAYER.body.fx = 0;
 
     }
-    if (PLAYER.x > PLAYER_MAX_X) {
-	PLAYER.x = PLAYER_MAX_X;
-	PLAYER.fx = 0;
+    if (PLAYER.body.x > PLAYER_MAX_X) {
+	PLAYER.body.x = PLAYER_MAX_X;
+	PLAYER.body.fx = 0;
 
     }
-    if (PLAYER.y < PLAYER_MIN_Y) {
-	PLAYER.y = PLAYER_MIN_Y;
-	PLAYER.fy = 0;
+    if (PLAYER.body.y < PLAYER_MIN_Y) {
+	PLAYER.body.y = PLAYER_MIN_Y;
+	PLAYER.body.fy = 0;
 	
     }
-    if (PLAYER.y > PLAYER_MAX_Y) {
-	PLAYER.y = PLAYER_MAX_Y;
-	PLAYER.fy = 0;
+    if (PLAYER.body.y > PLAYER_MAX_Y) {
+	PLAYER.body.y = PLAYER_MAX_Y;
+	PLAYER.body.fy = 0;
     }    	
 }
 
@@ -177,18 +159,18 @@ inline void draw_player(void) {
 
     uint8_t frame = PLAYER_ANIMATION_FRAME_TOP;
     if (PLAYER.boost){
-	if (PLAYER.dx < 0) {
+	if (PLAYER.body.dx < 0) {
 	    frame = PLAYER_ANIMATION_FRAME_LEFT;
-	} else if (PLAYER.dx > 0) {
+	} else if (PLAYER.body.dx > 0) {
 	    frame = PLAYER_ANIMATION_FRAME_RIGHT;
 	}
     }
     oam+=move_metasprite_ex(PLAYER.metasprites[frame],
 			    PLAYER_TILE_OFFSET,0,oam,
-			    PLAYER.x, PLAYER.y);
+			    PLAYER.body.x, PLAYER.body.y);
     if (PLAYER.shield && (frame_counter & 1)) {
 	oam+=move_metasprite_ex(shield_sprite_metasprites[0],
 				SHIELD_TILE_OFFSET,0,oam,
-				PLAYER.x, PLAYER.y);
+				PLAYER.body.x, PLAYER.body.y);
     }
 }

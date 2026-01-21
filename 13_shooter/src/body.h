@@ -10,7 +10,7 @@ typedef struct {
     int8_t fx, fy;
 } body_t;
 
-void init_body(body_t* body, uint8_t x, uint8_t y);
-void update_body(body_t* body);
+inline void init_body(body_t* body, uint8_t x, uint8_t y);
+inline void update_body_position(body_t* body);
 
 #endif // BODY_H

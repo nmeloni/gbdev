@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <gbdk/metasprites.h>
 
+#include "body.h"
 #include "game.h"
 #include "input.h"
 #include "shot.h"
@@ -32,9 +33,7 @@
 #define BOOST_SPEED             24
 
 typedef struct {
-    uint8_t x, y;
-    int8_t dx, dy;
-    int8_t fx, fy;
+    body_t body;
     uint8_t shoot_cooldown;
     uint8_t shoot_power;
     uint8_t shield;
