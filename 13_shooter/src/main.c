@@ -34,7 +34,7 @@ void main(void){
 	// On attend la prochaine frame
 	vsync();
 	if (KEY_RELEASED(J_START)){
-	    spawn_powerup(POWERUP_TYPE_POWER_UP, 80, 20);
+	    add_enemy(80, 20, ENEMY_TYPE_1, 3, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_AIMED);
 	}
 	// Mise à jour du jeu
 	game_update();

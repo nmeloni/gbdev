@@ -22,3 +22,10 @@ inline void update_body_position(body_t* body) {
 	body->fx &= 0x0F;
 	body->fy &= 0x0F;
 }
+
+inline uint8_t clamp(uint8_t value, uint8_t min, uint8_t max) {
+    // Clamp arithmétique pour uint8_t sans conditionnelles
+    value = value  + ((min - value) & ((value-min) >> 7));
+    value = value  - ((value - max) & ((max-value) >> 7));
+    return value;
+}

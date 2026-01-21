@@ -132,25 +132,8 @@ void kill_player(void) {
 
 inline void check_player_bounds(void) {
     // Limitation aux bords de l'écran de jeu
-    if (PLAYER.body.x < PLAYER_MIN_X) {
-	PLAYER.body.x = PLAYER_MIN_X;
-	PLAYER.body.fx = 0;
-
-    }
-    if (PLAYER.body.x > PLAYER_MAX_X) {
-	PLAYER.body.x = PLAYER_MAX_X;
-	PLAYER.body.fx = 0;
-
-    }
-    if (PLAYER.body.y < PLAYER_MIN_Y) {
-	PLAYER.body.y = PLAYER_MIN_Y;
-	PLAYER.body.fy = 0;
-	
-    }
-    if (PLAYER.body.y > PLAYER_MAX_Y) {
-	PLAYER.body.y = PLAYER_MAX_Y;
-	PLAYER.body.fy = 0;
-    }    	
+    PLAYER.body.x = clamp(PLAYER.body.x, PLAYER_MIN_X, PLAYER_MAX_X);
+    PLAYER.body.y = clamp(PLAYER.body.y, PLAYER_MIN_Y, PLAYER_MAX_Y);
 }
 
 inline void draw_player(void) {
