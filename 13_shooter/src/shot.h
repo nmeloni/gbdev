@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <gbdk/metasprites.h>
 
+#include "body.h"
 #include "game.h"
 #include "player.h"
 #include "shot_sprite.h"
@@ -16,9 +17,7 @@
 
 typedef struct {
     uint8_t active;
-    uint8_t x, y;
-    int8_t dx, dy;
-    int8_t fx, fy;
+    body_t body;
 } shot_t;
 
 extern shot_t SHOTS_POOL[MAX_SHOTS];

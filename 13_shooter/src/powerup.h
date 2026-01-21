@@ -4,6 +4,8 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <gbdk/metasprites.h>
+
+#include "body.h"
 #include "game.h"
 #include "player.h"
 #include "utils.h"
@@ -23,9 +25,7 @@
 
 typedef struct {
     uint8_t active;
-    uint8_t x, y;
-    int8_t dx, dy;
-    int8_t fx, fy;
+    body_t body;
     uint8_t move_pattern;
     uint8_t move_activepattern;
     uint8_t move_framecounter;

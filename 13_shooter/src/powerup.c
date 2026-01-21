@@ -1,7 +1,6 @@
 #include "powerup.h"
 
 inline void handle_move_pattern_powerup(void);
-inline void update_powerup_position(void);
 inline void check_powerup_bounds(void);
 inline void check_powerup_collision(void);
 inline void draw_powerup(void);
@@ -18,12 +17,7 @@ void init_powerup(void) {
 void spawn_powerup(uint8_t type, uint8_t x, uint8_t y) {
 	POWERUP.active = 1;
 	POWERUP.type = type;
-	POWERUP.x = x;
-	POWERUP.y = y;
-	POWERUP.dx = 0;
-	POWERUP.dy = 0; // Vitesse de descente
-	POWERUP.fx = 0;
-	POWERUP.fy = 0;
+	init_body(&POWERUP.body, x, y);
 	POWERUP.move_pattern = MOVE_PATTERN_ZIGZAG;
 	POWERUP.move_activepattern = 0;
 	POWERUP.move_framecounter = move_patterns[POWERUP.move_pattern][0][0];
@@ -36,7 +30,7 @@ void update_powerup(void) {
 	handle_move_pattern_powerup();
 
 	// Mouvement du powerup
-	update_powerup_position();
+	update_body_position(&POWERUP.body);
 
 	//Vérification des limites de l'écran
 	check_powerup_bounds();
@@ -61,29 +55,18 @@ inline void handle_move_pattern_powerup(void){
 	//On applique le step
 	step = POWERUP.move_activepattern;
 	POWERUP.move_framecounter = move_patterns[current_move_pattern][step][0];
-	POWERUP.dx = move_patterns[current_move_pattern][step][1];
-	POWERUP.dy = move_patterns[current_move_pattern][step][2];
+	POWERUP.body.dx = move_patterns[current_move_pattern][step][1];
+	POWERUP.body.dy = move_patterns[current_move_pattern][step][2];
     }
     POWERUP.move_framecounter--;
 }
 
-inline void update_powerup_position(void){
-	// Mise à jour des parties fractionnaires pour un mouvement plus fluide
-	POWERUP.fx += POWERUP.dx;
-	POWERUP.fy += POWERUP.dy;
-	
-	POWERUP.x += POWERUP.fx >> 4;
-	POWERUP.y += POWERUP.fy >> 4;
-
-	POWERUP.fx &= 0x0F;
-	POWERUP.fy &= 0x0F;
-}
 
 inline void check_powerup_collision(void){
     // Vérification de collision avec le joueur
 
-    if (check_collision_box(POWERUP.x, POWERUP.y, power_up_bbox[0], power_up_bbox[1],
-			    PLAYER.x, PLAYER.y, 0, 0) ) {
+    if (check_collision_box(POWERUP.body.x, POWERUP.body.y, power_up_bbox[0], power_up_bbox[1],
+			    PLAYER.body.x, PLAYER.body.y, 0, 0) ) {
 	// Collision détectée avec le joueur
 	switch (POWERUP.type) {
 	case POWERUP_TYPE_POWER_UP:
@@ -107,10 +90,10 @@ inline void check_powerup_collision(void){
 inline void check_powerup_bounds(void){
 
     // Vérification des limites de l'écran
-    if (POWERUP.x < GAMESCREEN_X_ORIGIN ||
-	POWERUP.x > GAMESCREEN_X_END ||
-	POWERUP.y < GAMESCREEN_Y_ORIGIN ||
-	POWERUP.y > GAMESCREEN_Y_END) {
+    if (POWERUP.body.x < GAMESCREEN_X_ORIGIN ||
+	POWERUP.body.x > GAMESCREEN_X_END ||
+	POWERUP.body.y < GAMESCREEN_Y_ORIGIN ||
+	POWERUP.body.y > GAMESCREEN_Y_END) {
 	POWERUP.active = 0;
     }
 }
@@ -134,6 +117,6 @@ inline void draw_powerup(void){
     }
     oam+= move_metasprite_ex(powerup_sprite_metasprites[POWERUP.type],
 			     POWERUP_TILE_OFFSET, 0 ,oam,
-			     POWERUP.x,
-			     POWERUP.y);
+			     POWERUP.body.x,
+			     POWERUP.body.y);
 }
