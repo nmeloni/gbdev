@@ -29,7 +29,9 @@ void game_update(void) {
 	update_explosions();
 	update_player();
 	scroll_background();
-	
+
+	// Mise à jour du niveau
+	update_level();
 	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
 	break;
     case GAME_STATE_PAUSE:

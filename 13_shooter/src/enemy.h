@@ -16,6 +16,10 @@
 
 #include "enemy_1_sprite.h"
 
+#define ENEMY_GAMESCREEN_X_ORIGIN  (GAMESCREEN_X_ORIGIN-4u)
+#define ENEMY_GAMESCREEN_Y_ORIGIN  (GAMESCREEN_Y_ORIGIN-8u)
+#define ENEMY_GAMESCREEN_X_END     (GAMESCREEN_X_END+4u)
+#define ENEMY_GAMESCREEN_Y_END     (GAMESCREEN_Y_END+8u)
 
 #define HIT_FLASH_DURATION      6
 #define ENEMY_TILE_OFFSET    0x40
@@ -27,6 +31,11 @@
 #define SPRITE_FRAME_DURATION_LOG2 3
 
 #define MAX_ENEMIES          8
+
+#define ENEMY_HP_3          3
+#define ENEMY_HP_5          5
+#define ENEMY_HP_8          8
+#define ENEMY_HP_10         10
 
 
 enum enemy_type {

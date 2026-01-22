@@ -15,7 +15,9 @@
 
 enum patterns_enum {
     MOVE_PATTERN_STRAIGHT = 0,
-    MOVE_PATTERN_ZIGZAG = 1
+    MOVE_PATTERN_ZIGZAG = 1,
+    MOVE_PATTERN_LATERAL = 2,
+    MOVE_PATTERN_SQUARE = 3
 };
 
 enum shoot_patterns_enum {
@@ -23,7 +25,8 @@ enum shoot_patterns_enum {
     SHOOT_PATTERN_AIMED = 1,
     SHOOT_PATTERN_CIRCULAR = 2,
     SHOOT_PATTERN_SEMI_CIRCULAR_LEFT = 3,
-    SHOOT_PATTERN_SEMI_CIRCULAR_RIGHT = 4
+    SHOOT_PATTERN_SEMI_CIRCULAR_RIGHT = 4,
+    SHOOT_PATTERN_NONE = 255
 };
 
 extern const uint8_t move_pattern_lengths[];

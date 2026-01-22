@@ -24,16 +24,16 @@ Prototype jouable – Construction du premier niveau
 
 - [x] Système d’ennemis générique
 - [x] 1 type d’ennemi fonctionnel
-- [ ] 2–3 variations d’ennemis
-- [ ] Patterns de déplacement
-- [ ] Patterns de tirs
-- [ ] Comportements combinés (move + shoot décalés)
+- [x] 2–3 variations d’ennemis
+- [x] Patterns de déplacement
+- [x] Patterns de tirs
+- [x] Comportements combinés (move + shoot décalés)
 - [ ] Mini-boss
 - [ ] Boss de fin de niveau
 
 ---
-q
-s## 💥 Collisions & règles
+
+## 💥 Collisions & règles
 
 - [x] Collision joueur ↔ ennemis
 - [x] Collision joueur ↔ bullets ennemies
@@ -48,9 +48,9 @@ s## 💥 Collisions & règles
 
 ## 🗺️ Niveau & progression
 
-- [ ] Script de niveau (timeline frame-based)
-- [ ] Vagues d’ennemis
-- [ ] Temps morts / respirations
+- [x] Script de niveau (timeline frame-based)
+- [x] Vagues d’ennemis
+- [x] Temps morts / respirations
 - [ ] Fin de niveau claire
 - [ ] Transition vers écran de score
 
@@ -59,10 +59,10 @@ s## 💥 Collisions & règles
 ## 🎨 Graphismes
 
 - [x] Sprites définitifs joueur
-- [ ] Sprites ennemis cohérents
-- [ ] Animations simples (2–3 frames)
+- [x] Sprites ennemis cohérents
+- [x] Animations simples (2–3 frames)
 - [x] Effets visuels (explosions, flash)
-- [ ] Lisibilité écran (contraste, tailles)
+- [x] Lisibilité écran (contraste, tailles)
 - [x] Background défilant
 
 ---

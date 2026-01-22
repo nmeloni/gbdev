@@ -31,7 +31,7 @@ void update_powerup(void) {
 
 	// Mouvement du powerup
 	update_body_position(&POWERUP.body);
-
+	
 	//Vérification des limites de l'écran
 	check_powerup_bounds();
 
@@ -69,7 +69,7 @@ inline void check_powerup_collision(void){
 			    PLAYER.body.x, PLAYER.body.y, 0, 0) ) {
 	// Collision détectée avec le joueur
 	switch (POWERUP.type) {
-	case POWERUP_TYPE_POWER_UP:
+	case POWERUP_TYPE_SHOT:
 	    if (PLAYER.shoot_power < 2) {
 		PLAYER.shoot_power++;
 	    }
@@ -90,18 +90,18 @@ inline void check_powerup_collision(void){
 inline void check_powerup_bounds(void){
     POWERUP.active =
 	is_inside_bounds(POWERUP.body.y,
-				      GAMESCREEN_Y_ORIGIN,
-				      GAMESCREEN_Y_END) &
+			 POWERUP_GAMESCREEN_Y_ORIGIN,
+			 POWERUP_GAMESCREEN_Y_END) &
 	is_inside_bounds(POWERUP.body.x,
-			 GAMESCREEN_X_ORIGIN,
-			 GAMESCREEN_X_END);
+			 POWERUP_GAMESCREEN_X_ORIGIN,
+			 POWERUP_GAMESCREEN_X_END);
 }
 
 inline void draw_powerup(void){
     // Mise à jour du sprite du powerup
     uint8_t tile_offset;
     switch (POWERUP.type) {
-    case POWERUP_TYPE_POWER_UP:
+    case POWERUP_TYPE_SHOT:
 	tile_offset = POWERUP_TILE_OFFSET;
 	break;
     case POWERUP_TYPE_SHIELD:

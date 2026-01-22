@@ -11,6 +11,11 @@
 #include "shot.h"
 #include "background.h"
 #include "gfx.h"
+#include "enemy.h"
+#include "bullet.h"
+#include "powerup.h"
+#include "explosion.h"
+#include "level.h"
 
 void main(void){
     // Initialisation du jeu
@@ -22,24 +27,18 @@ void main(void){
     init_enemies();
     init_powerup();
     init_background();
-
+    init_explosions();
+    init_level(level_1_events);
+    
     game_init();
     // Activation des sprites
     SHOW_SPRITES;
     SHOW_BKG;
 
     PLAYER.shield = 1;
-    add_enemy(80, 40, ENEMY_TYPE_3, BULLET_TYPE_LARGE,3, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_AIMED);
-
     while(1) {
 	// On attend la prochaine frame
 	vsync();
-	if (KEY_RELEASED(J_START)){
-	    add_enemy(80, 20, ENEMY_TYPE_2, BULLET_TYPE_SMALL,3, MOVE_PATTERN_STRAIGHT, SHOOT_PATTERN_SEMI_CIRCULAR_RIGHT);
-	}
-	if (KEY_RELEASED(J_SELECT)){
-	    spawn_powerup(POWERUP_TYPE_POWER_UP, 80, 20);
-	}
 	// Mise à jour du jeu
 	game_update();
 	

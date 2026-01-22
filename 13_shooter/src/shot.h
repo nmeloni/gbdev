@@ -13,7 +13,7 @@
 #define SHOT_TILE_OFFSET        12
 #define SHOT_ONSCREEN_OFFSET   (-4)
 #define MAX_SHOTS                5
-#define SHOT_SPEED              32
+#define SHOT_SPEED              48
 
 typedef struct {
     uint8_t active;

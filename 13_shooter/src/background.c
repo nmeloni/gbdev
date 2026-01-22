@@ -9,7 +9,7 @@ void init_background(void) {
     
     BACKGROUND.dx = 0;
     BACKGROUND.fx = 0;
-    BACKGROUND.dy = -4;
+    BACKGROUND.dy = -2;
     BACKGROUND.fy = 0;
 }
 

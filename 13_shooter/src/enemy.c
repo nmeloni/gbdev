@@ -122,28 +122,31 @@ inline void  handle_move_pattern(uint8_t i){
 
 inline void  handle_shoot_pattern(uint8_t i){
     uint8_t current_shoot_pattern = ENEMY_POOL[i].shoot_pattern;
+    if (current_shoot_pattern == SHOOT_PATTERN_NONE){
+	return;
+    }
     uint8_t shoot_pattern_length = shoot_pattern_lengths[current_shoot_pattern];
     if (ENEMY_POOL[i].shoot_framecounter == 0){
 	uint8_t step = ENEMY_POOL[i].shoot_activepattern;
 	    
 	//Type de tir
 	uint8_t flag = shoot_patterns[current_shoot_pattern][step][1];
-	if (flag){
-	    //Paramètres du tir
-	    int8_t bullet_dx,bullet_dy;
-	    if (flag & AIMED_SHOT){
-		EMU_printf("Aimed shot\n");
-		uint8_t direction = aimed_direction(ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, PLAYER.body.x, PLAYER.body.y);
-		bullet_dx = directions_dx[direction]<<(flag & SHOT_SPEED_MASK);
-		bullet_dy = directions_dy[direction]<<(flag & SHOT_SPEED_MASK);
-	    } else {
-		bullet_dx = shoot_patterns[current_shoot_pattern][step][2];
-		bullet_dy = shoot_patterns[current_shoot_pattern][step][3];
-	    }
-	    //On ajoute la bullet
-	    fire_bullet(ENEMY_POOL[i].weapon, ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, bullet_dx, bullet_dy);
-	    
+	
+	//Paramètres du tir
+	int8_t bullet_dx,bullet_dy;
+	if (flag & AIMED_SHOT){
+
+	    uint8_t direction = aimed_direction(ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, PLAYER.body.x, PLAYER.body.y);
+	    bullet_dx = directions_dx[direction]<<(flag & SHOT_SPEED_MASK);
+	    bullet_dy = directions_dy[direction]<<(flag & SHOT_SPEED_MASK);
+	} else {
+	    bullet_dx = shoot_patterns[current_shoot_pattern][step][2];
+	    bullet_dy = shoot_patterns[current_shoot_pattern][step][3];
 	}
+	//On ajoute la bullet
+	fire_bullet(ENEMY_POOL[i].weapon, ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, bullet_dx, bullet_dy);
+	    
+	
 	//On passe au step suivant
 	ENEMY_POOL[i].shoot_activepattern++;
 	if (ENEMY_POOL[i].shoot_activepattern >= shoot_pattern_length){
@@ -202,11 +205,11 @@ inline void  check_collision_with_player(uint8_t i){
 inline void  check_enemy_bounds(uint8_t i){
     // Désactiver l'ennemi s'il sort de l'écran
     ENEMY_POOL[i].active = is_inside_bounds(ENEMY_POOL[i].body.x,
-					 GAMESCREEN_X_ORIGIN,
-					 GAMESCREEN_X_END) &
+					     ENEMY_GAMESCREEN_X_ORIGIN,
+					     ENEMY_GAMESCREEN_X_END) &&
 			    is_inside_bounds(ENEMY_POOL[i].body.y,
-					     GAMESCREEN_Y_ORIGIN,
-					     GAMESCREEN_Y_END);
+					     ENEMY_GAMESCREEN_Y_ORIGIN,
+					     ENEMY_GAMESCREEN_Y_END);
     
 }
 
