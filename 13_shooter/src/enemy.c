@@ -37,7 +37,7 @@ void init_enemies(void) {
     active_enemy_index = 0;
 }
 
-void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern){
+void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern){
     for (uint8_t i=0; i<MAX_ENEMIES; i++){
 	if (!ENEMY_POOL[i].active){
 	    ENEMY_POOL[i].active = 1;
@@ -48,6 +48,7 @@ void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t hp, uint8_t move_patt
 	    ENEMY_POOL[i].body.fx = 0;
 	    ENEMY_POOL[i].body.fy = 0; 
 	    ENEMY_POOL[i].type = type;
+	    ENEMY_POOL[i].weapon = weapon;
 	    ENEMY_POOL[i].move_pattern = move_pattern;
 	    ENEMY_POOL[i].shoot_pattern = shoot_pattern;
 	    ENEMY_POOL[i].move_activepattern = 0;
@@ -126,21 +127,21 @@ inline void  handle_shoot_pattern(uint8_t i){
 	uint8_t step = ENEMY_POOL[i].shoot_activepattern;
 	    
 	//Type de tir
-	uint8_t bullet_type = shoot_patterns[current_shoot_pattern][step][1];
-	if (bullet_type!= BULLET_TYPE_NONE){
+	uint8_t flag = shoot_patterns[current_shoot_pattern][step][1];
+	if (flag){
 	    //Paramètres du tir
 	    int8_t bullet_dx,bullet_dy;
-	    if (bullet_type & AIMED_SHOT){
-
+	    if (flag & AIMED_SHOT){
+		EMU_printf("Aimed shot\n");
 		uint8_t direction = aimed_direction(ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, PLAYER.body.x, PLAYER.body.y);
-		bullet_dx = directions_dx[direction];
-		bullet_dy = directions_dy[direction];
+		bullet_dx = directions_dx[direction]<<(flag & SHOT_SPEED_MASK);
+		bullet_dy = directions_dy[direction]<<(flag & SHOT_SPEED_MASK);
 	    } else {
 		bullet_dx = shoot_patterns[current_shoot_pattern][step][2];
 		bullet_dy = shoot_patterns[current_shoot_pattern][step][3];
 	    }
 	    //On ajoute la bullet
-	    fire_bullet(bullet_type &  0x7, ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, bullet_dx, bullet_dy);
+	    fire_bullet(ENEMY_POOL[i].weapon, ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, bullet_dx, bullet_dy);
 	    
 	}
 	//On passe au step suivant

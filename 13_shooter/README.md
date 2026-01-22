@@ -25,9 +25,9 @@ Prototype jouable – Construction du premier niveau
 - [x] Système d’ennemis générique
 - [x] 1 type d’ennemi fonctionnel
 - [ ] 2–3 variations d’ennemis
-- [x] Patterns de déplacement
-- [x] Patterns de tirs
-- [x] Comportements combinés (move + shoot décalés)
+- [ ] Patterns de déplacement
+- [ ] Patterns de tirs
+- [ ] Comportements combinés (move + shoot décalés)
 - [ ] Mini-boss
 - [ ] Boss de fin de niveau
 

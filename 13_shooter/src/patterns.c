@@ -48,55 +48,54 @@ const int8_t move_pattern_zigzag[16][3] = {
 
 // Pattern 0: shoot straight down
 const int8_t shoot_pattern_down[1][4] = {
-    {60, BULLET_TYPE_SMALL, 0, 32},
+    {60, 0, 0, 32},
 };
 
 // Pattern 1: shoot aimed at player
 const int8_t shoot_pattern_aimed[1][4] = {
-	{60, BULLET_TYPE_SMALL | AIMED_SHOT, 0, 0},
+	{60,  AIMED_SHOT|SHOT_SPEED_FAST, 0, 0},
 };
 
 // Pattern 2: clockwise circular shooting
 const int8_t shoot_pattern_circular[16][4] = {
-    {4, BULLET_TYPE_SMALL, 0, 32},
-    {4, BULLET_TYPE_SMALL, 12, 30},
-    {4, BULLET_TYPE_SMALL, 22, 22},
-    {4, BULLET_TYPE_SMALL, 30, 12},
-    {4, BULLET_TYPE_SMALL, 32, 0},
-    {4, BULLET_TYPE_SMALL, 30, -12},
-    {4, BULLET_TYPE_SMALL, 22, -22},
-    {4, BULLET_TYPE_SMALL, 12, -30},
-    {4, BULLET_TYPE_SMALL, 0, -32},
-    {4, BULLET_TYPE_SMALL, -12, -30},
-    {4, BULLET_TYPE_SMALL, -22, -22},
-    {4, BULLET_TYPE_SMALL, -30, -12},
-    {4, BULLET_TYPE_SMALL, -32, 0},
-    {4, BULLET_TYPE_SMALL, -30, 12},
-    {4, BULLET_TYPE_SMALL, -22, 22},
-    {4, BULLET_TYPE_SMALL, -12, 30}
+    {4, NORMAL_SHOT, 0, 32},
+    {4, NORMAL_SHOT, 12, 30},
+    {4, NORMAL_SHOT, 22, 22},
+    {4, NORMAL_SHOT, 30, 12},
+    {4, NORMAL_SHOT, 32, 0},
+    {4, NORMAL_SHOT, 30, -12},
+    {4, NORMAL_SHOT, 22, -22},
+    {4, NORMAL_SHOT, 12, -30},
+    {4, NORMAL_SHOT, 0, -32},
+    {4, NORMAL_SHOT, -12, -30},
+    {4, NORMAL_SHOT, -22, -22},
+    {4, NORMAL_SHOT, -30, -12},
+    {4, NORMAL_SHOT, -32, 0},
+    {4, NORMAL_SHOT, -30, 12},
+    {4, NORMAL_SHOT, -22, 22},
+    {4, NORMAL_SHOT, -12, 30}
 };    
 
 const int8_t shoot_pattern_semi_circular_left[8][4] = {
-    {4, BULLET_TYPE_LARGE, 0, 32},
-    {4, BULLET_TYPE_LARGE, -22, 22},
-    {4, BULLET_TYPE_LARGE, -32, 0},
-    {4, BULLET_TYPE_LARGE, -22, -22},
+    {4, NORMAL_SHOT, 0, 32},
+    {4, NORMAL_SHOT, -22, 22},
+    {4, NORMAL_SHOT, -32, 0},
+    {4, NORMAL_SHOT, -22, -22},
    
-    {4, BULLET_TYPE_LARGE, -12, 30},
-    {4, BULLET_TYPE_LARGE, -30, -12},
-    {4, BULLET_TYPE_LARGE, -12, -30},
-    {4, BULLET_TYPE_LARGE, -30, 12}
+    {4, NORMAL_SHOT, -12, 30},
+    {4, NORMAL_SHOT, -30, -12},
+    {4, NORMAL_SHOT, -12, -30},
+    {4, NORMAL_SHOT, -30, 12}
 };
 
 const int8_t shoot_pattern_semi_circular_right[8][4] = {
-    {4, BULLET_TYPE_LARGE, 0, 32},
-    {4, BULLET_TYPE_LARGE, 22, 22},
-    {4, BULLET_TYPE_LARGE, 32, 0},
-    {4, BULLET_TYPE_LARGE, 22, -22},
-
-    {4, BULLET_TYPE_LARGE, 12, 30},
-    {4, BULLET_TYPE_LARGE, 30, -12},
-    {4, BULLET_TYPE_LARGE, 12, -30},
-    {4, BULLET_TYPE_LARGE, 30, 12}
+    {8, NORMAL_SHOT, 0, 32},
+    {8, NORMAL_SHOT, 22, 22},
+    {8, NORMAL_SHOT, 32, 0},
+    {8, NORMAL_SHOT, 22, -22},
+    {8, NORMAL_SHOT, 12, 30},
+    {8, NORMAL_SHOT, 30, -12},
+    {8, NORMAL_SHOT, 12, -30},
+    {8, NORMAL_SHOT, 30, 12}
 
 };

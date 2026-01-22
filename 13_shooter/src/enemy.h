@@ -37,6 +37,7 @@ enum enemy_type {
 
 typedef struct {
     body_t body;
+    uint8_t weapon;
     uint8_t active;
     uint8_t type;
     uint8_t move_pattern;
@@ -51,7 +52,7 @@ typedef struct {
 } enemy_t;
 
 void init_enemies(void);
-void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern);
+void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern);
 void update_enemies(void);
 
 

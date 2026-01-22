@@ -6,7 +6,12 @@
 
 #include "bullet.h"
 
-#define AIMED_SHOT              128
+#define NORMAL_SHOT         16 
+#define AIMED_SHOT          32
+#define SHOT_SPEED_SLOW      0
+#define SHOT_SPEED_MEDIUM    1
+#define SHOT_SPEED_FAST      2
+#define SHOT_SPEED_MASK      3           
 
 enum patterns_enum {
     MOVE_PATTERN_STRAIGHT = 0,
