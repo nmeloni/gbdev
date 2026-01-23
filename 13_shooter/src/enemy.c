@@ -15,19 +15,22 @@ inline void  check_enemy_hitshots(uint8_t i);
 const uint8_t enemy_bbox[][2] = {
     {7 , 7},   // ENEMY_TYPE_1
     {7 , 7},   // ENEMY_TYPE_2
-    {7 , 7}    // ENEMY_TYPE_3
+    {7 , 7},    // ENEMY_TYPE_3
+    {16,16}   // ENEMY_TYPE_MINI_BOSS_1
 };
 
 const uint8_t enemy_tile_offsets[] = {
     ENEMY_1_TILE_OFFSET,
     ENENY_2_TILE_OFFSET,
-    ENEMY_3_TILE_OFFSET
+    ENEMY_3_TILE_OFFSET,
+    MINI_BOSS_1_TILE_OFFSET
 };
 
 const const metasprite_t* const * enemy_metasprites[] = {
     enemy_1_sprite_metasprites,
     enemy_2_sprite_metasprites,
-    enemy_3_sprite_metasprites
+    enemy_3_sprite_metasprites,
+    mini_boss_1_sprite_metasprites
 };
 
 void init_enemies(void) {
@@ -37,7 +40,7 @@ void init_enemies(void) {
     active_enemy_index = 0;
 }
 
-void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern){
+void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern, uint8_t shoot_pattern_speed) {
     for (uint8_t i=0; i<MAX_ENEMIES; i++){
 	if (!ENEMY_POOL[i].active){
 	    ENEMY_POOL[i].active = 1;
@@ -55,6 +58,7 @@ void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp, u
 	    ENEMY_POOL[i].shoot_activepattern = 0;
 	    ENEMY_POOL[i].move_framecounter = move_patterns[move_pattern][0][0];
 	    ENEMY_POOL[i].shoot_framecounter = shoot_patterns[shoot_pattern][0][0];
+	    ENEMY_POOL[i].shoot_pattern_speed = shoot_pattern_speed;
 	    ENEMY_POOL[i].frame_timer = 0;
 	    ENEMY_POOL[i].hp = hp;
 	    ENEMY_POOL[i].ishit = 0;
@@ -126,6 +130,7 @@ inline void  handle_shoot_pattern(uint8_t i){
 	return;
     }
     uint8_t shoot_pattern_length = shoot_pattern_lengths[current_shoot_pattern];
+    uint8_t shoot_pattern_speed = ENEMY_POOL[i].shoot_pattern_speed;
     if (ENEMY_POOL[i].shoot_framecounter == 0){
 	uint8_t step = ENEMY_POOL[i].shoot_activepattern;
 	    
@@ -137,11 +142,11 @@ inline void  handle_shoot_pattern(uint8_t i){
 	if (flag & AIMED_SHOT){
 
 	    uint8_t direction = aimed_direction(ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, PLAYER.body.x, PLAYER.body.y);
-	    bullet_dx = directions_dx[direction]<<(flag & SHOT_SPEED_MASK);
-	    bullet_dy = directions_dy[direction]<<(flag & SHOT_SPEED_MASK);
+	    bullet_dx = directions_dx[direction]<<(shoot_pattern_speed);
+	    bullet_dy = directions_dy[direction]<<(shoot_pattern_speed);
 	} else {
-	    bullet_dx = shoot_patterns[current_shoot_pattern][step][2];
-	    bullet_dy = shoot_patterns[current_shoot_pattern][step][3];
+	    bullet_dx = shoot_patterns[current_shoot_pattern][step][2]<<(shoot_pattern_speed);
+	    bullet_dy = shoot_patterns[current_shoot_pattern][step][3]<<(shoot_pattern_speed);
 	}
 	//On ajoute la bullet
 	fire_bullet(ENEMY_POOL[i].weapon, ENEMY_POOL[i].body.x, ENEMY_POOL[i].body.y, bullet_dx, bullet_dy);

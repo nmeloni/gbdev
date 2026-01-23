@@ -28,7 +28,7 @@ void main(void){
     init_powerup();
     init_background();
     init_explosions();
-    init_level(level_1_events);
+    init_level(level_demo_events);
     
     game_init();
     // Activation des sprites

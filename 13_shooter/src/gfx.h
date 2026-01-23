@@ -17,6 +17,8 @@
 #include "enemy_2_sprite.h"
 #include "enemy_3_sprite.h"
 
+#include "mini_boss_1_sprite.h"
+
 #include "explosion.h"
 #include "explosion_sprite.h"
 

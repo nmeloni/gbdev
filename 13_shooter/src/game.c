@@ -23,8 +23,8 @@ void game_update(void) {
 	oam = 0;
 	
 	update_shots();
-	update_bullets();
 	update_enemies();
+	update_bullets();
 	update_powerup();
 	update_explosions();
 	update_player();

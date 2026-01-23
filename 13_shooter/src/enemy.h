@@ -15,6 +15,9 @@
 #include "patterns.h"
 
 #include "enemy_1_sprite.h"
+#include "enemy_2_sprite.h"
+#include "enemy_3_sprite.h"
+#include "mini_boss_1_sprite.h"
 
 #define ENEMY_GAMESCREEN_X_ORIGIN  (GAMESCREEN_X_ORIGIN-4u)
 #define ENEMY_GAMESCREEN_Y_ORIGIN  (GAMESCREEN_Y_ORIGIN-8u)
@@ -26,6 +29,7 @@
 #define ENEMY_1_TILE_OFFSET  ENEMY_TILE_OFFSET
 #define ENENY_2_TILE_OFFSET  (ENEMY_TILE_OFFSET + 8)
 #define ENEMY_3_TILE_OFFSET  (ENEMY_TILE_OFFSET + 16)
+#define MINI_BOSS_1_TILE_OFFSET (ENEMY_TILE_OFFSET + 24)
 
 #define SPRITE_FRAME_DURATION 8
 #define SPRITE_FRAME_DURATION_LOG2 3
@@ -41,7 +45,8 @@
 enum enemy_type {
     ENEMY_TYPE_1,
     ENEMY_TYPE_2,
-    ENEMY_TYPE_3
+    ENEMY_TYPE_3,
+    ENEMY_TYPE_MINI_BOSS_1
 };
 
 typedef struct {
@@ -51,6 +56,7 @@ typedef struct {
     uint8_t type;
     uint8_t move_pattern;
     uint8_t shoot_pattern;
+    uint8_t shoot_pattern_speed;
     uint8_t move_activepattern;
     uint8_t shoot_activepattern;
     uint8_t move_framecounter;
@@ -61,7 +67,7 @@ typedef struct {
 } enemy_t;
 
 void init_enemies(void);
-void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern);
+void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp, uint8_t move_pattern, uint8_t shoot_pattern, uint8_t shoot_pattern_speed);
 void update_enemies(void);
 
 
