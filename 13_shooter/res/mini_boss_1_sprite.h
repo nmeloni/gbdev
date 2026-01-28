@@ -11,7 +11,7 @@
 #define mini_boss_1_sprite_TILE_H 16
 #define mini_boss_1_sprite_WIDTH 32
 #define mini_boss_1_sprite_HEIGHT 32
-#define mini_boss_1_sprite_TILE_COUNT 16
+#define mini_boss_1_sprite_TILE_COUNT 24
 #define mini_boss_1_sprite_PALETTE_COUNT 1
 #define mini_boss_1_sprite_COLORS_PER_PALETTE 4
 #define mini_boss_1_sprite_TOTAL_COLORS 4
@@ -24,6 +24,6 @@ extern const metasprite_t* const mini_boss_1_sprite_metasprites[2];
 BANKREF_EXTERN(mini_boss_1_sprite)
 
 extern const palette_color_t mini_boss_1_sprite_palettes[4];
-extern const uint8_t mini_boss_1_sprite_tiles[256];
+extern const uint8_t mini_boss_1_sprite_tiles[384];
 
 #endif

@@ -24,6 +24,7 @@ void game_update(void) {
 	
 	update_shots();
 	update_enemies();
+	update_boss();
 	update_bullets();
 	update_powerup();
 	update_explosions();

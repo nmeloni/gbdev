@@ -6,6 +6,7 @@
 
 #include "game.h"
 #include "enemy.h"
+#include "boss.h"
 #include "patterns.h"
 #include "bullet.h"
 #include "powerup.h"
@@ -16,13 +17,13 @@ enum enemy_spawn_list_types {
     ENEMY_1_STRAIGHT_SHOOT_DOWN ,
     ENEMY_2_ZIGZAG_SHOOT_AIMED ,
     ENEMY_2_LATERAL_SHOOT_CIRCULAR_RIGHT ,
-    ENEMY_2_LATERAL_SHOOT_CIRCULAR_LEFT ,
-    ENEMY_MINI_BOSS_1_DOWN_SHOOT_AIMED
+    ENEMY_2_LATERAL_SHOOT_CIRCULAR_LEFT 
 };
 
 #define EVENT_NONE                0
 #define EVENT_SPAWN_ENEMY         1
 #define EVENT_SPAWN_POWERUP_SHOT  2
+#define EVENT_SPAWN_BOSS          3
 #define EVENT_END_LEVEL    255
 
 void init_level(const uint8_t  (*level_events)[5]);

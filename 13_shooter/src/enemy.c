@@ -221,7 +221,8 @@ inline void  check_enemy_bounds(uint8_t i){
 inline void  draw_enemy(uint8_t i){
     uint8_t type = ENEMY_POOL[i].type;
     uint8_t oam_prop = OAMF_PAL0;
-    uint8_t frame = (ENEMY_POOL[i].frame_timer & SPRITE_FRAME_DURATION) >> SPRITE_FRAME_DURATION_LOG2; 
+    uint8_t frame = (ENEMY_POOL[i].frame_timer & SPRITE_FRAME_DURATION) >> SPRITE_FRAME_DURATION_LOG2;
+
     ENEMY_POOL[i].frame_timer++;
     if (ENEMY_POOL[i].ishit){
 	ENEMY_POOL[i].ishit--;

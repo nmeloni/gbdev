@@ -16,6 +16,7 @@
 #include "powerup.h"
 #include "explosion.h"
 #include "level.h"
+#include "boss.h"
 
 #define SCREEN_WIDTH  160u
 #define SCREEN_HEIGHT 144u
