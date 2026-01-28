@@ -12,6 +12,11 @@
 #define BOSS_GAMESCREEN_X_START  (80u)
 #define BOSS_GAMESCREEN_Y_START  (48u)
 
+#define BOSS_MIN_X  (16u)
+#define BOSS_MAX_X  (160u)
+#define BOSS_MIN_Y  (16u)
+#define BOSS_MAX_Y  (144u)
+
 #define BOSS_TILE_OFFSET 0x60
 #define BOSS_FLAG_ENTERING 1u
 #define BOSS_FLAG_HITTABLE 2u

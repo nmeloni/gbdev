@@ -1,14 +1,16 @@
 #include "patterns.h"
 
 extern const uint8_t move_pattern_lengths[] = {
-    1,1,16,16,16
+    1,1,16,16,16,1,4
 };
 const int8_t (* const move_patterns[])[3] = {
     move_pattern_down,
     move_pattern_down_fast,
     move_pattern_zigzag,
     move_pattern_lateral,
-    move_pattern_square
+    move_pattern_square,
+    move_pattern_special_center,
+    move_pattern_special_aimed
 };
 
 const uint8_t shoot_pattern_lengths[] = {
@@ -97,6 +99,17 @@ const int8_t move_pattern_square[16][3] = {
     {60, 0,-20},
     {10, 0, -8}
    
+};
+
+const int8_t move_pattern_special_center[][3] = {
+	{60, 0, 0}
+};
+
+const int8_t move_pattern_special_aimed[][3] = {
+    {120, 0, 0},
+    {30,  0, 0},
+    {30, 0, 0},
+    {30,0,0}
 };
 
 // Pattern 0: shoot straight down

@@ -17,7 +17,7 @@ const uint8_t  (*LEVEL_EVENTS)[5];
 
 const uint8_t level_demo_events[][5] = {
     // {frame_delay, event_type, spawn_index, x, y}
-    /*
+    
     {60, EVENT_SPAWN_POWERUP_SHOT, 0, 80, 8},
     {180, EVENT_SPAWN_ENEMY, 0, 80, 8},
 
@@ -43,9 +43,9 @@ const uint8_t level_demo_events[][5] = {
     {1, EVENT_SPAWN_ENEMY, 5, 150, 8},
     {240, EVENT_SPAWN_ENEMY, 1, 40, 8},
     {0, EVENT_SPAWN_ENEMY, 1, 80, 8},
-    {0, EVENT_SPAWN_ENEMY, 1, 120, 8},*/
-    {60, EVENT_NONE,        0, 0, 0},
-    {60, EVENT_SPAWN_BOSS, MINI_BOSS_1, 80,0},
+    {0, EVENT_SPAWN_ENEMY, 1, 120, 8},
+    {240, EVENT_NONE,        0, 0, 0},
+    {240, EVENT_SPAWN_BOSS, MINI_BOSS_1, 80,0},
     {0, EVENT_END_LEVEL, 0, 0} // Marqueur de fin
 };
 
