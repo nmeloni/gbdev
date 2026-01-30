@@ -20,6 +20,7 @@
 void main(void){
     // Initialisation du jeu
     gfx_init();
+    audio_init();
     init_player();
     init_shots();
     init_background();

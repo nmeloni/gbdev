@@ -17,6 +17,7 @@
 #include "explosion.h"
 #include "level.h"
 #include "boss.h"
+#include "audio.h"
 
 #define SCREEN_WIDTH  160u
 #define SCREEN_HEIGHT 144u

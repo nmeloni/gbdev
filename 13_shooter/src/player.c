@@ -79,7 +79,8 @@ inline void update_player_input(void) {
 	    PLAYER.boost = PLAYER_BOOST_DURATION_FRAMES;
 	    speed = BOOST_SPEED;
 	}
-	
+
+	/*
 	if (KEY_PRESSED(J_LEFT)){
 	    PLAYER.body.dx = -speed;
 	}
@@ -92,7 +93,20 @@ inline void update_player_input(void) {
 	if (KEY_PRESSED(J_DOWN)){
 	    PLAYER.body.dy = speed;
 	}
-
+	*/
+	
+	if (KEY_RELEASED(J_LEFT)){
+	    audio_play_sfx(SFX_SHOOT);
+	}
+	if (KEY_RELEASED(J_RIGHT)){
+	    audio_play_sfx(SFX_EXPLODE);
+	}
+	if (KEY_RELEASED(J_UP)){
+	    audio_play_sfx(SFX_HIT);
+	}
+	if (KEY_RELEASED(J_DOWN)){
+	    audio_play_sfx(SFX_POWERUP);
+	}
     }
     
     
