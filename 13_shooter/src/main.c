@@ -19,22 +19,11 @@
 
 void main(void){
     // Initialisation du jeu
-    gfx_init();
-    audio_init();
-    init_player();
-    init_shots();
-    init_background();
-    init_bullets();
-    init_enemies();
-    init_powerup();
-    init_background();
-    init_explosions();
-    init_level(level_demo_events);
+  
     
     game_init();
     // Activation des sprites
     SHOW_SPRITES;
-    SHOW_BKG;
 
     PLAYER.shield = 1;
     while(1) {

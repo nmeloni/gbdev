@@ -6,11 +6,12 @@ uint16_t frame_counter = 0;
 game_state_t game_state;
 
 void game_init(void) {
-    game_state = GAME_STATE_PLAY;
+    game_state = GAME_STATE_LOGO;
     oam = 0;
     frame_counter = 0;
-
     reset_player(PLAYER_MIN_X + (PLAYER_MAX_X - PLAYER_MIN_X)/2, PLAYER_MAX_Y - 16);
+
+    init_logo();
 }
 
 void game_update(void) {
@@ -18,6 +19,12 @@ void game_update(void) {
     UPDATE_KEYS();
     
     switch (game_state) {
+    case GAME_STATE_LOGO:
+	show_logo();
+	break;
+    case GAME_STATE_TITLE_SCREEN:
+	show_title_screen();
+	break;
     case GAME_STATE_PLAY:
 	frame_counter++;
 	oam = 0;

@@ -27,8 +27,8 @@ static void sfx_shoot(void) {
     NR10_REG = 0x2D; // sweep up
     NR11_REG = 0x40;
     NR12_REG = 0xF1;
-    NR13_REG = 0xC2
-    NR14_REG = 0x86
+    NR13_REG = 0xC2;
+    NR14_REG = 0x86;
 	
  }
 

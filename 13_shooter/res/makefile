@@ -42,6 +42,11 @@ space_bkg_tileset.c: $(PNG_DIR)/space_bkg_tileset.png
 space_bkg_tilemap.c: $(PNG_DIR)/space_bkg_tilemap.png
 	$(PNG2ASSET) $< -c $@ -noflip -map -maps_only -source_tileset $(PNG_DIR)/space_bkg_tileset.png
 
+spaceboost_title.c: $(PNG_DIR)/spaceboost_title.png
+	$(PNG2ASSET) $< -c $@ -map -noflip
+
+melstudio.c: $(PNG_DIR)/melstudio.png
+	$(PNG2ASSET) $< -c $@ -map -noflip	
 
 # Nettoyer les fichiers générés
 clean:

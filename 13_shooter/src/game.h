@@ -18,6 +18,8 @@
 #include "level.h"
 #include "boss.h"
 #include "audio.h"
+#include "titlescreen.h"
+#include "logo.h"
 
 #define SCREEN_WIDTH  160u
 #define SCREEN_HEIGHT 144u
@@ -33,6 +35,8 @@
 
 // États possibles du jeu
 typedef enum {
+    GAME_STATE_LOGO,
+    GAME_STATE_TITLE_SCREEN,
     GAME_STATE_PLAY,
     GAME_STATE_PAUSE,
     GAME_STATE_GAME_OVER
