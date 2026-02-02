@@ -44,8 +44,8 @@ const uint8_t level_demo_events[][5] = {
     {240, EVENT_SPAWN_ENEMY, 1, 40, 8},
     {0, EVENT_SPAWN_ENEMY, 1, 80, 8},
     {0, EVENT_SPAWN_ENEMY, 1, 120, 8},
-    {240, EVENT_NONE,        0, 0, 0},
-    {240, EVENT_SPAWN_BOSS, MINI_BOSS_1, 80,0},*/
+    {240, EVENT_NONE,        0, 0, 0},*/
+    {240, EVENT_SPAWN_BOSS, MINI_BOSS_2, 80,0},
     {0, EVENT_END_LEVEL, 0, 0} // Marqueur de fin
 };
 

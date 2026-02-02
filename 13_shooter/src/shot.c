@@ -43,6 +43,8 @@ void fire_shot(uint8_t x, uint8_t y, int8_t dx, int8_t dy) {
 	    SHOTS_POOL[i].body.fx = 0;
 	    SHOTS_POOL[i].body.fy = 0;
 	    ACTIVE_SHOTS[active_shot_index++] = i;
+
+	    audio_play_sfx(SFX_SHOOT);
 	    break; // Tiré un seul tir à la fois
 	}
     }

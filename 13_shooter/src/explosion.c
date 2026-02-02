@@ -13,6 +13,8 @@ void add_explosion(uint8_t x, uint8_t y) {
     EXPLOSION_QUEUE[queue_front].y = y;
     EXPLOSION_QUEUE[queue_front].frame_counter = EXPLOSION_FRAME_DURATION;
     queue_front = (queue_front + 1) % MAX_EXPLOSIONS;
+
+    audio_play_sfx(SFX_EXPLODE);
 }
 
 void update_explosions(void) {

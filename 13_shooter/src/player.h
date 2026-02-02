@@ -28,6 +28,8 @@
 #define PLAYER_MAX_X            ((uint8_t) (GAMESCREEN_X_END-8u))
 #define PLAYER_MIN_Y            ((uint8_t) (GAMESCREEN_Y_ORIGIN+8u))
 #define PLAYER_MAX_Y            ((uint8_t) (GAMESCREEN_Y_END-8u))
+#define PLAYER_START_X          (84u)
+#define PLAYER_START_y          (128u)
 
 #define PLAYER_SPEED            12
 #define BOOST_SPEED             24

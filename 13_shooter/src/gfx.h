@@ -19,6 +19,7 @@
 
 #include "boss.h"
 #include "mini_boss_1_sprite.h"
+#include "mini_boss_2_sprite.h"
 
 #include "explosion.h"
 #include "explosion_sprite.h"

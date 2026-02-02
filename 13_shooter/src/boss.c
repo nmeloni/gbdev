@@ -35,11 +35,13 @@ const int8_t boss_jiggle_pattern[][2] = {
 
 
 const uint8_t boss_bbox[][2] = {
-    {16, 16}  // Taille du boss (largeur, hauteur)
+    {16, 16},
+    {24,16}
 };
 
 const uint8_t boss_weapon_table[][5] = {
-    {BULLET_TYPE_NONE, BULLET_TYPE_LARGE, BULLET_TYPE_NONE, BULLET_TYPE_LARGE,BULLET_TYPE_NONE} // Armes du mini-boss 1
+    {BULLET_TYPE_NONE, BULLET_TYPE_LARGE, BULLET_TYPE_NONE, BULLET_TYPE_LARGE,BULLET_TYPE_NONE}, // Armes du mini-boss 1
+    {BULLET_TYPE_NONE, BULLET_TYPE_LARGE, BULLET_TYPE_NONE}
 };
     
 const uint8_t mini_boss_1_move_patterns[][4] = {
@@ -53,6 +55,25 @@ const uint8_t mini_boss_1_move_patterns[][4] = {
     
 };
 
+const uint8_t mini_boss_2_move_patterns[][4] = {
+    {BOSS_PATTERN_TIME_TRIGGER, 240u, MOVE_PATTERN_DOWN, SHOOT_PATTERN_NONE},
+    {BOSS_PATTERN_HEALTH_TRIGGER, 100u, MOVE_PATTERN_LATERAL, SHOOT_PATTERN_AIMED},
+    {BOSS_PATTERN_DESTROY, 240u,0,0}
+};
+
+const uint8_t (* boss_move_pattern_list[])[4] = {
+    mini_boss_1_move_patterns,
+    mini_boss_2_move_patterns
+};
+
+const uint8_t boss_hp[]={
+    120,120
+};
+
+const  metasprite_t * const (* boss_metasprites_list[])={
+    mini_boss_1_sprite_metasprites,
+    mini_boss_2_sprite_metasprites
+};
 
 void init_boss(void) {
     BOSS.active = 0;
@@ -65,38 +86,29 @@ void spawn_boss(uint8_t boss_id, uint8_t x, uint8_t y) {
     BOSS.active = 1;
     BOSS.flag = BOSS_FLAG_ENTERING;
     init_body(&BOSS.body, x, y);
-    switch (boss_id) {
-    case MINI_BOSS_1:
-	BOSS.hp = 120;
-	BOSS.move_patterns = mini_boss_1_move_patterns;
-	BOSS.weapons = boss_weapon_table[0];
-	BOSS.shoot_pattern_speed = 1; // Vitesse de tir moyenne
+
+    
+    BOSS.hp = boss_hp[boss_id];
+    BOSS.move_patterns = boss_move_pattern_list[boss_id];
+    BOSS.weapons = boss_weapon_table[boss_id];
+    BOSS.shoot_pattern_speed = 1; // Vitesse de tir moyenne
 	
-	BOSS.current_pattern = 0;
-	BOSS.current_pattern_trigger = mini_boss_1_move_patterns[0][0];
-	BOSS.pattern_framecounter = mini_boss_1_move_patterns[0][1];
-	BOSS.current_move_pattern = mini_boss_1_move_patterns[0][2];
-	BOSS.current_shoot_pattern = mini_boss_1_move_patterns[0][3];
+    BOSS.current_pattern = 0;
+    BOSS.current_pattern_trigger = BOSS.move_patterns[0][0];
+    BOSS.pattern_framecounter  = BOSS.move_patterns[0][1];
+    BOSS.current_move_pattern  = BOSS.move_patterns[0][2];
+    BOSS.current_shoot_pattern = BOSS.move_patterns[0][3];
 
-	BOSS.move_activepattern = 0;
-	BOSS.move_framecounter = move_patterns[BOSS.current_move_pattern][0][0];
-    	BOSS.body.dx = move_patterns[BOSS.current_move_pattern][0][1];
-	BOSS.body.dy = move_patterns[BOSS.current_move_pattern][0][2];
+    BOSS.move_activepattern = 0;
+    BOSS.move_framecounter = move_patterns[BOSS.current_move_pattern][0][0];
+    BOSS.body.dx = move_patterns[BOSS.current_move_pattern][0][1];
+    BOSS.body.dy = move_patterns[BOSS.current_move_pattern][0][2];
 
+    
+    BOSS.shoot_activepattern = 0;
+    BOSS.shoot_framecounter = shoot_patterns[BOSS.current_shoot_pattern][0][0];
 	
-	BOSS.shoot_activepattern = 0;
-	BOSS.shoot_framecounter = shoot_patterns[BOSS.current_shoot_pattern][0][0];
-	
-	BOSS.metasprites = mini_boss_1_sprite_metasprites;
-	// Initialiser les patterns de mouvement et d'attaque spécifiques au boss
-	break;
-	// Ajouter d'autres cas pour différents boss si nécessaire
-
-    default:
-	BOSS.active = 0; // Boss inconnu, ne pas l'activer
-	break;
-    }
-
+    BOSS.metasprites = boss_metasprites_list[boss_id];
 	
 }
 

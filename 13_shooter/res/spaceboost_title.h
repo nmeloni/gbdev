@@ -11,7 +11,7 @@
 #define spaceboost_title_TILE_H 8
 #define spaceboost_title_WIDTH 160
 #define spaceboost_title_HEIGHT 144
-#define spaceboost_title_TILE_COUNT 166
+#define spaceboost_title_TILE_COUNT 195
 #define spaceboost_title_PALETTE_COUNT 1
 #define spaceboost_title_COLORS_PER_PALETTE 4
 #define spaceboost_title_TOTAL_COLORS 4
@@ -22,6 +22,6 @@ extern const unsigned char spaceboost_title_map[360];
 BANKREF_EXTERN(spaceboost_title)
 
 extern const palette_color_t spaceboost_title_palettes[4];
-extern const uint8_t spaceboost_title_tiles[2656];
+extern const uint8_t spaceboost_title_tiles[3120];
 
 #endif

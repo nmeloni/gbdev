@@ -19,7 +19,7 @@ void gfx_init(void) {
     set_sprite_data(ENEMY_1_TILE_OFFSET, enemy_1_sprite_TILE_COUNT, enemy_1_sprite_tiles);
     set_sprite_data(ENENY_2_TILE_OFFSET, enemy_2_sprite_TILE_COUNT, enemy_2_sprite_tiles);
     set_sprite_data(ENEMY_3_TILE_OFFSET, enemy_3_sprite_TILE_COUNT, enemy_3_sprite_tiles);
-    set_sprite_data(BOSS_TILE_OFFSET, mini_boss_1_sprite_TILE_COUNT, mini_boss_1_sprite_tiles);
+    set_sprite_data(BOSS_TILE_OFFSET, mini_boss_2_sprite_TILE_COUNT, mini_boss_2_sprite_tiles);
     
     set_sprite_data(POWERUP_TILE_OFFSET, powerup_sprite_TILE_COUNT, powerup_sprite_tiles);
     set_bkg_data(0x0, space_bkg_tileset_TILE_COUNT, space_bkg_tileset_tiles);

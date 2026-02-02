@@ -29,8 +29,15 @@ powerup_sprite.c: $(PNG_DIR)/powerup_sprite.png
 enemy_%_sprite.c: $(PNG_DIR)/enemy_%_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
-mini_boss_%_sprite.c: $(PNG_DIR)/mini_boss_%_sprite.png
+
+
+mini_boss_1_sprite.c: $(PNG_DIR)/mini_boss_1_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 32 -sh 32 -spr8x16 -noflip -keep_palette_order
+
+mini_boss_2_sprite.c: $(PNG_DIR)/mini_boss_2_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 48 -sh 32 -spr8x16 -noflip -keep_palette_order
+
+
 
 explosion_sprite.c: $(PNG_DIR)/explosion_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order

@@ -10,6 +10,7 @@
 #include "game.h"
 #include "utils.h"
 #include "gfx.h"
+#include "audio.h"
 #include "explosion_sprite.h"
 
 #define EXPLOSION_TILE_OFFSET 128

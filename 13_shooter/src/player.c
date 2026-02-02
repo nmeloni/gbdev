@@ -36,7 +36,12 @@ void init_player(void) {
 }
 
 void update_player(void){
-    // gestion du joueur décomposée en plusieurs fonctions inline pour plus de clarté    
+    // gestion du joueur décomposée en plusieurs fonctions inline pour plus de clarté
+    if (PLAYER.lives == 0){
+	game_state = GAME_STATE_GAME_OVER;
+	frame_counter = 300;
+	return;
+    }
     update_player_input();
     update_body_position(&PLAYER.body);
     check_player_bounds();
@@ -44,7 +49,6 @@ void update_player(void){
 }
 
 inline void update_player_input(void) {
-
     if (PLAYER.invincibility_timer) {
 	PLAYER.invincibility_timer--;
     }
@@ -80,7 +84,7 @@ inline void update_player_input(void) {
 	    speed = BOOST_SPEED;
 	}
 
-	/*
+	
 	if (KEY_PRESSED(J_LEFT)){
 	    PLAYER.body.dx = -speed;
 	}
@@ -93,22 +97,7 @@ inline void update_player_input(void) {
 	if (KEY_PRESSED(J_DOWN)){
 	    PLAYER.body.dy = speed;
 	}
-	*/
-	
-	if (KEY_RELEASED(J_LEFT)){
-	    audio_play_sfx(SFX_SHOOT);
-	}
-	if (KEY_RELEASED(J_RIGHT)){
-	    audio_play_sfx(SFX_EXPLODE);
-	}
-	if (KEY_RELEASED(J_UP)){
-	    audio_play_sfx(SFX_HIT);
-	}
-	if (KEY_RELEASED(J_DOWN)){
-	    audio_play_sfx(SFX_POWERUP);
-	}
-    }
-    
+    }    
     
     // Gestion du tir
     if (PLAYER.shoot_cooldown) {
@@ -116,6 +105,11 @@ inline void update_player_input(void) {
     } else if (KEY_PRESSED(J_B)) {
 	fire_shot(PLAYER.body.x, PLAYER.body.y-8, 0, -SHOT_SPEED);
 	PLAYER.shoot_cooldown = PLAYER_SHOOT_COOLDOWN_FRAMES;
+    }
+
+    //Gestion de la pause
+    if (KEY_RELEASED(J_START)){
+	game_state = GAME_STATE_PAUSE;
     }
     
 }
@@ -168,3 +162,4 @@ inline void draw_player(void) {
 				PLAYER.body.x, PLAYER.body.y);
     }
 }
+

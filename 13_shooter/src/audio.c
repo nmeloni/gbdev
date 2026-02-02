@@ -23,13 +23,20 @@ void audio_play_sfx(SfxId id) {
 static void sfx_shoot(void) {
    
     //version avec sweep
-    
+    /* 
     NR10_REG = 0x2D; // sweep up
     NR11_REG = 0x40;
     NR12_REG = 0xF1;
     NR13_REG = 0xC2;
     NR14_REG = 0x86;
-	
+    */
+    
+    NR10_REG = 0x1F; // sweep up
+    NR11_REG = 0x28;
+    NR12_REG = 0xF1;
+    NR13_REG = 0xEA;
+    NR14_REG = 0x86;
+    
  }
 
 static void sfx_explode(void) {

@@ -9,6 +9,9 @@
 #include "game.h"
 #include "body.h"
 
+#include "mini_boss_1_sprite.h"
+#include "mini_boss_2_sprite.h"
+
 #define BOSS_GAMESCREEN_X_START  (80u)
 #define BOSS_GAMESCREEN_Y_START  (48u)
 
@@ -32,7 +35,8 @@
 
 
 enum boss_ids {
-	MINI_BOSS_1 = 0
+    MINI_BOSS_1 = 0,
+    MINI_BOSS_2
 };
 
 typedef struct {

@@ -7,6 +7,7 @@
 
 #include "body.h"
 #include "game.h"
+#include "audio.h"
 #include "player.h"
 #include "shot_sprite.h"
 

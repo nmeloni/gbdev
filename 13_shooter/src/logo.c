@@ -3,18 +3,19 @@
 uint8_t logo_y;
 
 void init_logo(void){
+    DISPLAY_OFF;
     frame_counter = 600;
     logo_y = 80;
     set_bkg_data(0, melstudio_TILE_COUNT, melstudio_tiles);
     uint8_t x, y;
 
-    for(y = 0; y < 18; y++) {
-        for(x = 0; x < 20; x++) {
+    for(y = 0; y < 0x20; y++) {
+        for(x = 0; x < 0x20; x++) {
             set_bkg_tiles(x, y, 1, 1, 0);
         }
     }
     set_bkg_tiles(0,0,20,4,melstudio_map);
-    
+    DISPLAY_ON;
     move_bkg(0,logo_y);
     BGP_REG = 0xE4;
     SHOW_BKG;

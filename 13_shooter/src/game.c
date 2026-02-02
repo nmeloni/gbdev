@@ -9,9 +9,31 @@ void game_init(void) {
     game_state = GAME_STATE_LOGO;
     oam = 0;
     frame_counter = 0;
-    reset_player(PLAYER_MIN_X + (PLAYER_MAX_X - PLAYER_MIN_X)/2, PLAYER_MAX_Y - 16);
-
+    hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
     init_logo();
+}
+
+void pause(void){
+    if ( KEY_RELEASED(J_START) ){
+	game_state = GAME_STATE_PLAY;
+    }
+}
+
+void game_over(void){
+    if (frame_counter){
+	oam = 0;
+	update_shots();
+	update_enemies();
+	update_boss();
+	update_bullets();
+	update_powerup();
+	update_explosions();
+	scroll_background();
+	hide_sprites_range(oam,MAX_HARDWARE_SPRITES);
+	frame_counter--;
+    } else {
+	game_init();
+    }
 }
 
 void game_update(void) {
@@ -44,11 +66,11 @@ void game_update(void) {
 	break;
     case GAME_STATE_PAUSE:
 	// Handle pause state
-	update_player();
+	pause();
 	break;
     case GAME_STATE_GAME_OVER:
 	// Handle game over state
-	update_player();
+	game_over();
 	break;
     }
 
