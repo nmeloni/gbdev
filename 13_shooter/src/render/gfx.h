@@ -31,7 +31,10 @@
 #include "space_bkg_tileset.h"
 #include "space_bkg_tilemap.h"
 
+#define BKG_WHITE_TILE        0x80
+
 // Fonction d'initialisation de toutes les ressources graphiques
 void gfx_init(void);
+void clear_bkg(void);
 
 #endif // GFX_H

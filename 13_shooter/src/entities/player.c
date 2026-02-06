@@ -26,6 +26,7 @@ const uint16_t boost_speed_table_normalized[24] = {
 player_t PLAYER;
 void init_player(void) {
     init_body(&PLAYER.body, 0, 0);
+    PLAYER.active = 0;
     PLAYER.shoot_cooldown = 0;
     PLAYER.shoot_power = 0;
     PLAYER.invincibility_timer = 0;
@@ -33,18 +34,21 @@ void init_player(void) {
     PLAYER.boost = 0;
     PLAYER.lives = 3;
     PLAYER.metasprites = player_sprite_metasprites;
+     
 }
 
 void update_player(void){
     // gestion du joueur décomposée en plusieurs fonctions inline pour plus de clarté
     if (PLAYER.lives == 0){
-	game_state = GAME_STATE_GAME_OVER;
-	frame_counter = 300;
+	PLAYER.active = 0;
+	game_change_state(GAME_STATE_GAME_OVER);
 	return;
     }
-    update_player_input();
-    update_body_position(&PLAYER.body);
-    check_player_bounds();
+    if (PLAYER.active){
+	update_player_input();
+	update_body_position(&PLAYER.body);
+	check_player_bounds();
+    }
     draw_player();     
 }
 

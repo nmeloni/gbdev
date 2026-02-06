@@ -10,7 +10,7 @@ typedef enum {
     SFX_POWERUP,
 } SfxId;
 
-void audio_init(void);
+void init_audio(void);
 void audio_play_sfx(SfxId id);
 
 #endif // AUDIO_H

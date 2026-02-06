@@ -11,6 +11,8 @@
 #include "bullet.h"
 #include "powerup.h"
 
+#include "level1.h"
+
 enum enemy_spawn_list_types {
     ENEMY_1_DOWN_NO_SHOOT = 0,
     ENEMY_1_DOWN_FAST_NO_SHOOT ,
@@ -20,16 +22,22 @@ enum enemy_spawn_list_types {
     ENEMY_2_LATERAL_SHOOT_CIRCULAR_LEFT 
 };
 
-#define EVENT_NONE                0
-#define EVENT_SPAWN_ENEMY         1
-#define EVENT_SPAWN_POWERUP_SHOT  2
-#define EVENT_SPAWN_BOSS          3
-#define EVENT_END_LEVEL    255
+enum level_event_types {
+	EVENT_NONE = 0,
+	EVENT_INIT_LEVEL,
+	EVENT_LEVEL_INTRO,
+	EVENT_MOVE_PLAYER,
+	EVENT_ACTIVATE_PLAYER,
+	EVENT_SPAWN_ENEMY,
+	EVENT_SPAWN_POWERUP_SHOT,
+	EVENT_SPAWN_BOSS,
+	EVENT_END_LEVEL
+};
 
-void init_level(const uint8_t  (*level_events)[5]);
+void load_level(uint8_t level_id);
 void update_level(void);
 
 extern const uint8_t  (*LEVEL_EVENTS)[5];
-extern const uint8_t level_demo_events[][5];
+extern const uint8_t  (*ENEMY_SPAWN_LIST)[6];
 
 #endif // LEVEL_H

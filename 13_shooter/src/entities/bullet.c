@@ -11,7 +11,7 @@ uint8_t active_bullet_index = 0;
 const uint8_t bullet_bbox[][2] = {
     {3, 3},   // BULLET_TYPE_SMALL
     {5, 5},     // BULLET_TYPE_LARGE
-    {6, 8}
+    {4, 6},    // BULLET_TYPE_LASER
 };
 
 void init_bullets(void) {

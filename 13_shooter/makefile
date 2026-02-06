@@ -13,17 +13,42 @@ PROJECTNAME    = shooter
 
 SRCDIR      = src
 OBJDIR      = obj
+SRCDIRS      = src \
+	src/core \
+	src/entities \
+	src/systems \
+	src/render \
+	src/utils \
+	src/input \
+	src/audio \
+	src/levels
+
+OBJDIRS      = $(subst src, obj, $(SRCDIR))
 RESDIR      = res
 
-INC = -Ires -Isrc
+INC =   -Ires \
+        -Isrc \
+        -Isrc/core \
+        -Isrc/entities \
+        -Isrc/systems \
+        -Isrc/render \
+        -Isrc/utils \
+	-Isrc/input \
+	-Isrc/audio \
+	-Isrc/levels 
+
+
+
 LCCFLAGS   += $(INC) 
 
 BINS	    = $(PROJECTNAME).gb
-CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c)))
-ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
-OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
+CSOURCES    = $(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c))
+RESOURCES  = $(foreach dir,$(RESDIR), $(wildcard $(dir)/*.c))
+OBJS        = $(CSOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o) \
+		$(RESOURCES:$(RESDIR)/%.c=$(OBJDIR)/%.o)
 
 all:	prepare $(BINS)
+
 
 # Commande pour générer les ressources
 resources:
@@ -31,7 +56,9 @@ resources:
 	@$(MAKE) -C $(RESDIR)
 
 # Compile .c files in "src/" to .o object files
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c 
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c
+	@echo "Compiling $< to $@"
+	@mkdir -p $(dir $@)
 	$(LCC) $(LCCFLAGS) -c -o $@ $<
 
 # Compile .c files in "res/" to .o object files
@@ -52,9 +79,9 @@ $(BINS):	$(OBJS)
 	$(LCC) $(LCCFLAGS) -o $(BINS) $(OBJS)
 
 prepare:
-	mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 clean:
 	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
-	rm -f  $(OBJDIR)/*.* 
+	rm -rf  $(OBJDIR)/* 
 

@@ -5,7 +5,7 @@ static void sfx_explode(void);
 static void sfx_hit(void);
 static void sfx_powerup(void);
 
-void audio_init(void) {
+void init_audio(void) {
     NR52_REG = 0x80; // Sound ON
     NR50_REG = 0x77; // Volume max L/R
     NR51_REG = 0xFF; // Tous canaux vers L/R

@@ -35,6 +35,7 @@
 
 // États possibles du jeu
 typedef enum {
+    GAME_STATE_INIT,
     GAME_STATE_LOGO,
     GAME_STATE_TITLE_SCREEN,
     GAME_STATE_PLAY,
@@ -51,7 +52,8 @@ extern uint16_t frame_counter;
 
 // Initialisation du jeu
 void game_init(void);
-
+// Changement d'état du jeu
+void game_change_state(game_state_t new_state);
 // Mise à jour du jeu (appelée une fois par frame)
 void game_update(void);
 
