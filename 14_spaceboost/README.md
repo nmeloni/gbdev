@@ -11,7 +11,7 @@ Prototype jouable – Construction du premier niveau
 - [x] Lecture des entrées joueur
 - [x] Déplacement du vaisseau joueur
 - [x] Boost (accélération / décélération)
-- [v] Tir joueur de base
+- [x] Tir joueur de base
 - [ ] Pool statique de bullets
 - [ ] Déplacement optimisé des bullets ennemies
 - [ ] Hitbox précises (indépendantes des sprites)
