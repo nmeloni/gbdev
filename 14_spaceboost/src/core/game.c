@@ -107,34 +107,17 @@ static void init_gameplay(void) {
     init_enemies();
     //init_bullets();
     //init_powerup();
-    //init_explosions();
+    init_explosions();
     //init_boss();
     //init_background();
     //init_audio();
 
-    
-    
     PLAYER->body.x = PLAYER_START_X;
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
 
     add_enemy(80,32, ENEMY_DRONE, WEAPON_NONE, 10);
-    ENEMY_POOL[0].body.dy = 1;
-
-    add_enemy(60,32, ENEMY_DRONE, WEAPON_NONE, 10);
-    ENEMY_POOL[1].body.dy = 1;
-
-    add_enemy(100,32, ENEMY_DRONE, WEAPON_NONE, 10);
-    ENEMY_POOL[2].body.dy = 1;
-
-    add_enemy(20,32, ENEMY_DRONE, WEAPON_NONE, 10);
-    ENEMY_POOL[3].body.dy = 1;
-
-    add_enemy(30,32, ENEMY_DRONE, WEAPON_NONE, 10);
-    ENEMY_POOL[4].body.dy = 1;
-
-    add_enemy(40,32, ENEMY_DRONE, WEAPON_NONE, 10);
-    ENEMY_POOL[5].body.dy = 1;
+    ENEMY_POOL[0].body.dy = 0;
 
     // Pas de gestion de niveau pour le moment
     // load_level(1);
@@ -152,7 +135,7 @@ static void update_gameplay(void) {
     update_enemies();
     //if (BOSS.active) update_boss();
     //update_powerup();
-    //update_explosions();
+    update_explosions();
     update_player();
     //scroll_background();
     //update_level();

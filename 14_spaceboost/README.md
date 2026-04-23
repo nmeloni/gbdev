@@ -22,7 +22,7 @@ Prototype jouable – Construction du premier niveau
 
 ## 👾 Ennemis
 
-- [ ] Système d’ennemis générique
+- [x] Système d’ennemis générique
 - [ ] 1 type d’ennemi fonctionnel
 - [ ] 2–3 variations d’ennemis
 - [ ] Patterns de déplacement

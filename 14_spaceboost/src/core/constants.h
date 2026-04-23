@@ -101,9 +101,10 @@
 #define BOSS_TILE_OFFSET      80u
 
 // ─── Durées et timings ────────────────────────────────────────────────────────
-#define EXPLOSION_DURATION    32u
-#define EXPLOSION_FRAMES      4u
-#define HIT_FLASH_DURATION    6u
+#define EXPLOSION_DURATION         32u
+#define EXPLOSION_ANIM_SPEED_LOG2   3u
+#define EXPLOSION_FRAMES            4u
+#define HIT_FLASH_DURATION          6u
 
 // ─── Score ────────────────────────────────────────────────────────────────────
 #define SCORE_ENEMY_1         10u

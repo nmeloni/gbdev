@@ -30,6 +30,13 @@ typedef struct{
     uint8_t active;
 } Shot;
 
+// ─── Structure Explosion ─────────────────────────────────────────────────────
+typedef struct {
+    uint8_t x;
+    uint8_t y;
+    uint8_t frame_timer;
+} Explosion;
+
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
 typedef enum {
   ENEMY_DRONE,

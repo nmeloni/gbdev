@@ -1,5 +1,6 @@
 #include <stdint.h>
 
+#include "explosion.h"
 #include "game.h"
 #include "body.h"
 #include "utils.h"
@@ -13,6 +14,7 @@
 Enemy ENEMY_POOL[MAX_ENEMIES];
 uint8_t ACTIVE_ENEMY_POOL[MAX_ENEMIES];
 uint8_t active_enemy_count = 0;
+
 
 const uint8_t enemy_bbox[][2] = {
     [ENEMY_DRONE] = {8,8}
@@ -135,6 +137,7 @@ static inline void handle_enemy_hp(Enemy *e){
 
 static inline void destroy_enemy(Enemy *e){
     desactivate_enemy(e);
+    add_explosion(e->body.x, e->body.y);
 }
 
 static inline void handle_enemy_bounds(Enemy *e){

@@ -78,7 +78,6 @@ void update_shots(void) {
 }
 
 inline void desactivate_shot(Shot *s){
-    EMU_printf("desactivate shot\n");
     s->active = 0;
 }
 

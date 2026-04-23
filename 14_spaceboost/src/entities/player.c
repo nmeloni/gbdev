@@ -67,8 +67,8 @@ void update_player(void) {
         update_body_position(&PLAYER->body);
         check_player_bounds();
     }
-//    EMU_printf("AFFICHAGE JOUEUR %d %d", PLAYER->body.x, PLAYER->body.y); 
-    draw_player();  // toujours dessiné : visible pendant l'intro (level_intro gère le mouvement)
+    draw_player();  // toujours dessiné : visible pendant l'intro
+		    // (level_intro gère le mouvement)
 }
 
 static void update_player_input(void) {
