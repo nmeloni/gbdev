@@ -1,40 +1,28 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "global.h"
-#include "spaceship_sprite.h"
+#include <gb/gb.h>
+#include <stdint.h>
+#include <gbdk/metasprites.h>
 
-#define SPACESHIP_TILE_OFFSET   (0)
+#include "game_types.h"
+#include "constants.h"
 
-#define PLAYER_MIN_X            ((GAMESCREEN_X_ORIGIN+8))
-#define PLAYER_MAX_X            ((GAMESCREEN_X_END-8))
-#define PLAYER_MIN_Y            ((GAMESCREEN_Y_ORIGIN+8))
-#define PLAYER_MAX_Y            ((GAMESCREEN_Y_END-8))
-
-#define PLAYER_INIT_X           (84)
-#define PLAYER_INIT_Y           ((uint16_t) 128)
-
-#define NORMAL_SPEED            (12<<4)
-#define BOOST_SPEED             (14<<4)
-#define BOOST_LAG               (16)
-#define BOOST_DURATION          (48)
-
-
-
+#define PLAYER_ANIMATION_FRAME_CENTER 0
+#define PLAYER_ANIMATION_FRAME_LEFT   1
+#define PLAYER_ANIMATION_FRAME_RIGHT  2
 
 typedef struct {
-    uint16_t x,y;
-    int16_t dx, dy;
-    uint8_t px, py;
-    uint8_t last_boost;
+    body_t  body;
+    uint8_t active;
     uint8_t boost;
-
+    uint8_t invincibility_timer;
     const metasprite_t * const * metasprites;
 } player_t;
 
 extern player_t PLAYER;
 
-void init_player(void);
-void handle_player(void);
+void player_init(void);
+void player_update(void);
 
 #endif // PLAYER_H

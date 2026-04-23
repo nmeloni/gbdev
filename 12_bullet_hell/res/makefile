@@ -17,11 +17,15 @@ all: $(C_FILES)
 	@echo "Converting $< to $@"
 	$(PNG2ASSET) $< -c $@ -sw 8 -sh 16 -spr8x16 -noflip -keep_palette_order -tiles_only
 
-spaceship_sprite.c: $(PNG_DIR)/spaceship_sprite.png
+player_sprite.c: $(PNG_DIR)/player_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
-enemy_1_sprite.c: $(PNG_DIR)/enemy_1_sprite.png
-	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+# regles spécifiques pour les tilesmap
+space_bkg_tileset.c: $(PNG_DIR)/space_bkg_tileset.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only
+
+space_bkg_tilemap.c: $(PNG_DIR)/space_bkg_tilemap.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -maps_only -source_tileset $(PNG_DIR)/space_bkg_tileset.png
 
 
 # Nettoyer les fichiers générés
