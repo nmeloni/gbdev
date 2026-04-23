@@ -4,14 +4,14 @@
 #include <gbdk/platform.h>
 #include <gbdk/metasprites.h>
 
-BANKREF(mini_boss_2_sprite)
+BANKREF(boss_dreadnought_sprite)
 
-const palette_color_t mini_boss_2_sprite_palettes[4] = {
+const palette_color_t boss_dreadnought_sprite_palettes[4] = {
 	RGB8(  0,  0,  0), RGB8(255,255,255), RGB8(169,169,169), RGB8( 84, 84, 84)
 	
 };
 
-const uint8_t mini_boss_2_sprite_tiles[384] = {
+const uint8_t boss_dreadnought_sprite_tiles[384] = {
 	0x00,0x00,0x00,0x00,
 	0x00,0x04,0x07,0x09,
 	0x04,0x07,0x14,0x1b,
@@ -122,7 +122,7 @@ const uint8_t mini_boss_2_sprite_tiles[384] = {
 	
 };
 
-const metasprite_t mini_boss_2_sprite_metasprite0[] = {
+const metasprite_t boss_dreadnought_sprite_metasprite0[] = {
 	METASPR_ITEM(-16, -24, 0, S_PAL(0)),
 	METASPR_ITEM(0, 8, 2, S_PAL(0)),
 	METASPR_ITEM(0, 8, 4, S_PAL(0)),
@@ -138,6 +138,6 @@ const metasprite_t mini_boss_2_sprite_metasprite0[] = {
 	METASPR_TERM
 };
 
-const metasprite_t* const mini_boss_2_sprite_metasprites[1] = {
-	mini_boss_2_sprite_metasprite0
+const metasprite_t* const boss_dreadnought_sprite_metasprites[1] = {
+	boss_dreadnought_sprite_metasprite0
 };

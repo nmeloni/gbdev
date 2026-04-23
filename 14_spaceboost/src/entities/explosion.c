@@ -1,5 +1,4 @@
 #include "explosion.h"
-// Stub Phase 1 — implémentation complète en Phase 4
 
 explosion_t EXPLOSION_QUEUE[MAX_EXPLOSIONS];
 

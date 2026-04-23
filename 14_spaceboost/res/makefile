@@ -31,10 +31,10 @@ enemy_%_sprite.c: $(PNG_DIR)/enemy_%_sprite.png
 
 
 
-mini_boss_1_sprite.c: $(PNG_DIR)/mini_boss_1_sprite.png
+boss_beholder_sprite.c: $(PNG_DIR)/boss_beholder_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 32 -sh 32 -spr8x16 -noflip -keep_palette_order
 
-mini_boss_2_sprite.c: $(PNG_DIR)/mini_boss_2_sprite.png
+boss_dreadnought_sprite.c: $(PNG_DIR)/boss_dreadnought_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 48 -sh 32 -spr8x16 -noflip -keep_palette_order
 
 

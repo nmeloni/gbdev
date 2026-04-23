@@ -4,14 +4,14 @@
 #include <gbdk/platform.h>
 #include <gbdk/metasprites.h>
 
-BANKREF(enemy_3_sprite)
+BANKREF(enemy_sphere_sprite)
 
-const palette_color_t enemy_3_sprite_palettes[4] = {
+const palette_color_t enemy_sphere_sprite_palettes[4] = {
 	RGB8(  0,  0,  0), RGB8(255,255,255), RGB8(170,170,170), RGB8( 85, 85, 85)
 	
 };
 
-const uint8_t enemy_3_sprite_tiles[128] = {
+const uint8_t enemy_sphere_sprite_tiles[128] = {
 	0x10,0x1f,0x5c,0x63,
 	0x38,0x47,0x20,0x59,
 	0x01,0x31,0x03,0x01,
@@ -50,18 +50,18 @@ const uint8_t enemy_3_sprite_tiles[128] = {
 	
 };
 
-const metasprite_t enemy_3_sprite_metasprite0[] = {
+const metasprite_t enemy_sphere_sprite_metasprite0[] = {
 	METASPR_ITEM(-8, -8, 0, S_PAL(0)),
 	METASPR_ITEM(0, 8, 2, S_PAL(0)),
 	METASPR_TERM
 };
 
-const metasprite_t enemy_3_sprite_metasprite1[] = {
+const metasprite_t enemy_sphere_sprite_metasprite1[] = {
 	METASPR_ITEM(-8, -8, 4, S_PAL(0)),
 	METASPR_ITEM(0, 8, 6, S_PAL(0)),
 	METASPR_TERM
 };
 
-const metasprite_t* const enemy_3_sprite_metasprites[2] = {
-	enemy_3_sprite_metasprite0, enemy_3_sprite_metasprite1
+const metasprite_t* const enemy_sphere_sprite_metasprites[2] = {
+	enemy_sphere_sprite_metasprite0, enemy_sphere_sprite_metasprite1
 };

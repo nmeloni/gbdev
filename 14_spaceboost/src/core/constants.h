@@ -48,8 +48,9 @@
 #define PLAYER_ANIMATION_FRAME_RIGHT 2
 
 // ─── Tirs joueur ──────────────────────────────────────────────────────────────
-#define SHOT_SPEED            48
-#define SHOT_ONSCREEN_OFFSET (-4)
+#define SHOT_SPEED              48
+#define SHOT_ONSCREEN_X_OFFSET (-4)
+#define SHOT_ONSCREEN_Y_OFFSET (-8)
 
 #define SHOT_LVL1_WIDTH        1u
 #define SHOT_LVL1_HEIGHT       2u
@@ -62,9 +63,26 @@
 #define SHOT_POWER_LVL_2       2u
 #define SHOT_POWER_LVL_3       4u
 
+#define SHOT_BOUND_FRAME_SKIP  8u
+
 // ─── Physique (virgule fixe 4 bits) ───────────────────────────────────────────
 #define FRAC_SHIFT            4
 #define FRAC_MASK             0x0F
+
+// ─── Enemy ────────────────────────────────────────────────────────────────────
+// Marges de détection hors-écran (permet de sortir légèrement)
+#define ENEMY_MIN_X     0u
+#define ENEMY_MIN_Y     8u
+#define ENEMY_MAX_X     168u
+#define ENEMY_MAX_Y     144u
+
+#define ENEMY_IS_HIT_DURATION    24u
+#define ENEMY_ANIM_DURATION       8u
+#define ENEMY_ANIM_DURATION_LOG2  3u
+
+#define ENEMY_BOUND_HP_FRAME_SKIP 8u
+#define ENEMY_VS_SHOT_FRAME_SKIP  4u
+#define ENEMY_VS_SHOT_MAN_DIST   16u
 
 // ─── Offsets de tiles dans la VRAM sprite ────────────────────────────────────
 // Chaque entrée = index de départ dans la table sprite hardware (0-127 en 8x16)
@@ -92,5 +110,6 @@
 #define SCORE_ENEMY_2         20u
 #define SCORE_ENEMY_3         30u
 #define SCORE_BOSS            200u
+
 
 #endif // CONSTANTS_H

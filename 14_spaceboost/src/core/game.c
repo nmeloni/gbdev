@@ -1,5 +1,6 @@
 #include "game.h"
 #include "constants.h"
+#include "game_types.h"
 #include "gfx.h"
 #include "background.h"
 #include "logo.h"
@@ -103,7 +104,7 @@ static void init_gameplay(void) {
     gfx_init();
     init_player();
     init_shots();
-    //init_enemies();
+    init_enemies();
     //init_bullets();
     //init_powerup();
     //init_explosions();
@@ -111,11 +112,30 @@ static void init_gameplay(void) {
     //init_background();
     //init_audio();
 
-    EMU_printf("Joueur position: %d %d\n", PLAYER_START_X, PLAYER_START_Y);
+    
+    
     PLAYER->body.x = PLAYER_START_X;
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
-    EMU_printf("Joueur position: %d %d\n", PLAYER->body.x,PLAYER->body.y);
+
+    add_enemy(80,32, ENEMY_DRONE, WEAPON_NONE, 10);
+    ENEMY_POOL[0].body.dy = 1;
+
+    add_enemy(60,32, ENEMY_DRONE, WEAPON_NONE, 10);
+    ENEMY_POOL[1].body.dy = 1;
+
+    add_enemy(100,32, ENEMY_DRONE, WEAPON_NONE, 10);
+    ENEMY_POOL[2].body.dy = 1;
+
+    add_enemy(20,32, ENEMY_DRONE, WEAPON_NONE, 10);
+    ENEMY_POOL[3].body.dy = 1;
+
+    add_enemy(30,32, ENEMY_DRONE, WEAPON_NONE, 10);
+    ENEMY_POOL[4].body.dy = 1;
+
+    add_enemy(40,32, ENEMY_DRONE, WEAPON_NONE, 10);
+    ENEMY_POOL[5].body.dy = 1;
+
     // Pas de gestion de niveau pour le moment
     // load_level(1);
 }
@@ -129,7 +149,7 @@ static void update_gameplay(void) {
 
     update_shots();
     //update_bullets();
-    //update_enemies();
+    update_enemies();
     //if (BOSS.active) update_boss();
     //update_powerup();
     //update_explosions();

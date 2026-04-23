@@ -17,6 +17,7 @@ void init_shots(void);
 void fire_shot(uint8_t x, uint8_t y, int8_t dx, int8_t dy);
 void update_shots(void);
 
+inline void desactivate_shot(Shot *s);
 inline void kill_active_shot(uint8_t j);
 
 #endif // SHOT_H

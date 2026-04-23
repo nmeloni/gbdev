@@ -20,16 +20,3 @@ inline void update_body_position(Body* body) {
     body->fy &= FRAC_MASK;
 }
 
-inline uint8_t clamp(uint8_t value, uint8_t min, uint8_t max) {
-    value = value + ((min - value) * (min > value));
-    value = value - ((value - max) * (max < value));
-    return value;
-}
-
-inline uint8_t is_inside_bounds(uint8_t value, uint8_t min, uint8_t max) {
-    return (value >= min) & (value <= max);
-}
-
-inline uint8_t is_outside_bounds(uint8_t value, uint8_t min, uint8_t max) {
-    return (value < min) | (value > max);
-}

@@ -30,4 +30,29 @@ typedef struct{
     uint8_t active;
 } Shot;
 
+// ─── Structure Enemy ─────────────────────────────────────────────────────────
+typedef enum {
+  ENEMY_DRONE,
+  ENEMY_NONE = 255
+} EnemyType;
+
+typedef enum {
+    WEAPON_SMALL_BULLET,
+    WEAPON_LARGE_BULLET,
+    WEAPON_LASER,
+    WEAPON_NONE = 255
+} EnemyWeapon;
+
+typedef struct {
+    Body    body;
+    uint8_t active;
+    EnemyType type;
+    EnemyWeapon weapon;
+    int8_t  hp;
+    uint8_t ishit;
+    uint8_t frame_timer;
+} Enemy;
+
+
+
 #endif // TYPES_H

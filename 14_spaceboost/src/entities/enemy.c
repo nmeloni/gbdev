@@ -1,14 +1,196 @@
+#include <stdint.h>
+
+#include "game.h"
+#include "body.h"
+#include "utils.h"
 #include "enemy.h"
+#include "shot.h"
+#include "player.h"
+
+#include "enemy_drone_sprite.h"
 // Stub Phase 1 — implémentation complète en Phase 3
 
-enemy_t ENEMY_POOL[MAX_ENEMIES];
+Enemy ENEMY_POOL[MAX_ENEMIES];
 uint8_t ACTIVE_ENEMY_POOL[MAX_ENEMIES];
-uint8_t active_enemy_index = 0;
+uint8_t active_enemy_count = 0;
 
-void init_enemies(void) {}
-void add_enemy(uint8_t x, uint8_t y, uint8_t type, uint8_t weapon, uint8_t hp,
-               uint8_t move_pattern, uint8_t shoot_pattern, uint8_t shoot_pattern_speed) {
-    (void)x; (void)y; (void)type; (void)weapon; (void)hp;
-    (void)move_pattern; (void)shoot_pattern; (void)shoot_pattern_speed;
+const uint8_t enemy_bbox[][2] = {
+    [ENEMY_DRONE] = {8,8}
+};
+
+const uint8_t enemy_tile_offsets[] = {
+    [ENEMY_DRONE] = ENEMY_1_TILE_OFFSET
+};
+
+const const metasprite_t* const * enemy_metasprites[] = {
+    enemy_drone_sprite_metasprites
+};
+
+static inline void desactivate_enemy(Enemy *e);
+static inline void remove_enemy(uint8_t * ae);
+static inline void enemy_get_hit(Enemy *e, uint8_t damage);
+static inline void destroy_enemy(Enemy *e);
+
+static inline void handle_enemy_hp(Enemy *e);
+static inline void handle_enemy_bounds(Enemy *e);
+static inline void handle_enemy_vs_shot_collision(Enemy *e);
+static inline void handle_enemy_move_pattern(Enemy *e);
+static inline void handle_enemy_shot_pattern(Enemy *e);
+static inline void draw_enemy(Enemy *e);
+
+
+void init_enemies(void) {
+    Enemy *e = &ENEMY_POOL[0];
+    for (uint8_t i = 0; i < MAX_ENEMIES; i++,e++){
+	init_body( &(e->body), 0, 0);
+	e->type = ENEMY_NONE;
+	e->weapon = WEAPON_NONE;
+	e->hp = 0;
+	e->ishit = 0;
+	e->frame_timer = 0;
+	e->active = 0;
+    }
 }
-void update_enemies(void) {}
+
+void add_enemy(uint8_t x, uint8_t y, EnemyType type, EnemyWeapon weapon, uint8_t hp){
+    if (active_enemy_count >= MAX_ENEMIES) return;
+
+    // Cherche un slot libre dans le pool d'ennemis
+    Enemy *e = &ENEMY_POOL[0];
+    for (uint8_t i = 0; i < MAX_ENEMIES; i++,e++){
+	if (e->active) continue;
+
+	//On a trouvé un slot de libre
+	init_body( &(e->body), x, y);
+	e->type = type;
+	e->weapon = weapon;
+	e->hp = hp;
+	e->ishit = 0;
+	e->frame_timer = 0;
+	e->active = 1;
+	ACTIVE_ENEMY_POOL[active_enemy_count++] = i;
+	return;
+    }
+}
+
+void update_enemies(void) {
+    //On boucle uniquement sur les ennemies actifs
+    uint8_t j = 0;
+    uint8_t *ae = &ACTIVE_ENEMY_POOL[0];
+
+    while (j < active_enemy_count) {
+	uint8_t i = *ae;
+
+	Enemy *e = &ENEMY_POOL[i];
+	if (!e->active) {
+	    //si l'ennemi n'est plus actif on le supprime du pool actif
+	    //et on passe à l'ennemie suivant
+	    remove_enemy(ae);
+	    continue;
+	}
+
+	// Gestion des hp / collision avec frame skip
+	if (frame_counter % ENEMY_BOUND_HP_FRAME_SKIP == 1) {
+	    //On vérifie s'il reste de hp à l'ennemie
+	    handle_enemy_hp(e);
+	
+	    //On gère la sortie de de l'écran
+	    handle_enemy_bounds(e);
+	}
+	
+	//On gère la collision avec les tirs du joueur avec frame skip
+	if (frame_counter % ENEMY_VS_SHOT_FRAME_SKIP == 2) {
+	    handle_enemy_vs_shot_collision(e);
+	}
+	//On gère le pattern de mouvement
+	handle_enemy_move_pattern(e);
+
+	//On gère le pattern de tir
+	handle_enemy_shot_pattern(e);
+
+	//On affiche
+	draw_enemy(e);
+
+	ae++;
+	j++;
+    }
+}
+
+
+static inline void desactivate_enemy(Enemy *e){
+    e->active = 0;
+}
+static inline void remove_enemy(uint8_t * ae){
+    *ae = ACTIVE_ENEMY_POOL[--active_enemy_count];
+}
+
+static inline void enemy_get_hit(Enemy *e, uint8_t damage){
+    e->hp -= damage;
+    e->ishit = ENEMY_IS_HIT_DURATION;
+}
+
+static inline void handle_enemy_hp(Enemy *e){
+    if (e->hp <= 0) destroy_enemy(e);
+}
+
+static inline void destroy_enemy(Enemy *e){
+    desactivate_enemy(e);
+}
+
+static inline void handle_enemy_bounds(Enemy *e){
+    if ( is_outside_bounds(e->body.x, ENEMY_MIN_X, ENEMY_MAX_X) ||
+	 is_outside_bounds(e->body.x, ENEMY_MIN_Y, ENEMY_MAX_Y))
+	desactivate_enemy(e);
+}
+
+static inline void handle_enemy_vs_shot_collision(Enemy *e){
+    uint8_t *ac = &ACTIVE_SHOTS[0];
+    const uint8_t * sbbox = shot_bbox[PLAYER->shoot_power];
+    const uint8_t * ebbox = enemy_bbox[e->type];
+    
+    for (uint8_t j = 0; j < active_shot_index; j++,ac++) {
+        uint8_t i = *ac;
+	Shot *s = &SHOTS_POOL[i];
+
+	// On test d'abord la distance manathan pour eliminer les
+	// entité trop distantes
+
+	if (manathan_distance(e->body.x, e->body.y, s->body.x, s->body.y) >=
+	    ENEMY_VS_SHOT_MAN_DIST)
+	    continue;
+
+	
+	
+	if (check_collision_box(s->body.x, s->body.y, sbbox[0], sbbox[1],
+				e->body.x, e->body.y, ebbox[0], ebbox[1])){
+	    enemy_get_hit(e, shot_power_table[PLAYER->shoot_power]);
+	    desactivate_shot(s);
+	    kill_active_shot(j);
+	    return;
+	}
+    }
+}
+
+static inline void handle_enemy_move_pattern(Enemy *e){
+    update_body_position(&e->body);
+}
+
+static inline void handle_enemy_shot_pattern(Enemy *e){e;}
+
+static inline void draw_enemy(Enemy *e){
+    uint8_t oam_prop = OAMF_PAL0;
+    
+    uint8_t frame = (e->frame_timer & ENEMY_ANIM_DURATION) >> ENEMY_ANIM_DURATION_LOG2;
+
+    e->frame_timer++;
+    if (e->ishit){
+	e->ishit--;
+	oam_prop = OAMF_PAL1;
+    }
+    // Mise à jour du sprite de l'ennemi
+    oam+= move_metasprite_ex(enemy_metasprites[e->type][frame],
+			     enemy_tile_offsets[e->type], oam_prop ,oam,
+			     e->body.x,
+			     e->body.y);
+    
+}
