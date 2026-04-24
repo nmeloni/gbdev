@@ -99,8 +99,4 @@ typedef struct {
     StaticPatternManager smp; //static Move Manager
 } Enemy;
 
-
-
-
-
 #endif // TYPES_H

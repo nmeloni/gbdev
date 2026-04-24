@@ -31,7 +31,8 @@
 #define PLAYER_INVINCIBILITY  191u
 #define PLAYER_SHOT_COOLDOWN  12u
 #define PLAYER_BOOST_DURATION 48u
-
+#define PLAYER_BBOX_W          1u
+#define PLAYER_BBOX_H          1u
 // Limites basées sur l'analyse des offsets metasprite (METASPR_ITEM(dy,dx,dtile,props))
 // Entry 0 : dx=-8 → OAM_x = body.x-8 → screen cols body.x-16 à body.x-9  (gauche)
 // Entry 1 : dx=+8 → OAM_x = body.x+8 → screen cols body.x   à body.x+7   (droite)
@@ -83,10 +84,11 @@
 #define ENEMY_ANIM_DURATION       8u
 #define ENEMY_ANIM_DURATION_LOG2  3u
 
-#define ENEMY_BOUND_HP_FRAME_SKIP 8u
-#define ENEMY_VS_SHOT_FRAME_SKIP  4u
-#define ENEMY_VS_SHOT_MAN_DIST   16u
-
+#define ENEMY_BOUND_HP_FRAME_SKIP    8u
+#define ENEMY_VS_SHOT_FRAME_SKIP     4u
+#define ENEMY_VS_SHOT_MAN_DIST      16u
+#define ENEMY_VS_PLAYER_FRAME_SKIP   2u
+#define ENEMY_VS_PLAYER_MAN_DIST    16u
 // ─── Offsets de tiles dans la VRAM sprite ────────────────────────────────────
 // Chaque entrée = index de départ dans la table sprite hardware (0-127 en 8x16)
 // Layout séquentiel calculé depuis les TILE_COUNT de chaque sprite :

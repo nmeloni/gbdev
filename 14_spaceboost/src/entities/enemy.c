@@ -38,6 +38,9 @@ const const metasprite_t* const * enemy_metasprites[] = {
     enemy_drone_sprite_metasprites
 };
 
+static uint8_t shot_bbox_w, shot_bbox_h;
+static uint8_t enemy_bbox_w, enemy_bbow_h;
+
 static inline void desactivate_enemy(Enemy *e);
 static inline void remove_enemy(uint8_t * ae);
 static inline void enemy_get_hit(Enemy *e, uint8_t damage);
@@ -46,6 +49,7 @@ static inline void destroy_enemy(Enemy *e);
 static inline void handle_enemy_hp(Enemy *e);
 static inline void handle_enemy_bounds(Enemy *e);
 static inline void handle_enemy_vs_shot_collision(Enemy *e);
+static inline void handle_enemy_vs_player(Enemy *e);
 static inline void handle_enemy_move_pattern(Enemy *e);
 static inline void handle_enemy_shot_pattern(Enemy *e);
 static inline void draw_enemy(Enemy *e);
@@ -92,11 +96,16 @@ void update_enemies(void) {
     //On boucle uniquement sur les ennemies actifs
     uint8_t j = 0;
     uint8_t *ae = &ACTIVE_ENEMY_POOL[0];
-
+    shot_bbox_w = shot_bbox[PLAYER->shot_power][0];
+    shot_bbox_h = shot_bbox[PLAYER->shot_power][1];
     while (j < active_enemy_count) {
 	uint8_t i = *ae;
 
 	Enemy *e = &ENEMY_POOL[i];
+	const uint8_t * ebbox =  enemy_bbox[e->type];
+	enemy_bbox_w = ebbox[0];
+	enemy_bbow_h = ebbox[1];
+
 	if (!e->active) {
 	    //si l'ennemi n'est plus actif on le supprime du pool actif
 	    //et on passe à l'ennemie suivant
@@ -117,6 +126,12 @@ void update_enemies(void) {
 	if (frame_counter % ENEMY_VS_SHOT_FRAME_SKIP == 2) {
 	    handle_enemy_vs_shot_collision(e);
 	}
+	
+	//On gère les collisions avec le joueur avec frame skip
+	if (frame_counter % ENEMY_VS_PLAYER_FRAME_SKIP == 0) {
+	    handle_enemy_vs_player(e);
+	}
+	
 	//On gère le pattern de mouvement
 	handle_enemy_move_pattern(e);
 
@@ -162,8 +177,7 @@ static inline void handle_enemy_bounds(Enemy *e){
 
 static inline void handle_enemy_vs_shot_collision(Enemy *e){
     uint8_t *ac = &ACTIVE_SHOTS[0];
-    const uint8_t * sbbox = shot_bbox[PLAYER->shot_power];
-    const uint8_t * ebbox = enemy_bbox[e->type];
+    
     
     for (uint8_t j = 0; j < active_shot_index; j++,ac++) {
         uint8_t i = *ac;
@@ -176,8 +190,8 @@ static inline void handle_enemy_vs_shot_collision(Enemy *e){
 	    ENEMY_VS_SHOT_MAN_DIST)
 	    continue;
 
-	if (check_collision_box(s->body.x, s->body.y, sbbox[0], sbbox[1],
-				e->body.x, e->body.y, ebbox[0], ebbox[1])){
+	if (check_collision_box(s->body.x, s->body.y, shot_bbox_w, shot_bbox_h,
+				e->body.x, e->body.y, enemy_bbox_w, enemy_bbow_h)){
 	    enemy_get_hit(e, shot_power_table[PLAYER->shot_power]);
 	    desactivate_shot(s);
 	    kill_active_shot(j);
@@ -185,6 +199,21 @@ static inline void handle_enemy_vs_shot_collision(Enemy *e){
 	}
     }
 }
+
+static inline void handle_enemy_vs_player(Enemy *e) {
+    if (PLAYER->invincibility_timer) return;
+    if (manathan_distance(PLAYER->body.x, PLAYER->body.y,
+			  e->body.x, e->body.y) <= ENEMY_VS_PLAYER_MAN_DIST){
+	//si la distance de manathan est faible on teste la collision
+	if (check_collision_box(PLAYER->body.x,  PLAYER->body.y,
+				PLAYER_BBOX_W, PLAYER_BBOX_H,
+				e->body.x, e->body.y,
+				enemy_bbox_w, enemy_bbow_h)){
+	    kill_player();
+	}
+    }
+}
+
 
 static inline void handle_enemy_move_pattern(Enemy *e){
     update_static_move_pattern_manager(&e->smp);
