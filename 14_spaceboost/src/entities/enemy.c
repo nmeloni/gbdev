@@ -209,7 +209,7 @@ static inline void handle_enemy_vs_player(Enemy *e) {
 				PLAYER_BBOX_W, PLAYER_BBOX_H,
 				e->body.x, e->body.y,
 				enemy_bbox_w, enemy_bbow_h)){
-	    kill_player();
+	    hit_player();
 	}
     }
 }

@@ -56,6 +56,10 @@ void kill_player(void) {
     PLAYER->invincibility_timer = PLAYER_INVINCIBILITY;
 }
 
+void hit_player(void) {
+    kill_player();
+}
+
 void update_player(void) {
     if (PLAYER->lives == 0) {
         PLAYER->active = 0;

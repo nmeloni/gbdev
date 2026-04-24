@@ -21,7 +21,7 @@
 // ─── Pools d'entités ──────────────────────────────────────────────────────────
 #define MAX_ENEMIES           8u
 #define MAX_SHOTS             5u
-#define MAX_BULLETS           16u
+#define MAX_BULLETS           24u
 #define MAX_EXPLOSIONS        8u
 
 // ─── Joueur ───────────────────────────────────────────────────────────────────
@@ -73,6 +73,17 @@
 #define FRAC_SHIFT            4
 #define FRAC_MASK             0x0F
 
+// ───  Bullet ──────────────────────────────────────────────────────────────────
+#define BULLET_SPRITE_X_OFFSET  (-4)
+#define BULLET_SPRITE_Y_OFFSET  (-8)
+
+#define BULLET_BOUND_FRAME_SKIP      16u
+#define BULLET_VS_PLAYER_FRAME_SKIP   2u
+#define BULLET_MIN_X                  4u
+#define BULLET_MIN_Y                  8u
+#define BULLET_MAX_X                168u
+#define BULLET_MAX_Y                144u
+#define BULLET_VS_PLAYER_MAN_DIST     8u
 // ─── Enemy ────────────────────────────────────────────────────────────────────
 // Marges de détection hors-écran (permet de sortir légèrement)
 #define ENEMY_MIN_X     4u
@@ -89,21 +100,24 @@
 #define ENEMY_VS_SHOT_MAN_DIST      16u
 #define ENEMY_VS_PLAYER_FRAME_SKIP   2u
 #define ENEMY_VS_PLAYER_MAN_DIST    16u
+
 // ─── Offsets de tiles dans la VRAM sprite ────────────────────────────────────
 // Chaque entrée = index de départ dans la table sprite hardware (0-127 en 8x16)
 // Layout séquentiel calculé depuis les TILE_COUNT de chaque sprite :
 //   player(12) shield(4) shot(6) explosion(16) bullet(6)
 //   powerup(12) enemy_1(8) enemy_2(8) enemy_3(8) boss(24) → total 104
-#define PLAYER_TILE_OFFSET    0u
-#define SHIELD_TILE_OFFSET    12u
-#define SHOT_TILE_OFFSET      16u
-#define EXPLOSION_TILE_OFFSET 22u
-#define BULLET_TILE_OFFSET    38u
-#define POWERUP_TILE_OFFSET   44u
-#define ENEMY_1_TILE_OFFSET   56u
-#define ENEMY_2_TILE_OFFSET   64u
-#define ENEMY_3_TILE_OFFSET   72u
-#define BOSS_TILE_OFFSET      80u
+#define PLAYER_TILE_OFFSET           0u
+#define SHIELD_TILE_OFFSET          12u
+#define SHOT_TILE_OFFSET            16u
+#define EXPLOSION_TILE_OFFSET       22u
+#define BULLET_SMALL_TILE_OFFSET    38u
+#define BULLET_LARGE_TILE_OFFSET    40u
+#define BULLET_LASER_TILE_OFFSET    42u
+#define POWERUP_TILE_OFFSET         44u
+#define ENEMY_1_TILE_OFFSET         56u
+#define ENEMY_2_TILE_OFFSET         64u
+#define ENEMY_3_TILE_OFFSET         72u
+#define BOSS_TILE_OFFSET            80u
 
 // ─── Durées et timings ────────────────────────────────────────────────────────
 #define EXPLOSION_DURATION         32u

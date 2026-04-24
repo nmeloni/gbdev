@@ -14,6 +14,7 @@
 #include "powerup.h"
 #include "explosion.h"
 #include "level.h"
+#include <stdint.h>
 
 // ─── État global ──────────────────────────────────────────────────────────────
 game_state_t game_state    = GAME_STATE_INIT;
@@ -105,7 +106,7 @@ static void init_gameplay(void) {
     init_player();
     init_shots();
     init_enemies();
-    //init_bullets();
+    init_bullets();
     //init_powerup();
     init_explosions();
     //init_boss();
@@ -116,10 +117,8 @@ static void init_gameplay(void) {
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
 
-    add_enemy(144,16, ENEMY_DRONE,  10, 0);
-    add_enemy(144,48, ENEMY_DRONE,  10, 0);
-    add_enemy(144,80, ENEMY_DRONE,  10, 0);
-    add_enemy(144,112, ENEMY_DRONE,  10, 0);
+    for (uint8_t i = 0; i < MAX_BULLETS; i++)
+	fire_bullet(BULLET_TYPE_SMALL, 4 + i*8, 8+16*(i>>3), 0, 1);
 
 
     // Pas de gestion de niveau pour le moment
@@ -134,12 +133,15 @@ static void update_gameplay(void) {
     oam = 0;
 
     update_shots();
-    //update_bullets();
+    update_player();
+    
+    update_bullets();
     update_enemies();
+
     //if (BOSS.active) update_boss();
     //update_powerup();
     update_explosions();
-    update_player();
+
     scroll_background();
     //update_level();
 

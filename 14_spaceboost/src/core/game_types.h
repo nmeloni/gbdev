@@ -77,6 +77,32 @@ typedef struct {
     uint8_t frame_timer;
 } Explosion;
 
+// ─── Structure Bullet ────────────────────────────────────────────────────────
+typedef enum {
+    BULLET_TYPE_SMALL,
+    BULLET_TYPE_LARGE,
+    BULLET_TYPE_LASER,
+    BULLET_TYPE_NONE
+} BulletType;
+
+typedef struct {
+    Body    body;
+    uint8_t active;
+    BulletType type;
+} Bullet;
+
+// ─── Directions ──────────────────────────────────────────────────────────────
+typedef enum {
+    //0,1,2,3
+    DIR_E, DIR_ENE, DIR_NE, DIR_NNE,
+    //4,5,6,7
+    DIR_N, DIR_NNW, DIR_NW, DIR_WNW,
+    // 8,9,10,11
+    DIR_W, DIR_WSW, DIR_SW, DIR_SSW,
+    //12,13,14,15
+    DIR_S, DIR_SSE, DIR_SE, DIR_ESE
+} Direction16;
+
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
 
 typedef enum {

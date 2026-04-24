@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+
+
 inline uint8_t abs_diff(uint8_t x1, uint8_t x2);
 inline uint8_t manathan_distance(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
