@@ -92,7 +92,7 @@ static inline void handle_shot_bounds(Shot *s) {
 }
 
 static inline void draw_shot(Shot *s) {
-    set_sprite_tile(oam, shot_tile_offsets[PLAYER->shoot_power]);
+    set_sprite_tile(oam, shot_tile_offsets[PLAYER->shot_power]);
     //On remet la prop a 0 au cas où il y a donnees de la frame précédentes
     set_sprite_prop(oam, 0); 
     move_sprite(oam++,

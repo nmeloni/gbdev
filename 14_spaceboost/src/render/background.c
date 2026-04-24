@@ -2,12 +2,12 @@
 #include "background.h"
 #include "constants.h"
 
-background_t BACKGROUND;
+Background BACKGROUND;
 
 void init_background(void) {
     BACKGROUND.dx = 0;
     BACKGROUND.fx = 0;
-    BACKGROUND.dy = -2;
+    BACKGROUND.dy = BACKGROUND_SCROLL_SPEED_Y;
     BACKGROUND.fy = 0;
 }
 

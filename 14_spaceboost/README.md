@@ -37,9 +37,9 @@ Prototype jouable – Construction du premier niveau
 
 - [ ] Collision joueur ↔ ennemis
 - [ ] Collision joueur ↔ bullets ennemies
-- [ ] Collision bullets joueur ↔ ennemis
+- [x] Collision bullets joueur ↔ ennemis
 - [ ] Gestion des dégâts (PV ennemis)
-- [ ] Destruction ennemis + explosion
+- [x] Destruction ennemis + explosion
 - [ ] Gestion des vies joueur
 - [ ] Gestion des powerup
 - [ ] Game Over

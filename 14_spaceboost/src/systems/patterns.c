@@ -79,7 +79,7 @@ static const int8_t shoot_pattern_semi_circular_right[8][4] = {
 
 const uint8_t move_pattern_lengths[] = {1, 1, 16, 16, 16, 1, 4};
 
-const int8_t (* const move_patterns[])[3] = {
+const int8_t (* const __move_patterns[])[3] = {
     move_pattern_down,
     move_pattern_down_fast,
     move_pattern_zigzag,

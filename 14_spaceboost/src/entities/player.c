@@ -42,8 +42,8 @@ void init_player(void) {
 
 void reset_player(uint8_t x, uint8_t y) {
     init_body(&PLAYER->body, x, y);
-    PLAYER->shoot_cooldown      = 0;
-    PLAYER->shoot_power         = 0;
+    PLAYER->shot_cooldown      = 0;
+    PLAYER->shot_power         = 0;
     PLAYER->invincibility_timer = 0;
     PLAYER->boost               = 0;
     PLAYER->shield              = 0;
@@ -110,11 +110,11 @@ static void update_player_input(void) {
         if (KEY_PRESSED(J_DOWN))  PLAYER->body.dy =  speed;
     }
 
-    if (PLAYER->shoot_cooldown) {
-        PLAYER->shoot_cooldown--;
+    if (PLAYER->shot_cooldown) {
+        PLAYER->shot_cooldown--;
     } else if (KEY_PRESSED(J_B)) {
         fire_shot(PLAYER->body.x, PLAYER->body.y - 8, 0, -SHOT_SPEED);
-        PLAYER->shoot_cooldown = PLAYER_SHOOT_COOLDOWN;
+        PLAYER->shot_cooldown = PLAYER_SHOT_COOLDOWN;
     }
 }
 

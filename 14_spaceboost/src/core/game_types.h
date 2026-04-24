@@ -4,22 +4,62 @@
 #include <stdint.h>
 #include <gbdk/metasprites.h>
 
-// ─── Corps physique (virgule fixe 4 bits) ─────────────────────────────────────
+// ─── Corps physique (virgule fixe 4 bits) ──────────────────────────────────────
 typedef struct {
     uint8_t x, y;
     int8_t  dx, dy;
     int8_t  fx, fy;
 } Body;
 
-// ─── Structure Joueur ───────────────────────────────────────────────────────
+// ─── Background (virgule fixe 4 bits) ────────────────────────────────────────── 
+typedef struct {
+    int8_t dx, fx;
+    int8_t dy, fy;
+} Background;
+
+// ─── Structure Pattern mouvement ───────────────────────────────────────────────
+typedef enum {
+    STATIC_PATTERN_TYPE_MOVE_DOWN,
+    STATIC_PATTERN_TYPE_MOVE_DOWN_FAST,
+    STATIC_PATTERN_TYPE_MOVE_UP,
+    STATIC_PATTERN_TYPE_MOVE_UP_FAST,
+    STATIC_PATTERN_TYPE_MOVE_LEFT,
+    STATIC_PATTERN_TYPE_MOVE_LEFT_FAST,
+    STATIC_PATTERN_TYPE_MOVE_RIGHT,
+    STATIC_PATTERN_TYPE_MOVE_RIGHT_FAST,
+    
+    STATIC_PATTERN_TYPE_MOVE_LEFT_BKG,
+    STATIC_PATTERN_TYPE_MOVE_RIGHT_BKG,
+    
+    STATIC_PATTERN_TYPE_MOVE_LATERAL,
+    STATIC_PATTERN_TYPE_ZIGZAG,
+    STATIC_PATTERN_TYPE_NONE
+} StaticPatternType;
+
+typedef struct {
+    StaticPatternType type[2];
+    StaticPatternType active_type;
+    uint8_t active_type_index;
+    uint8_t pattern_length;
+    uint8_t active_pattern;
+    uint8_t timer;
+    int8_t dx, dy;
+} StaticPatternManager;
+
+typedef struct {
+    int8_t dx, dy;
+    uint8_t duration;
+} StaticPattern;
+
+// ─── Structure Joueur ──────────────────────────────────────────────────────────
 typedef struct {
     Body  body;
     uint8_t active;
     uint8_t lives;
     uint8_t shield;
     uint8_t invincibility_timer;
-    uint8_t shoot_cooldown;
-    uint8_t shoot_power;
+    uint8_t shot_cooldown;
+    uint8_t shot_power;
     uint8_t boost;
     const metasprite_t * const * metasprites;
 } Player;
@@ -38,27 +78,28 @@ typedef struct {
 } Explosion;
 
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
+
 typedef enum {
   ENEMY_DRONE,
-  ENEMY_NONE = 255
+  ENEMY_NONE
 } EnemyType;
 
 typedef enum {
-    WEAPON_SMALL_BULLET,
-    WEAPON_LARGE_BULLET,
-    WEAPON_LASER,
-    WEAPON_NONE = 255
-} EnemyWeapon;
+    WEAPON_NONE
+} WeaponType;
 
 typedef struct {
     Body    body;
     uint8_t active;
     EnemyType type;
-    EnemyWeapon weapon;
     int8_t  hp;
     uint8_t ishit;
     uint8_t frame_timer;
+    uint8_t speed;
+    StaticPatternManager smp; //static Move Manager
 } Enemy;
+
+
 
 
 

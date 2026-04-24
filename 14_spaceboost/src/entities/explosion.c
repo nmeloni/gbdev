@@ -37,14 +37,17 @@ void add_explosion(uint8_t x, uint8_t y) {
 void update_explosions(void) {
     Explosion *ex = &EXPLOSION_QUEUE[queue_rear];
     for(uint8_t i = queue_rear; i != queue_front; i = (i + 1) % MAX_EXPLOSIONS) {
-	uint8_t frame = ex->frame_timer >> EXPLOSION_ANIM_SPEED_LOG2;
-	oam += move_metasprite_ex(explosion_sprite_metasprites[frame],
-				  EXPLOSION_TILE_OFFSET, 0, oam,
-				  ex->x, ex->y);
 	ex->frame_timer--;
 	if (ex->frame_timer == 0) {
 	    queue_rear = (queue_rear + 1) % MAX_EXPLOSIONS;
 	}
+	
+	if ( (frame_counter^i) % 2) continue;
+	
+	uint8_t frame = ex->frame_timer >> EXPLOSION_ANIM_SPEED_LOG2;	
+	oam += move_metasprite_ex(explosion_sprite_metasprites[frame],
+				  EXPLOSION_TILE_OFFSET, 0, oam,
+				  ex->x, ex->y);
     }
 }
 	

@@ -109,15 +109,18 @@ static void init_gameplay(void) {
     //init_powerup();
     init_explosions();
     //init_boss();
-    //init_background();
+    init_background();
     //init_audio();
 
     PLAYER->body.x = PLAYER_START_X;
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
 
-    add_enemy(80,32, ENEMY_DRONE, WEAPON_NONE, 10);
-    ENEMY_POOL[0].body.dy = 0;
+    add_enemy(144,16, ENEMY_DRONE,  10, 0);
+    add_enemy(144,48, ENEMY_DRONE,  10, 0);
+    add_enemy(144,80, ENEMY_DRONE,  10, 0);
+    add_enemy(144,112, ENEMY_DRONE,  10, 0);
+
 
     // Pas de gestion de niveau pour le moment
     // load_level(1);
@@ -137,7 +140,7 @@ static void update_gameplay(void) {
     //update_powerup();
     update_explosions();
     update_player();
-    //scroll_background();
+    scroll_background();
     //update_level();
 
     hide_sprites_range(oam, MAX_HARDWARE_SPRITES);

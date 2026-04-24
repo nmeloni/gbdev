@@ -7,6 +7,9 @@
 #define SCREEN_WIDTH          160u
 #define SCREEN_HEIGHT         144u
 
+// ─── Background ───────────────────────────────────────────────────────────────
+#define BACKGROUND_SCROLL_SPEED_Y (-3)
+
 // Zone de jeu (sprites OAM : décalage matériel de 8,16)
 #define GAMESCREEN_X_ORIGIN   8u
 #define GAMESCREEN_Y_ORIGIN   16u
@@ -26,7 +29,7 @@
 #define PLAYER_SPEED          14
 #define BOOST_SPEED           24
 #define PLAYER_INVINCIBILITY  191u
-#define PLAYER_SHOOT_COOLDOWN 12u
+#define PLAYER_SHOT_COOLDOWN  12u
 #define PLAYER_BOOST_DURATION 48u
 
 // Limites basées sur l'analyse des offsets metasprite (METASPR_ITEM(dy,dx,dtile,props))
@@ -71,7 +74,7 @@
 
 // ─── Enemy ────────────────────────────────────────────────────────────────────
 // Marges de détection hors-écran (permet de sortir légèrement)
-#define ENEMY_MIN_X     0u
+#define ENEMY_MIN_X     4u
 #define ENEMY_MIN_Y     8u
 #define ENEMY_MAX_X     168u
 #define ENEMY_MAX_Y     144u

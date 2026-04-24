@@ -2,13 +2,10 @@
 #define BACKGROUND_H
 
 #include <stdint.h>
+#include "game_types.h"
 
-typedef struct {
-    int8_t dx, fx;
-    int8_t dy, fy;
-} background_t;
 
-extern background_t BACKGROUND;
+extern Background BACKGROUND;
 
 void init_background(void);
 void scroll_background(void);

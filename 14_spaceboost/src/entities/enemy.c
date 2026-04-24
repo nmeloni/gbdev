@@ -1,6 +1,7 @@
 #include <stdint.h>
 
 #include "explosion.h"
+#include "move_pattern.h"
 #include "game.h"
 #include "body.h"
 #include "utils.h"
@@ -15,6 +16,15 @@ Enemy ENEMY_POOL[MAX_ENEMIES];
 uint8_t ACTIVE_ENEMY_POOL[MAX_ENEMIES];
 uint8_t active_enemy_count = 0;
 
+typedef struct  {
+    StaticPatternType intro_pattern_type;
+    StaticPatternType loop_pattern_type;
+    uint8_t initial_pattern;
+} static_manager_data;
+
+const static_manager_data enemy_pattern_data[] = {
+    [ENEMY_DRONE] = {STATIC_PATTERN_TYPE_NONE, STATIC_PATTERN_TYPE_MOVE_LEFT_BKG, 0}
+};
 
 const uint8_t enemy_bbox[][2] = {
     [ENEMY_DRONE] = {8,8}
@@ -40,13 +50,11 @@ static inline void handle_enemy_move_pattern(Enemy *e);
 static inline void handle_enemy_shot_pattern(Enemy *e);
 static inline void draw_enemy(Enemy *e);
 
-
 void init_enemies(void) {
     Enemy *e = &ENEMY_POOL[0];
     for (uint8_t i = 0; i < MAX_ENEMIES; i++,e++){
 	init_body( &(e->body), 0, 0);
 	e->type = ENEMY_NONE;
-	e->weapon = WEAPON_NONE;
 	e->hp = 0;
 	e->ishit = 0;
 	e->frame_timer = 0;
@@ -54,7 +62,7 @@ void init_enemies(void) {
     }
 }
 
-void add_enemy(uint8_t x, uint8_t y, EnemyType type, EnemyWeapon weapon, uint8_t hp){
+void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed){
     if (active_enemy_count >= MAX_ENEMIES) return;
 
     // Cherche un slot libre dans le pool d'ennemis
@@ -65,11 +73,16 @@ void add_enemy(uint8_t x, uint8_t y, EnemyType type, EnemyWeapon weapon, uint8_t
 	//On a trouvé un slot de libre
 	init_body( &(e->body), x, y);
 	e->type = type;
-	e->weapon = weapon;
 	e->hp = hp;
 	e->ishit = 0;
 	e->frame_timer = 0;
+	e->speed = speed;
 	e->active = 1;
+	init_static_move_pattern_manager(&e->smp,
+					 enemy_pattern_data[type].intro_pattern_type,
+					 enemy_pattern_data[type].loop_pattern_type,
+					 enemy_pattern_data[type].initial_pattern);
+	
 	ACTIVE_ENEMY_POOL[active_enemy_count++] = i;
 	return;
     }
@@ -142,13 +155,14 @@ static inline void destroy_enemy(Enemy *e){
 
 static inline void handle_enemy_bounds(Enemy *e){
     if ( is_outside_bounds(e->body.x, ENEMY_MIN_X, ENEMY_MAX_X) ||
-	 is_outside_bounds(e->body.x, ENEMY_MIN_Y, ENEMY_MAX_Y))
+	 is_outside_bounds(e->body.y, ENEMY_MIN_Y, ENEMY_MAX_Y)){
 	desactivate_enemy(e);
+    }
 }
 
 static inline void handle_enemy_vs_shot_collision(Enemy *e){
     uint8_t *ac = &ACTIVE_SHOTS[0];
-    const uint8_t * sbbox = shot_bbox[PLAYER->shoot_power];
+    const uint8_t * sbbox = shot_bbox[PLAYER->shot_power];
     const uint8_t * ebbox = enemy_bbox[e->type];
     
     for (uint8_t j = 0; j < active_shot_index; j++,ac++) {
@@ -162,11 +176,9 @@ static inline void handle_enemy_vs_shot_collision(Enemy *e){
 	    ENEMY_VS_SHOT_MAN_DIST)
 	    continue;
 
-	
-	
 	if (check_collision_box(s->body.x, s->body.y, sbbox[0], sbbox[1],
 				e->body.x, e->body.y, ebbox[0], ebbox[1])){
-	    enemy_get_hit(e, shot_power_table[PLAYER->shoot_power]);
+	    enemy_get_hit(e, shot_power_table[PLAYER->shot_power]);
 	    desactivate_shot(s);
 	    kill_active_shot(j);
 	    return;
@@ -175,6 +187,9 @@ static inline void handle_enemy_vs_shot_collision(Enemy *e){
 }
 
 static inline void handle_enemy_move_pattern(Enemy *e){
+    update_static_move_pattern_manager(&e->smp);
+    e->body.dx = e->smp.dx << e->speed;
+    e->body.dy = e->smp.dy << e->speed;
     update_body_position(&e->body);
 }
 
@@ -197,3 +212,4 @@ static inline void draw_enemy(Enemy *e){
 			     e->body.y);
     
 }
+
