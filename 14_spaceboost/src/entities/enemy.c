@@ -2,6 +2,7 @@
 
 #include "explosion.h"
 #include "move_pattern.h"
+#include "bullet_pattern.h"
 #include "game.h"
 #include "body.h"
 #include "utils.h"
@@ -23,7 +24,7 @@ typedef struct  {
 } static_manager_data;
 
 const static_manager_data enemy_pattern_data[] = {
-    [ENEMY_DRONE] = {STATIC_PATTERN_TYPE_NONE, STATIC_PATTERN_TYPE_MOVE_LEFT_BKG, 0}
+    [ENEMY_DRONE] = {STATIC_PATTERN_TYPE_MOVE_DOWN_FAST, STATIC_PATTERN_TYPE_ZIGZAG, 0}
 };
 
 const uint8_t enemy_bbox[][2] = {
@@ -86,6 +87,7 @@ void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed){
 					 enemy_pattern_data[type].intro_pattern_type,
 					 enemy_pattern_data[type].loop_pattern_type,
 					 enemy_pattern_data[type].initial_pattern);
+	init_bullet_pattern_manager(&e->bpm, bullet_pattern_data[type]);
 	
 	ACTIVE_ENEMY_POOL[active_enemy_count++] = i;
 	return;
@@ -222,7 +224,9 @@ static inline void handle_enemy_move_pattern(Enemy *e){
     update_body_position(&e->body);
 }
 
-static inline void handle_enemy_shot_pattern(Enemy *e){e;}
+static inline void handle_enemy_shot_pattern(Enemy *e){
+    update_bullet_pattern_manager(&e->bpm, e->body.x, e->body.y);
+}
 
 static inline void draw_enemy(Enemy *e){
     uint8_t oam_prop = OAMF_PAL0;

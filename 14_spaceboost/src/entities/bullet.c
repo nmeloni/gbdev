@@ -141,6 +141,7 @@ static inline void draw_bullet(Bullet *b){
 	set_sprite_tile(oam, BULLET_SMALL_TILE_OFFSET);
 	break;
     }
+    set_sprite_prop(oam, 0); 
     move_sprite(oam,
 		b->body.x + BULLET_SPRITE_X_OFFSET,
 		b->body.y + BULLET_SPRITE_Y_OFFSET);

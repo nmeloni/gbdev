@@ -140,9 +140,10 @@ void update_static_move_pattern_manager(StaticPatternManager *smp){
 	    }
 	}
 	//on remet le timer a jour
-	smp->timer = move_patterns[smp->active_type][smp->active_pattern].duration;
-	smp->dx    = move_patterns[smp->active_type][smp->active_pattern].dx;
-	smp->dy    = move_patterns[smp->active_type][smp->active_pattern].dy;
+	const StaticPattern *temp = &move_patterns[smp->active_type][smp->active_pattern];
+	smp->timer = temp->duration;
+	smp->dx    = temp->dx;
+	smp->dy    = temp->dy;
     }
     smp->timer--;
 }

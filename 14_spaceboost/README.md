@@ -12,10 +12,10 @@ Prototype jouable – Construction du premier niveau
 - [x] Déplacement du vaisseau joueur
 - [x] Boost (accélération / décélération)
 - [x] Tir joueur de base
-- [ ] Pool statique de bullets
-- [ ] Déplacement optimisé des bullets ennemies
-- [ ] Hitbox précises (indépendantes des sprites)
-- [ ] Invincibilité temporaire après hit
+- [x] Pool statique de bullets
+- [x] Déplacement optimisé des bullets ennemies
+- [x] Hitbox précises (indépendantes des sprites)
+- [x] Invincibilité temporaire après hit
 - [ ] Feedback visuel de dégâts (clignotement / flash)
 
 ---
@@ -23,11 +23,11 @@ Prototype jouable – Construction du premier niveau
 ## 👾 Ennemis
 
 - [x] Système d’ennemis générique
-- [ ] 1 type d’ennemi fonctionnel
+- [x] 1 type d’ennemi fonctionnel
 - [ ] 2–3 variations d’ennemis
-- [ ] Patterns de déplacement
-- [ ] Patterns de tirs
-- [ ] Comportements combinés (move + shoot décalés)
+- [x] Patterns de déplacement
+- [x] Patterns de tirs
+- [x] Comportements combinés (move + shoot décalés)
 - [ ] Mini-boss
 - [ ] Boss de fin de niveau
 
@@ -35,10 +35,10 @@ Prototype jouable – Construction du premier niveau
 
 ## 💥 Collisions & règles
 
-- [ ] Collision joueur ↔ ennemis
-- [ ] Collision joueur ↔ bullets ennemies
+- [x] Collision joueur ↔ ennemis
+- [x] Collision joueur ↔ bullets ennemies
 - [x] Collision bullets joueur ↔ ennemis
-- [ ] Gestion des dégâts (PV ennemis)
+- [x] Gestion des dégâts (PV ennemis)
 - [x] Destruction ennemis + explosion
 - [ ] Gestion des vies joueur
 - [ ] Gestion des powerup
@@ -63,7 +63,7 @@ Prototype jouable – Construction du premier niveau
 - [ ] Animations simples (2–3 frames)
 - [ ] Effets visuels (explosions, flash)
 - [ ] Lisibilité écran (contraste, tailles)
-- [ ] Background défilant
+- [x] Background défilant
 
 ---
 
@@ -82,7 +82,7 @@ Prototype jouable – Construction du premier niveau
 
 - [x] Aucun calcul flottant
 - [x] Pas de 16 bits dans la boucle critique
-- [ ] Tables pré-calculées (directions, patterns)
+- [x] Tables pré-calculées (directions, patterns)
 - [x] Limites CPU testées (stress test bullets)
 - [ ] Nettoyage du code mort
 - [ ] Commentaires essentiels
@@ -91,8 +91,8 @@ Prototype jouable – Construction du premier niveau
 
 ## 📦 Finition
 
-- [ ] Écran logo
-- [ ] Écran titre
+- [x] Écran logo
+- [x] Écran titre
 - [ ] README complet (description, contrôles)
 - [ ] Screenshots
 - [ ] Instructions de build (GBDK)

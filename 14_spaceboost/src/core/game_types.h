@@ -16,6 +16,31 @@ typedef struct {
     int8_t dx, fx;
     int8_t dy, fy;
 } Background;
+// ─── Structure Bullet ────────────────────────────────────────────────────────
+typedef enum {
+    BULLET_TYPE_SMALL,
+    BULLET_TYPE_LARGE,
+    BULLET_TYPE_LASER,
+    BULLET_TYPE_NONE
+} BulletType;
+
+typedef struct {
+    Body    body;
+    uint8_t active;
+    BulletType type;
+} Bullet;
+
+// ─── Directions ──────────────────────────────────────────────────────────────
+typedef enum {
+    //0,1,2,3
+    DIR_E, DIR_ENE, DIR_NE, DIR_NNE,
+    //4,5,6,7
+    DIR_N, DIR_NNW, DIR_NW, DIR_WNW,
+    // 8,9,10,11
+    DIR_W, DIR_WSW, DIR_SW, DIR_SSW,
+    //12,13,14,15
+    DIR_S, DIR_SSE, DIR_SE, DIR_ESE
+} Direction16;
 
 // ─── Structure Pattern mouvement ───────────────────────────────────────────────
 typedef enum {
@@ -51,6 +76,28 @@ typedef struct {
     uint8_t duration;
 } StaticPattern;
 
+// ─── Structure Pattern Tir enemie ──────────────────────────────────────────────
+typedef enum  {
+    BULLET_PATTERN_TYPE_SINGLE_DOWN,
+    BULLET_PATTERN_TYPE_NONE
+} BulletPatternType;
+
+typedef struct {
+    BulletType type; 
+    Direction16 * dir; //direction de chaque tirs du pattern
+    uint8_t length;    // nombre de directions
+    uint8_t lag;       // laps de temps entre deux tirs
+    uint8_t cool_down;  // laps de temps avant de repeter le pattern
+} BulletPattern;
+
+typedef struct {
+    const BulletPattern * bp;
+    uint8_t current_dir_index;
+    uint8_t lag_timer;
+    uint8_t cool_down_timer;
+} BulletPatternManager;
+
+
 // ─── Structure Joueur ──────────────────────────────────────────────────────────
 typedef struct {
     Body  body;
@@ -77,31 +124,7 @@ typedef struct {
     uint8_t frame_timer;
 } Explosion;
 
-// ─── Structure Bullet ────────────────────────────────────────────────────────
-typedef enum {
-    BULLET_TYPE_SMALL,
-    BULLET_TYPE_LARGE,
-    BULLET_TYPE_LASER,
-    BULLET_TYPE_NONE
-} BulletType;
 
-typedef struct {
-    Body    body;
-    uint8_t active;
-    BulletType type;
-} Bullet;
-
-// ─── Directions ──────────────────────────────────────────────────────────────
-typedef enum {
-    //0,1,2,3
-    DIR_E, DIR_ENE, DIR_NE, DIR_NNE,
-    //4,5,6,7
-    DIR_N, DIR_NNW, DIR_NW, DIR_WNW,
-    // 8,9,10,11
-    DIR_W, DIR_WSW, DIR_SW, DIR_SSW,
-    //12,13,14,15
-    DIR_S, DIR_SSE, DIR_SE, DIR_ESE
-} Direction16;
 
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
 
@@ -123,6 +146,7 @@ typedef struct {
     uint8_t frame_timer;
     uint8_t speed;
     StaticPatternManager smp; //static Move Manager
+    BulletPatternManager bpm; //bullet pattern manager
 } Enemy;
 
 #endif // TYPES_H

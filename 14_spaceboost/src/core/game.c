@@ -117,10 +117,7 @@ static void init_gameplay(void) {
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
 
-    for (uint8_t i = 0; i < MAX_BULLETS; i++)
-	fire_bullet(BULLET_TYPE_SMALL, 4 + i*8, 8+16*(i>>3), 0, 1);
-
-
+    add_enemy(80, 8, ENEMY_DRONE, 10, 0);
     // Pas de gestion de niveau pour le moment
     // load_level(1);
 }
