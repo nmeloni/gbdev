@@ -74,7 +74,7 @@ void update_shots(void) {
             kill_active_shot(j);
             j--;
         }
-    }
+    }	is_inside_bounds(POWERUP->body.x, GAMESCREEN_X_ORIGIN, GAMESCREEN_X_END) &
 }
 
 inline void desactivate_shot(Shot *s){

@@ -124,6 +124,18 @@ typedef struct {
     uint8_t frame_timer;
 } Explosion;
 
+// ─── Structure Power UP ──────────────────────────────────────────────────────
+typedef enum {
+    POWERUP_TYPE_SHOT,
+    POWERUP_TYPE_SHIELD,
+    POWERUP_TYPE_LIFE
+} PowerUpType;
+typedef struct {
+    Body  body;
+    uint8_t active;
+    uint8_t type;
+    StaticPatternManager spm;
+} PowerUp;
 
 
 // ─── Structure Enemy ─────────────────────────────────────────────────────────

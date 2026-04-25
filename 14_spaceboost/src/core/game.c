@@ -107,7 +107,7 @@ static void init_gameplay(void) {
     init_shots();
     init_enemies();
     init_bullets();
-    //init_powerup();
+    init_powerup();
     init_explosions();
     //init_boss();
     init_background();
@@ -117,7 +117,8 @@ static void init_gameplay(void) {
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
 
-    add_enemy(80, 8, ENEMY_DRONE, 10, 0);
+    spawn_powerup(POWERUP_TYPE_SHOT, 80, 70);
+    //add_enemy(80, 8, ENEMY_DRONE, 10, 0);
     // Pas de gestion de niveau pour le moment
     // load_level(1);
 }
@@ -136,7 +137,7 @@ static void update_gameplay(void) {
     update_enemies();
 
     //if (BOSS.active) update_boss();
-    //update_powerup();
+    update_powerup();
     update_explosions();
 
     scroll_background();

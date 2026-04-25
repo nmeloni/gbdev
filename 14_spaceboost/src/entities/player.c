@@ -75,6 +75,20 @@ void update_player(void) {
 		    // (level_intro gère le mouvement)
 }
 
+void powerup_player(PowerUpType type){
+    switch (type) {
+    case POWERUP_TYPE_SHOT:
+	if (PLAYER->shot_power < PLAYER_MAX_POWER_LVL) PLAYER->shot_power++;
+	break;
+    case POWERUP_TYPE_SHIELD:
+	PLAYER->shield = 1;
+	break;
+    case POWERUP_TYPE_LIFE:
+	if (PLAYER->lives < PLAYER_MAX_LIVES) PLAYER->lives++;
+	break;
+    }
+}
+
 static void update_player_input(void) {
     if (PLAYER->invincibility_timer) {
         PLAYER->invincibility_timer--;
