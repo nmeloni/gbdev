@@ -70,28 +70,8 @@ static inline void handle_powerup_move_pattern(void){
 
 
 static inline void draw_powerup(void){
-    uint8_t sprite, tile_offset;
-    switch (POWERUP->type){
-    case POWERUP_TYPE_SHOT:
-	sprite = 0;
-	tile_offset = POWERUP_SHOT_TILE_OFFSET;
-	break;
-    case POWERUP_TYPE_SHIELD:
-	sprite = 1;
-	tile_offset = POWERUP_SHIELD_TILE_OFFSET;
-	break;
-    case POWERUP_TYPE_LIFE:
-	sprite = 2;
-	tile_offset = POWERUP_EXTRA_LIFE_TILE_OFFSET;
-	break;
-    default :
-	sprite = 0;
-	tile_offset = POWERUP_SHOT_TILE_OFFSET;
-	break;
-    }
-
-    oam += move_metasprite_ex(powerup_sprite_metasprites[sprite],
-			      tile_offset, 0, oam,
+    oam += move_metasprite_ex(powerup_sprite_metasprites[POWERUP->type],
+			      POWERUP_TILE_OFFSET, 0, oam,
 			      POWERUP->body.x, POWERUP->body.y);
     
 }

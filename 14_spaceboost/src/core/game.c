@@ -117,8 +117,8 @@ static void init_gameplay(void) {
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
 
-    spawn_powerup(POWERUP_TYPE_SHOT, 80, 70);
-    //add_enemy(80, 8, ENEMY_DRONE, 10, 0);
+    //spawn_powerup(POWERUP_TYPE_SHOT, 80, 70);
+    add_enemy(80, 8, ENEMY_DRONE, 3, 0, POWERUP_TYPE_SHIELD);
     // Pas de gestion de niveau pour le moment
     // load_level(1);
 }

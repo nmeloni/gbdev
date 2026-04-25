@@ -5,6 +5,7 @@
 #include "bullet_pattern.h"
 #include "game.h"
 #include "body.h"
+#include "powerup.h"
 #include "utils.h"
 #include "enemy.h"
 #include "shot.h"
@@ -64,10 +65,11 @@ void init_enemies(void) {
 	e->ishit = 0;
 	e->frame_timer = 0;
 	e->active = 0;
+	e->powerup = POWERUP_TYPE_NONE;
     }
 }
 
-void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed){
+void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed, PowerUpType powerup){
     if (active_enemy_count >= MAX_ENEMIES) return;
 
     // Cherche un slot libre dans le pool d'ennemis
@@ -82,6 +84,7 @@ void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed){
 	e->ishit = 0;
 	e->frame_timer = 0;
 	e->speed = speed;
+	e->powerup = powerup;
 	e->active = 1;
 	init_static_move_pattern_manager(&e->smp,
 					 enemy_pattern_data[type].intro_pattern_type,
@@ -168,6 +171,9 @@ static inline void handle_enemy_hp(Enemy *e){
 static inline void destroy_enemy(Enemy *e){
     desactivate_enemy(e);
     add_explosion(e->body.x, e->body.y);
+    if (e->powerup != POWERUP_TYPE_NONE){
+	spawn_powerup(e->powerup, e->body.x, e->body.y);
+    }
 }
 
 static inline void handle_enemy_bounds(Enemy *e){

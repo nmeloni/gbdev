@@ -128,15 +128,16 @@ typedef struct {
 typedef enum {
     POWERUP_TYPE_SHOT,
     POWERUP_TYPE_SHIELD,
-    POWERUP_TYPE_LIFE
+    POWERUP_TYPE_LIFE,
+    POWERUP_TYPE_NONE
 } PowerUpType;
+
 typedef struct {
     Body  body;
     uint8_t active;
     uint8_t type;
     StaticPatternManager spm;
 } PowerUp;
-
 
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
 
@@ -157,6 +158,7 @@ typedef struct {
     uint8_t ishit;
     uint8_t frame_timer;
     uint8_t speed;
+    PowerUpType powerup;
     StaticPatternManager smp; //static Move Manager
     BulletPatternManager bpm; //bullet pattern manager
 } Enemy;
