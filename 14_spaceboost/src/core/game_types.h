@@ -176,6 +176,7 @@ typedef enum {
     LEVEL_EVENT_START,
     LEVEL_EVENT_SPAWN_ENEMY,
     LEVEL_EVENT_END,
+    LEVEL_EVENT_OUTRO,
     LEVEL_EVENT_NONE
 } LevelEventType;
 
