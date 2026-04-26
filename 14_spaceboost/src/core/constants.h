@@ -128,10 +128,12 @@
 #define POWERUP_SHIELD_TILE_OFFSET     (POWERUP_TILE_OFFSET + 4u)
 #define POWERUP_EXTRA_LIFE_TILE_OFFSET (POWERUP_TILE_OFFSET + 8u)
 
-#define ENEMY_1_TILE_OFFSET         56u
-#define ENEMY_2_TILE_OFFSET         64u
-#define ENEMY_3_TILE_OFFSET         72u
-#define BOSS_TILE_OFFSET            80u
+#define ENEMY_TILE_OFFSET   80u
+#define ENEMY_1_TILE_OFFSET (ENEMY_TILE_OFFSET)
+#define ENEMY_2_TILE_OFFSET (ENEMY_TILE_OFFSET + 8u)       
+#define ENEMY_3_TILE_OFFSET (ENEMY_TILE_OFFSET + 16u)
+#define ENEMY_4_TILE_OFFSET (ENEMY_TILE_OFFSET + 24u)
+#define BOSS_TILE_OFFSET    80u
 
 // ─── Durées et timings ────────────────────────────────────────────────────────
 #define EXPLOSION_DURATION         32u

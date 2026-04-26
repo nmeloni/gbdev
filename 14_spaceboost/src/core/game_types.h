@@ -140,7 +140,6 @@ typedef struct {
 } PowerUp;
 
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
-
 typedef enum {
   ENEMY_DRONE,
   ENEMY_NONE
@@ -159,8 +158,39 @@ typedef struct {
     uint8_t frame_timer;
     uint8_t speed;
     PowerUpType powerup;
+    uint8_t tile_offset;
     StaticPatternManager smp; //static Move Manager
     BulletPatternManager bpm; //bullet pattern manager
 } Enemy;
+
+// ─── Structure Level ─────────────────────────────────────────────────────────
+typedef enum {
+    LEVEL_1,
+    LEVEL_2,
+    LEVEL_3,
+} LevelNumber;
+
+typedef enum {
+    LEVEL_EVENT_INIT,
+    LEVEL_EVENT_INTRO,
+    LEVEL_EVENT_START,
+    LEVEL_EVENT_SPAWN_ENEMY,
+    LEVEL_EVENT_END,
+    LEVEL_EVENT_NONE
+} LevelEventType;
+
+typedef struct {
+    LevelEventType level_event_type;
+    EnemyType enemy_type;
+    uint8_t x, y;
+    uint8_t duration;
+} LevelEvent;
+
+typedef struct{
+    const LevelEvent * le;
+    uint8_t current_event_index;
+    LevelEventType current_event_type;
+    uint8_t timer;
+} LevelEventManager;
 
 #endif // TYPES_H

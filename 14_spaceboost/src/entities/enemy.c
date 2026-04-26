@@ -32,10 +32,6 @@ const uint8_t enemy_bbox[][2] = {
     [ENEMY_DRONE] = {8,8}
 };
 
-const uint8_t enemy_tile_offsets[] = {
-    [ENEMY_DRONE] = ENEMY_1_TILE_OFFSET
-};
-
 const const metasprite_t* const * enemy_metasprites[] = {
     enemy_drone_sprite_metasprites
 };
@@ -66,6 +62,7 @@ void init_enemies(void) {
 	e->frame_timer = 0;
 	e->active = 0;
 	e->powerup = POWERUP_TYPE_NONE;
+	e->tile_offset = ENEMY_TILE_OFFSET;
     }
 }
 
@@ -246,7 +243,7 @@ static inline void draw_enemy(Enemy *e){
     }
     // Mise à jour du sprite de l'ennemi
     oam+= move_metasprite_ex(enemy_metasprites[e->type][frame],
-			     enemy_tile_offsets[e->type], oam_prop ,oam,
+			     e->tile_offset, oam_prop ,oam,
 			     e->body.x,
 			     e->body.y);
     

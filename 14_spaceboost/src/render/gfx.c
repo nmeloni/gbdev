@@ -34,7 +34,7 @@ void gfx_init(void) {
     set_sprite_data(EXPLOSION_TILE_OFFSET, explosion_sprite_TILE_COUNT, explosion_sprite_tiles);
     set_sprite_data(BULLET_SMALL_TILE_OFFSET,    bullet_sprite_TILE_COUNT,    bullet_sprite_tiles);
     set_sprite_data(POWERUP_TILE_OFFSET,   powerup_sprite_TILE_COUNT,   powerup_sprite_tiles);
-    set_sprite_data(ENEMY_1_TILE_OFFSET,   enemy_drone_sprite_TILE_COUNT,   enemy_drone_sprite_tiles);
+    set_sprite_data(ENEMY_TILE_OFFSET,   enemy_drone_sprite_TILE_COUNT,   enemy_drone_sprite_tiles);
 
     // Background
     set_bkg_data(0x0, space_bkg_tileset_TILE_COUNT, space_bkg_tileset_tiles);

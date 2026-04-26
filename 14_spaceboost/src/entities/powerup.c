@@ -25,7 +25,7 @@ void spawn_powerup(uint8_t type, uint8_t x, uint8_t y) {
     init_body( &POWERUP->body, x,y);
     POWERUP->type = type;
     init_static_move_pattern_manager(&POWERUP->spm,
-				     STATIC_PATTERN_TYPE_MOVE_DOWN,
+				     STATIC_PATTERN_TYPE_NONE,
 				     STATIC_PATTERN_TYPE_ZIGZAG, 0);
     POWERUP->active = 1;
 }
@@ -41,9 +41,9 @@ void update_powerup(void) {
 }
 
 static inline void handle_powerup_bounds(void){
-    POWERUP->active =
-	is_inside_bounds(POWERUP->body.x, GAMESCREEN_X_ORIGIN, GAMESCREEN_X_END) &
-	is_inside_bounds(POWERUP->body.y, GAMESCREEN_Y_ORIGIN, GAMESCREEN_Y_END);
+    // On ne teste que la sortie d'écran par le haut ou le bas
+    POWERUP->active = is_inside_bounds(POWERUP->body.y,
+				       GAMESCREEN_Y_ORIGIN, GAMESCREEN_Y_END);
 }
 
 static inline void handle_powerup_vs_player(void){

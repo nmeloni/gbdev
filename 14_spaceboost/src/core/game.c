@@ -112,15 +112,13 @@ static void init_gameplay(void) {
     //init_boss();
     init_background();
     //init_audio();
-
+    init_level(LEVEL_1);
+    
     PLAYER->body.x = PLAYER_START_X;
     PLAYER->body.y = PLAYER_START_Y;
     PLAYER->active = 1;
 
-    //spawn_powerup(POWERUP_TYPE_SHOT, 80, 70);
-    add_enemy(80, 8, ENEMY_DRONE, 3, 0, POWERUP_TYPE_SHIELD);
-    // Pas de gestion de niveau pour le moment
-    // load_level(1);
+    
 }
 
 static void update_gameplay(void) {
@@ -141,7 +139,7 @@ static void update_gameplay(void) {
     update_explosions();
 
     scroll_background();
-    //update_level();
+    update_level();
 
     hide_sprites_range(oam, MAX_HARDWARE_SPRITES);
 

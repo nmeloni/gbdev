@@ -41,17 +41,17 @@ Prototype jouable – Construction du premier niveau
 - [x] Gestion des dégâts (PV ennemis)
 - [x] Destruction ennemis + explosion
 - [ ] Gestion des vies joueur
-- [ ] Gestion des powerup
+- [x] Gestion des powerup
 - [ ] Game Over
 
 ---
 
 ## 🗺️ Niveau & progression
 
-- [ ] Script de niveau (timeline frame-based)
-- [ ] Vagues d’ennemis
-- [ ] Temps morts / respirations
-- [ ] Fin de niveau claire
+- [x] Script de niveau (timeline frame-based)
+- [x] Vagues d’ennemis
+- [x] Temps morts / respirations
+- [x] Fin de niveau claire
 - [ ] Transition vers écran de score
 
 ---
