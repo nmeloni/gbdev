@@ -1,9 +1,9 @@
 #ifndef LEVEL1_H
 #define LEVEL1_H
 
-#include <stdint.h>
+#include "game_types.h"
 
-extern const uint8_t level_1_events[][5];
-extern const uint8_t level_1_enemies[][6];
+extern const LevelEvent level_1_events[];
+
 
 #endif // LEVEL1_H

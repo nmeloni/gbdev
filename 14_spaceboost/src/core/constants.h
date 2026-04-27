@@ -93,6 +93,8 @@
 #define BULLET_MAX_X                168u
 #define BULLET_MAX_Y                144u
 #define BULLET_VS_PLAYER_MAN_DIST     8u
+
+#define DIRECTIONS_NUMBER            16u
 // ─── Enemy ────────────────────────────────────────────────────────────────────
 // Marges de détection hors-écran (permet de sortir légèrement)
 #define ENEMY_MIN_X     4u
@@ -133,6 +135,7 @@
 #define ENEMY_2_TILE_OFFSET (ENEMY_TILE_OFFSET + 8u)       
 #define ENEMY_3_TILE_OFFSET (ENEMY_TILE_OFFSET + 16u)
 #define ENEMY_4_TILE_OFFSET (ENEMY_TILE_OFFSET + 24u)
+#define ENEMY_5_TILE_OFFSET (ENEMY_TILE_OFFSET + 32u)
 #define BOSS_TILE_OFFSET    80u
 
 // ─── Durées et timings ────────────────────────────────────────────────────────

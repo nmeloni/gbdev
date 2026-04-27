@@ -3,6 +3,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "level.h"
+#include "level1.h"
 
 LevelEventManager lem;
 extern LevelEventManager * LEM = &lem;
@@ -12,17 +13,8 @@ static inline void handle_intro_event(void);
 static inline void handle_start_event(void);
 static inline void handle_end_event(void);
 static inline void handle_outro_event(void);
+static inline void handle_load_event(void);
 static inline void handle_spawn_enemy_event(void);
-
-const LevelEvent level_1_events[]={
-    {.level_event_type = LEVEL_EVENT_INIT,        .enemy_type = ENEMY_NONE,  .x = PLAYER_START_X,  .y = 180, .duration = 0},
-    {.level_event_type = LEVEL_EVENT_INTRO,       .enemy_type = ENEMY_NONE,  .x = 0,  .y = 0, .duration = 240},
-    {.level_event_type = LEVEL_EVENT_START,       .enemy_type = ENEMY_NONE,  .x = 0,  .y = 0, .duration = 0},
-    //{.level_event_type = LEVEL_EVENT_SPAWN_ENEMY, .enemy_type = ENEMY_DRONE, .x = 80, .y = 8, .duration = 240},
-    {.level_event_type = LEVEL_EVENT_NONE, .enemy_type = ENEMY_NONE, .x = 0, .y = 0, .duration = 240},
-    {.level_event_type = LEVEL_EVENT_END,         .enemy_type = ENEMY_NONE,  .x = 0,  .y = 0, .duration = 60},
-    {.level_event_type = LEVEL_EVENT_OUTRO,       .enemy_type = ENEMY_NONE,  .x = 0,  .y = 0, .duration = 240},
-};
 
 void init_level(uint8_t level_number){
     switch (level_number) {
@@ -64,6 +56,9 @@ void update_level(void){
     case LEVEL_EVENT_SPAWN_ENEMY:
 	handle_spawn_enemy_event();
 	break;
+    case LEVEL_EVENT_LOAD_TITLE_SCREEN:
+	handle_load_event();
+	break;
     default:
 	break;
     }
@@ -92,11 +87,12 @@ static inline void handle_start_event(void){
 }
 
 static inline void handle_end_event(void){
+    EMU_printf("\desactivate player\n");
     PLAYER->active = 0;
     PLAYER->body.dy = 0;
     PLAYER->body.dx = 0;
-
 }
+
 static inline void handle_outro_event(void){
     if (PLAYER->body.y > 8){
 	if (PLAYER->body.dy > -120){
@@ -105,10 +101,20 @@ static inline void handle_outro_event(void){
 	update_body_position(&PLAYER->body);
 	return;
     }
-    game_change_state(GAME_STATE_TITLE_SCREEN);
+}
+
+static inline void handle_load_event(void){
+    switch (LEM->current_event_type) {
+    case LEVEL_EVENT_LOAD_TITLE_SCREEN:
+	game_change_state(GAME_STATE_TITLE_SCREEN);
+	break;
+    default:
+	game_change_state(GAME_STATE_TITLE_SCREEN);
+	break;
+    }
 }
 
 static inline void handle_spawn_enemy_event(void){
     const LevelEvent *le = &LEM->le[LEM->current_event_index];
-    add_enemy(le->x, le->y, le->enemy_type, 3, 0, POWERUP_TYPE_SHOT);
+    add_enemy(le->x, le->y, le->enemy_type, le->enemy_data_type, 3, 0, POWERUP_TYPE_SHOT);
 }

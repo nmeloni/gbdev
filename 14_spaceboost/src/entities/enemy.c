@@ -25,7 +25,7 @@ typedef struct  {
 } static_manager_data;
 
 const static_manager_data enemy_pattern_data[] = {
-    [ENEMY_DRONE] = {STATIC_PATTERN_TYPE_MOVE_DOWN_FAST, STATIC_PATTERN_TYPE_ZIGZAG, 0}
+    [ENEMY_DATA_DRONE_1] = {STATIC_PATTERN_TYPE_NONE, STATIC_PATTERN_TYPE_MOVE_DOWN, 0}
 };
 
 const uint8_t enemy_bbox[][2] = {
@@ -57,6 +57,7 @@ void init_enemies(void) {
     for (uint8_t i = 0; i < MAX_ENEMIES; i++,e++){
 	init_body( &(e->body), 0, 0);
 	e->type = ENEMY_NONE;
+	e->data_type = ENEMY_DATA_NONE;
 	e->hp = 0;
 	e->ishit = 0;
 	e->frame_timer = 0;
@@ -66,7 +67,7 @@ void init_enemies(void) {
     }
 }
 
-void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed, PowerUpType powerup){
+void add_enemy(uint8_t x, uint8_t y, EnemyType type, EnemyDataType data_type, uint8_t hp, uint8_t speed, PowerUpType powerup){
     if (active_enemy_count >= MAX_ENEMIES) return;
 
     // Cherche un slot libre dans le pool d'ennemis
@@ -77,6 +78,7 @@ void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed, 
 	//On a trouvé un slot de libre
 	init_body( &(e->body), x, y);
 	e->type = type;
+	e->data_type = data_type;
 	e->hp = hp;
 	e->ishit = 0;
 	e->frame_timer = 0;
@@ -84,10 +86,10 @@ void add_enemy(uint8_t x, uint8_t y, EnemyType type, uint8_t hp, uint8_t speed, 
 	e->powerup = powerup;
 	e->active = 1;
 	init_static_move_pattern_manager(&e->smp,
-					 enemy_pattern_data[type].intro_pattern_type,
-					 enemy_pattern_data[type].loop_pattern_type,
-					 enemy_pattern_data[type].initial_pattern);
-	init_bullet_pattern_manager(&e->bpm, bullet_pattern_data[type]);
+					 enemy_pattern_data[data_type].intro_pattern_type,
+					 enemy_pattern_data[data_type].loop_pattern_type,
+					 enemy_pattern_data[data_type].initial_pattern);
+	init_bullet_pattern_manager(&e->bpm, bullet_pattern_data[data_type]);
 	
 	ACTIVE_ENEMY_POOL[active_enemy_count++] = i;
 	return;

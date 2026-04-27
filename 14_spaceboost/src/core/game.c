@@ -113,12 +113,6 @@ static void init_gameplay(void) {
     init_background();
     //init_audio();
     init_level(LEVEL_1);
-    
-    PLAYER->body.x = PLAYER_START_X;
-    PLAYER->body.y = PLAYER_START_Y;
-    PLAYER->active = 1;
-
-    
 }
 
 static void update_gameplay(void) {

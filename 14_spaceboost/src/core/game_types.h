@@ -39,7 +39,8 @@ typedef enum {
     // 8,9,10,11
     DIR_W, DIR_WSW, DIR_SW, DIR_SSW,
     //12,13,14,15
-    DIR_S, DIR_SSE, DIR_SE, DIR_ESE
+    DIR_S, DIR_SSE, DIR_SE, DIR_ESE,
+    DIR_AIMED_1, DIR_AIMED_3, DIR_AIMED_5
 } Direction16;
 
 // ─── Structure Pattern mouvement ───────────────────────────────────────────────
@@ -141,9 +142,14 @@ typedef struct {
 
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
 typedef enum {
-  ENEMY_DRONE,
-  ENEMY_NONE
+    ENEMY_DRONE,
+    ENEMY_NONE
 } EnemyType;
+
+typedef enum {
+    ENEMY_DATA_DRONE_1,
+    ENEMY_DATA_NONE
+} EnemyDataType;
 
 typedef enum {
     WEAPON_NONE
@@ -153,6 +159,7 @@ typedef struct {
     Body    body;
     uint8_t active;
     EnemyType type;
+    EnemyDataType data_type;
     int8_t  hp;
     uint8_t ishit;
     uint8_t frame_timer;
@@ -177,12 +184,16 @@ typedef enum {
     LEVEL_EVENT_SPAWN_ENEMY,
     LEVEL_EVENT_END,
     LEVEL_EVENT_OUTRO,
+    LEVEL_EVENT_LOAD_LEVEL_2,
+    LEVEL_EVENT_LOAD_LEVEL_3,
+    LEVEL_EVENT_LOAD_TITLE_SCREEN,
     LEVEL_EVENT_NONE
 } LevelEventType;
 
 typedef struct {
     LevelEventType level_event_type;
     EnemyType enemy_type;
+    EnemyDataType enemy_data_type;
     uint8_t x, y;
     uint8_t duration;
 } LevelEvent;
