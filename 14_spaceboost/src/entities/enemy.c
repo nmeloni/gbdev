@@ -11,7 +11,14 @@
 #include "shot.h"
 #include "player.h"
 
+
 #include "enemy_drone_sprite.h"
+#include "enemy_scout_sprite.h"
+#include "enemy_minion_sprite.h"
+#include "enemy_sphere_sprite.h"
+#include "enemy_probe_sprite.h"
+
+
 // Stub Phase 1 — implémentation complète en Phase 3
 
 Enemy ENEMY_POOL[MAX_ENEMIES];
@@ -33,7 +40,19 @@ const uint8_t enemy_bbox[][2] = {
 };
 
 const const metasprite_t* const * enemy_metasprites[] = {
-    enemy_drone_sprite_metasprites
+    enemy_drone_sprite_metasprites,
+    enemy_scout_sprite_metasprites,
+    enemy_minion_sprite_metasprites,
+    enemy_sphere_sprite_metasprites,
+    enemy_probe_sprite_metasprites
+};
+
+const uint8_t enemy_tile_offset[]={
+    [ENEMY_DRONE] = ENEMY_1_TILE_OFFSET,
+    [ENEMY_SCOUT] = ENEMY_2_TILE_OFFSET,
+    [ENEMY_MINION] = ENEMY_3_TILE_OFFSET,
+    [ENEMY_SPHERE] = ENEMY_4_TILE_OFFSET,
+    [ENEMY_PROBE] = ENEMY_5_TILE_OFFSET
 };
 
 static uint8_t shot_bbox_w, shot_bbox_h;
@@ -84,6 +103,7 @@ void add_enemy(uint8_t x, uint8_t y, EnemyType type, EnemyDataType data_type, ui
 	e->frame_timer = 0;
 	e->speed = speed;
 	e->powerup = powerup;
+	e->tile_offset = enemy_tile_offset[type];
 	e->active = 1;
 	init_static_move_pattern_manager(&e->smp,
 					 enemy_pattern_data[data_type].intro_pattern_type,

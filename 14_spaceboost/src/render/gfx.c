@@ -11,6 +11,10 @@
 #include "bullet_sprite.h"
 #include "powerup_sprite.h"
 #include "enemy_drone_sprite.h"
+#include "enemy_scout_sprite.h"
+#include "enemy_minion_sprite.h"
+#include "enemy_sphere_sprite.h"
+#include "enemy_probe_sprite.h"
 // Background
 #include "space_bkg_tileset.h"
 #include "space_bkg_tilemap.h"
@@ -34,7 +38,11 @@ void gfx_init(void) {
     set_sprite_data(EXPLOSION_TILE_OFFSET, explosion_sprite_TILE_COUNT, explosion_sprite_tiles);
     set_sprite_data(BULLET_SMALL_TILE_OFFSET,    bullet_sprite_TILE_COUNT,    bullet_sprite_tiles);
     set_sprite_data(POWERUP_TILE_OFFSET,   powerup_sprite_TILE_COUNT,   powerup_sprite_tiles);
-    set_sprite_data(ENEMY_TILE_OFFSET,   enemy_drone_sprite_TILE_COUNT,   enemy_drone_sprite_tiles);
+    set_sprite_data(ENEMY_1_TILE_OFFSET,   enemy_drone_sprite_TILE_COUNT,   enemy_drone_sprite_tiles);
+    set_sprite_data(ENEMY_2_TILE_OFFSET,   enemy_scout_sprite_TILE_COUNT,   enemy_scout_sprite_tiles);
+    set_sprite_data(ENEMY_3_TILE_OFFSET,   enemy_minion_sprite_TILE_COUNT,   enemy_minion_sprite_tiles);
+    set_sprite_data(ENEMY_4_TILE_OFFSET,   enemy_sphere_sprite_TILE_COUNT,   enemy_sphere_sprite_tiles);
+    set_sprite_data(ENEMY_5_TILE_OFFSET,   enemy_probe_sprite_TILE_COUNT,   enemy_probe_sprite_tiles);
 
     // Background
     set_bkg_data(0x0, space_bkg_tileset_TILE_COUNT, space_bkg_tileset_tiles);

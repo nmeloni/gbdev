@@ -143,6 +143,10 @@ typedef struct {
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
 typedef enum {
     ENEMY_DRONE,
+    ENEMY_SCOUT,
+    ENEMY_MINION,
+    ENEMY_SPHERE,
+    ENEMY_PROBE,
     ENEMY_NONE
 } EnemyType;
 

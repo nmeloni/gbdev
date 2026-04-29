@@ -37,8 +37,6 @@ boss_beholder_sprite.c: $(PNG_DIR)/boss_beholder_sprite.png
 boss_dreadnought_sprite.c: $(PNG_DIR)/boss_dreadnought_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 48 -sh 32 -spr8x16 -noflip -keep_palette_order
 
-
-
 explosion_sprite.c: $(PNG_DIR)/explosion_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
