@@ -1,9 +1,9 @@
 #
-# A Makefile that compiles all .c and .s files in "src" and "res" 
+# A Makefile that compiles all .c and .s files in "src" and "res"
 # subdirectories and places the output in a "obj" subdirectory
 #
 
-# If you move this project you can change the directory 
+# If you move this project you can change the directory
 # to match your GBDK root directory (ex: GBDK_HOME = "C:/GBDK/"
 
 
@@ -35,11 +35,11 @@ INC =   -Ires \
         -Isrc/utils \
 	-Isrc/input \
 	-Isrc/audio \
-	-Isrc/levels 
+	-Isrc/levels
 
 
 
-LCCFLAGS   += $(INC) 
+LCCFLAGS   += $(INC)
 
 BINS	    = $(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c))
@@ -71,7 +71,7 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.s
 
 # If needed, compile .c files in "src/" to .s assembly files
 # (not required if .c is compiled directly to .o)
-$(OBJDIR)/%.s:	$(SRCDIR)/%.c 
+$(OBJDIR)/%.s:	$(SRCDIR)/%.c
 	$(LCC) $(LCCFLAGS) -S -o $@ $<
 
 # Link the compiled object files into a .gb ROM file
@@ -83,5 +83,4 @@ prepare:
 
 clean:
 	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
-	rm -rf  $(OBJDIR)/* 
-
+	rm -rf  $(OBJDIR)/*
