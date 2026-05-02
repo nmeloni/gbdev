@@ -41,13 +41,12 @@ void update_explosions(void) {
 	if (ex->frame_timer == 0) {
 	    queue_rear = (queue_rear + 1) % MAX_EXPLOSIONS;
 	}
-	
+
 	if ( (frame_counter^i) % 2) continue;
-	
-	uint8_t frame = ex->frame_timer >> EXPLOSION_ANIM_SPEED_LOG2;	
-	oam += move_metasprite_ex(explosion_sprite_metasprites[frame],
+
+	uint8_t frame = ex->frame_timer >> EXPLOSION_ANIM_SPEED_LOG2;
+	oam += move_metasprite_ex(explosion_sprite_metasprites[3-frame],
 				  EXPLOSION_TILE_OFFSET, 0, oam,
 				  ex->x, ex->y);
     }
 }
-	

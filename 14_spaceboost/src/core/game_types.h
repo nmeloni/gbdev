@@ -11,7 +11,7 @@ typedef struct {
     int8_t  fx, fy;
 } Body;
 
-// ─── Background (virgule fixe 4 bits) ────────────────────────────────────────── 
+// ─── Background (virgule fixe 4 bits) ──────────────────────────────────────────
 typedef struct {
     int8_t dx, fx;
     int8_t dy, fy;
@@ -53,10 +53,10 @@ typedef enum {
     STATIC_PATTERN_TYPE_MOVE_LEFT_FAST,
     STATIC_PATTERN_TYPE_MOVE_RIGHT,
     STATIC_PATTERN_TYPE_MOVE_RIGHT_FAST,
-    
+
     STATIC_PATTERN_TYPE_MOVE_LEFT_BKG,
     STATIC_PATTERN_TYPE_MOVE_RIGHT_BKG,
-    
+
     STATIC_PATTERN_TYPE_MOVE_LATERAL,
     STATIC_PATTERN_TYPE_ZIGZAG,
     STATIC_PATTERN_TYPE_NONE
@@ -77,6 +77,12 @@ typedef struct {
     uint8_t duration;
 } StaticPattern;
 
+typedef struct  {
+    StaticPatternType intro_pattern_type;
+    StaticPatternType loop_pattern_type;
+    uint8_t initial_pattern;
+} static_manager_data;
+
 // ─── Structure Pattern Tir enemie ──────────────────────────────────────────────
 typedef enum  {
     BULLET_PATTERN_TYPE_SINGLE_DOWN,
@@ -84,7 +90,7 @@ typedef enum  {
 } BulletPatternType;
 
 typedef struct {
-    BulletType type; 
+    BulletType type;
     Direction16 * dir; //direction de chaque tirs du pattern
     uint8_t length;    // nombre de directions
     uint8_t lag;       // laps de temps entre deux tirs
@@ -109,6 +115,7 @@ typedef struct {
     uint8_t shot_cooldown;
     uint8_t shot_power;
     uint8_t boost;
+    uint16_t score;
     const metasprite_t * const * metasprites;
 } Player;
 
@@ -147,11 +154,15 @@ typedef enum {
     ENEMY_MINION,
     ENEMY_SPHERE,
     ENEMY_PROBE,
+    ENEMY_RUSHER,
+    ENEMY_SWARMER,
     ENEMY_NONE
 } EnemyType;
 
 typedef enum {
     ENEMY_DATA_DRONE_1,
+    ENEMY_DATA_SCOUT_1,
+    ENEMY_DATA_SCOUT_2,
     ENEMY_DATA_NONE
 } EnemyDataType;
 
@@ -186,6 +197,9 @@ typedef enum {
     LEVEL_EVENT_INTRO,
     LEVEL_EVENT_START,
     LEVEL_EVENT_SPAWN_ENEMY,
+    LEVEL_EVENT_POWERUP_SHOT,
+    LEVEL_EVENT_POWERUP_SHIELD,
+    LEVEL_EVENT_POWERUP_LIFE,
     LEVEL_EVENT_END,
     LEVEL_EVENT_OUTRO,
     LEVEL_EVENT_LOAD_LEVEL_2,

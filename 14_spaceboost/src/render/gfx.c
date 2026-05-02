@@ -1,4 +1,5 @@
 #include <gb/gb.h>
+#include <stdint.h>
 
 #include "gfx.h"
 #include "constants.h"
@@ -15,9 +16,21 @@
 #include "enemy_minion_sprite.h"
 #include "enemy_sphere_sprite.h"
 #include "enemy_probe_sprite.h"
+#include "enemy_swarmer_sprite.h"
+#include "enemy_rusher_sprite.h"
 // Background
 #include "space_bkg_tileset.h"
 #include "space_bkg_tilemap.h"
+// HUD
+#include "gb_font.h"
+#include "mini_player.h"
+
+const uint8_t white_tile[] = {
+    0x00,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00,
+    0x00,0x00,0x00,0x00
+};
 
 void gfx_init(void) {
     SPRITES_8x16;
@@ -43,8 +56,14 @@ void gfx_init(void) {
     set_sprite_data(ENEMY_3_TILE_OFFSET,   enemy_minion_sprite_TILE_COUNT,   enemy_minion_sprite_tiles);
     set_sprite_data(ENEMY_4_TILE_OFFSET,   enemy_sphere_sprite_TILE_COUNT,   enemy_sphere_sprite_tiles);
     set_sprite_data(ENEMY_5_TILE_OFFSET,   enemy_probe_sprite_TILE_COUNT,   enemy_probe_sprite_tiles);
-
+    set_sprite_data(ENEMY_6_TILE_OFFSET,   enemy_swarmer_sprite_TILE_COUNT,   enemy_swarmer_sprite_tiles);
+    set_sprite_data(ENEMY_7_TILE_OFFSET,   enemy_rusher_sprite_TILE_COUNT,   enemy_rusher_sprite_tiles);
     // Background
     set_bkg_data(0x0, space_bkg_tileset_TILE_COUNT, space_bkg_tileset_tiles);
     set_bkg_tiles(0, 0, 20, 32, space_bkg_tilemap_map);
+    // Window HUD
+    set_bkg_data(HUD_BLANK_TILE, 1, white_tile);
+    set_bkg_data(HUD_SHIP_TILE,  mini_player_TILE_COUNT, mini_player_tiles);
+    set_bkg_data(FONT_TILE, gb_font_TILE_COUNT,     gb_font_tiles);
+
 }

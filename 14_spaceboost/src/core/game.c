@@ -1,7 +1,10 @@
+#include <stdint.h>
+
 #include "game.h"
 #include "constants.h"
 #include "game_types.h"
 #include "gfx.h"
+#include "hud.h"
 #include "background.h"
 #include "logo.h"
 #include "titlescreen.h"
@@ -14,7 +17,7 @@
 #include "powerup.h"
 #include "explosion.h"
 #include "level.h"
-#include <stdint.h>
+
 
 // ─── État global ──────────────────────────────────────────────────────────────
 game_state_t game_state    = GAME_STATE_INIT;
@@ -104,6 +107,8 @@ static void init_gameplay(void) {
     frame_counter = 0;
     gfx_init();
     init_player();
+    init_hud();
+
     init_shots();
     init_enemies();
     init_bullets();

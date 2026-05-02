@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "player.h"
+#include "hud.h"
 #include "game.h"
 #include "input.h"
 #include "body.h"
@@ -35,6 +36,7 @@ Player * PLAYER = &player;
 
 void init_player(void) {
     PLAYER->lives       = PLAYER_LIVES;
+    PLAYER->score       = 0;
     PLAYER->active      = 0;  // activé par EVENT_ACTIVATE_PLAYER après l'intro
     PLAYER->metasprites = player_sprite_metasprites;
     reset_player(PLAYER_START_X, PLAYER_START_Y);
@@ -54,10 +56,15 @@ void kill_player(void) {
     PLAYER->lives--;
     reset_player(PLAYER_START_X, PLAYER_START_Y);
     PLAYER->invincibility_timer = PLAYER_INVINCIBILITY;
+    hud_set_lives();
 }
 
 void hit_player(void) {
     kill_player();
+}
+
+void add_to_score(uint8_t points){
+    PLAYER->score += points;
 }
 
 void update_player(void) {

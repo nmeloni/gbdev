@@ -40,7 +40,18 @@ boss_dreadnought_sprite.c: $(PNG_DIR)/boss_dreadnought_sprite.png
 explosion_sprite.c: $(PNG_DIR)/explosion_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
+# -----------------------------------------------------------------------
+# HUD : font et icône vaisseau (tiles BG, pas de métasprites)
+# -----------------------------------------------------------------------
+gb_font.c: $(PNG_DIR)/gb_font.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only -keep_palette_order
+
+mini_player.c: $(PNG_DIR)/mini_player.png
+	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only
+
+# -----------------------------------------------------------------------
 # regles spécifiques pour les tilesmap
+# -----------------------------------------------------------------------
 space_bkg_tileset.c: $(PNG_DIR)/space_bkg_tileset.png
 	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only
 
@@ -51,7 +62,7 @@ logo_img.c: $(PNG_DIR)/logo_img.png
 	$(PNG2ASSET) $< -c $@ -map -noflip
 
 titlescreen_img.c: $(PNG_DIR)/titlescreen_img.png
-	$(PNG2ASSET) $< -c $@ -map -noflip	
+	$(PNG2ASSET) $< -c $@ -map -noflip
 
 # Nettoyer les fichiers générés
 clean:

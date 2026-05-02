@@ -11,83 +11,83 @@ static const uint8_t pattern_length[] = {
 };
 
 static const StaticPattern move_down[1] = {
-    { .dx = 0, .dy = 4, .duration = 120 }
+    { .dx = 0, .dy = 4, .duration = 40 }
 };
 
 static const StaticPattern move_down_fast[1] = {
-    { .dx = 0, .dy = 8, .duration = 120 }
+    { .dx = 0, .dy = 8, .duration = 40 }
 };
 
 static const StaticPattern move_up[1] = {
-    { .dx = 0, .dy = -4, .duration = 120 }
+    { .dx = 0, .dy = -4, .duration = 40 }
 };
 
 static const StaticPattern move_up_fast[1] = {
-    { .dx = 0, .dy = -8, .duration = 120 }
+    { .dx = 0, .dy = -8, .duration = 40 }
 };
 
 static const StaticPattern move_left[1] = {
-    { .dx = -4, .dy = 0, .duration = 120 }
+    { .dx = -4, .dy = 0, .duration = 40 }
 };
 
 static const StaticPattern move_left_fast[1] = {
-    { .dx = -8, .dy = 0, .duration = 120 }
+    { .dx = -8, .dy = 0, .duration = 40 }
 };
 
 static const StaticPattern move_right[1] = {
-    { .dx = 4, .dy = 0, .duration = 120 }
+    { .dx = 4, .dy = 0, .duration = 40 }
 };
 
 static const StaticPattern move_right_fast[1] = {
-    { .dx = 8, .dy = 0, .duration = 120 }
+    { .dx = 8, .dy = 0, .duration = 40 }
 };
 
 static const StaticPattern move_left_background[1] = {
-   { .dx = -8, .dy = -BACKGROUND_SCROLL_SPEED_Y, .duration = 120 }
+   { .dx = -8, .dy = -BACKGROUND_SCROLL_SPEED_Y, .duration = 40 }
 };
 
 static const StaticPattern move_right_background[1] = {
-   { .dx = 8, .dy = -BACKGROUND_SCROLL_SPEED_Y, .duration = 120 }
-};   
-    
+   { .dx = 8, .dy = -BACKGROUND_SCROLL_SPEED_Y, .duration = 40 }
+};
+
 static const StaticPattern move_lateral[16] = {
-    {.dx =   16, .dy =  0, .duration = 5},
-    {.dx =  12, .dy =  0, .duration = 10},
-    {.dx =   8, .dy =  0, .duration = 10},
-    {.dx =   4, .dy =  0, .duration = 10},
-    {.dx =    0, .dy =  0, .duration = 5},
-    {.dx =  -4, .dy =  0, .duration = 10},
-    {.dx =  -8, .dy =  0, .duration = 10},
-    {.dx = -12, .dy =  0, .duration = 10},
-    {.dx =  -16, .dy =  0, .duration = 5},
-    {.dx = -12, .dy =  0, .duration = 10},
-    {.dx =  -8, .dy =  0, .duration = 10},
-    {.dx =  -4, .dy =  0, .duration = 10},
-    {.dx =    0, .dy =  0, .duration = 5},
-    {.dx =   4, .dy =  0, .duration = 10},
-    {.dx =   8, .dy =  0, .duration = 10},
-    {.dx =  12, .dy =  0, .duration = 10}
+    {.dx =   16, .dy =  0, .duration = 2},
+    {.dx =  12, .dy =  0, .duration = 4},
+    {.dx =   8, .dy =  0, .duration = 4},
+    {.dx =   4, .dy =  0, .duration = 4},
+    {.dx =    0, .dy =  0, .duration = 2},
+    {.dx =  -4, .dy =  0, .duration = 4},
+    {.dx =  -8, .dy =  0, .duration = 4},
+    {.dx = -12, .dy =  0, .duration = 4},
+    {.dx =  -16, .dy =  0, .duration = 2},
+    {.dx = -12, .dy =  0, .duration = 4},
+    {.dx =  -8, .dy =  0, .duration = 4},
+    {.dx =  -4, .dy =  0, .duration = 4},
+    {.dx =    0, .dy =  0, .duration = 2},
+    {.dx =   4, .dy =  0, .duration = 4},
+    {.dx =   8, .dy =  0, .duration = 4},
+    {.dx =  12, .dy =  0, .duration = 4}
 };
 
 static const StaticPattern move_zigzag[16] = {
-    {.dx =   32, .dy =   4, .duration = 5},
-    {.dx =  24, .dy =   4, .duration = 10},
-    {.dx =  16, .dy =   4, .duration = 10},
-    {.dx =   8, .dy =   4, .duration = 10},
-    {.dx =    0, .dy =   4, .duration = 5},
-    {.dx =  -8, .dy =   4, .duration = 10},
-    {.dx = -16, .dy =   4, .duration = 10},
-    {.dx = -24, .dy =   4, .duration = 10},
-    {.dx =  -32, .dy =   4, .duration = 5},
-    {.dx = -24, .dy =   4, .duration = 10},
-    {.dx = -16, .dy =   4, .duration = 10},
-    {.dx =  -8, .dy =   4, .duration = 10},
-    {.dx =    0, .dy =   4, .duration = 5},
-    {.dx =   8, .dy =   4, .duration = 10},
-    {.dx =  16, .dy =   4, .duration = 10},
-    {.dx =  24, .dy =   4, .duration = 10}
+    {.dx =   32, .dy =   4, .duration = 2},
+    {.dx =  24, .dy =   4, .duration = 4},
+    {.dx =  16, .dy =   4, .duration = 4},
+    {.dx =   8, .dy =   4, .duration = 4},
+    {.dx =    0, .dy =   4, .duration = 2},
+    {.dx =  -8, .dy =   4, .duration = 4},
+    {.dx = -16, .dy =   4, .duration = 4},
+    {.dx = -24, .dy =   4, .duration = 4},
+    {.dx =  -32, .dy =   4, .duration = 2},
+    {.dx = -24, .dy =   4, .duration = 4},
+    {.dx = -16, .dy =   4, .duration = 4},
+    {.dx =  -8, .dy =   4, .duration = 4},
+    {.dx =    0, .dy =   4, .duration = 2},
+    {.dx =   8, .dy =   4, .duration = 4},
+    {.dx =  16, .dy =   4, .duration = 4},
+    {.dx =  24, .dy =   4, .duration = 4}
 };
-    
+
 static const StaticPattern move_none[1] = {
     { .dx = 0, .dy = 0, .duration = 0 }
 };
@@ -147,6 +147,3 @@ void update_static_move_pattern_manager(StaticPatternManager *smp){
     }
     smp->timer--;
 }
-
-
-

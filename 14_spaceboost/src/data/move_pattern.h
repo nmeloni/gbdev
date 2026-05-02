@@ -13,5 +13,4 @@ void init_static_move_pattern_manager(StaticPatternManager *smp,
 			      uint8_t initial_pattern);
 void update_static_move_pattern_manager(StaticPatternManager *smp);
 
-
 #endif

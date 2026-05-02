@@ -10,6 +10,10 @@
 // ─── Background ───────────────────────────────────────────────────────────────
 #define BACKGROUND_SCROLL_SPEED_Y (-3)
 
+// ─── HUD ──────────────────────────────────────────────────────────────────────
+#define HUD_COL_LIVES    2u
+#define HUD_COL_SCORE   12u
+
 // Zone de jeu (sprites OAM : décalage matériel de 8,16)
 #define GAMESCREEN_X_ORIGIN   8u
 #define GAMESCREEN_Y_ORIGIN   16u
@@ -41,10 +45,10 @@
 // Bord gauche : body.x-16 = 0  → body.x = 16
 // Bord droit  : body.x+7  = 159 → body.x = 152
 // Bord haut/bas inchangés (validés par test)
-#define PLAYER_MIN_X          16u
-#define PLAYER_MAX_X          160u
+#define PLAYER_MIN_X          8u
+#define PLAYER_MAX_X          168u
 #define PLAYER_MIN_Y          24u
-#define PLAYER_MAX_Y          136u
+#define PLAYER_MAX_Y          144u
 
 #define PLAYER_START_X        84u
 #define PLAYER_START_Y        112u
@@ -136,7 +140,13 @@
 #define ENEMY_3_TILE_OFFSET (ENEMY_TILE_OFFSET + 16u)
 #define ENEMY_4_TILE_OFFSET (ENEMY_TILE_OFFSET + 24u)
 #define ENEMY_5_TILE_OFFSET (ENEMY_TILE_OFFSET + 32u)
+#define ENEMY_6_TILE_OFFSET (ENEMY_TILE_OFFSET + 40u)
+#define ENEMY_7_TILE_OFFSET (ENEMY_TILE_OFFSET + 48u)
 #define BOSS_TILE_OFFSET    80u
+
+#define HUD_BLANK_TILE 0xC0u
+#define HUD_SHIP_TILE  0xC1u
+#define FONT_TILE      0xC2u
 
 // ─── Durées et timings ────────────────────────────────────────────────────────
 #define EXPLOSION_DURATION         32u

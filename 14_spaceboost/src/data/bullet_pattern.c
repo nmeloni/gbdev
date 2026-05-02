@@ -8,20 +8,23 @@
 #include "game_types.h"
 
 const Direction16 shot_down[1] = { DIR_S };
-const Direction16 shot_aimed_3[1] = { DIR_AIMED_5 };
+const Direction16 shot_aimed_1[1] = { DIR_AIMED_1 };
 
 const BulletPattern bullet_patterns[] = {
     [BULLET_PATTERN_TYPE_SINGLE_DOWN] = {
-    .type = BULLET_TYPE_NONE,
+    .type = BULLET_TYPE_SMALL,
     .dir = shot_down,
     .length = 1,
-    .lag = 30,
-    .cool_down = 30
+    .lag = 10u,
+    .cool_down = 10u
+    },
+    [BULLET_PATTERN_TYPE_NONE] = {
+    .type = BULLET_TYPE_NONE,
+    .dir = NULL,
+    .length = 0,
+    .lag = 0,
+    .cool_down = 0
     }
-};
-
-const BulletPatternType bullet_pattern_data[] = {
-    [ENEMY_DATA_DRONE_1] = BULLET_PATTERN_TYPE_SINGLE_DOWN
 };
 
 static inline void handle_aimed_bullet(BulletPatternManager *bpm, Direction16 dir, uint8_t x, uint8_t y);

@@ -3,6 +3,7 @@
 #include "explosion.h"
 #include "move_pattern.h"
 #include "bullet_pattern.h"
+#include "enemy_data.h"
 #include "game.h"
 #include "body.h"
 #include "powerup.h"
@@ -10,13 +11,9 @@
 #include "enemy.h"
 #include "shot.h"
 #include "player.h"
+#include "hud.h"
 
 
-#include "enemy_drone_sprite.h"
-#include "enemy_scout_sprite.h"
-#include "enemy_minion_sprite.h"
-#include "enemy_sphere_sprite.h"
-#include "enemy_probe_sprite.h"
 
 
 // Stub Phase 1 — implémentation complète en Phase 3
@@ -24,36 +21,6 @@
 Enemy ENEMY_POOL[MAX_ENEMIES];
 uint8_t ACTIVE_ENEMY_POOL[MAX_ENEMIES];
 uint8_t active_enemy_count = 0;
-
-typedef struct  {
-    StaticPatternType intro_pattern_type;
-    StaticPatternType loop_pattern_type;
-    uint8_t initial_pattern;
-} static_manager_data;
-
-const static_manager_data enemy_pattern_data[] = {
-    [ENEMY_DATA_DRONE_1] = {STATIC_PATTERN_TYPE_NONE, STATIC_PATTERN_TYPE_MOVE_DOWN, 0}
-};
-
-const uint8_t enemy_bbox[][2] = {
-    [ENEMY_DRONE] = {8,8}
-};
-
-const const metasprite_t* const * enemy_metasprites[] = {
-    enemy_drone_sprite_metasprites,
-    enemy_scout_sprite_metasprites,
-    enemy_minion_sprite_metasprites,
-    enemy_sphere_sprite_metasprites,
-    enemy_probe_sprite_metasprites
-};
-
-const uint8_t enemy_tile_offset[]={
-    [ENEMY_DRONE] = ENEMY_1_TILE_OFFSET,
-    [ENEMY_SCOUT] = ENEMY_2_TILE_OFFSET,
-    [ENEMY_MINION] = ENEMY_3_TILE_OFFSET,
-    [ENEMY_SPHERE] = ENEMY_4_TILE_OFFSET,
-    [ENEMY_PROBE] = ENEMY_5_TILE_OFFSET
-};
 
 static uint8_t enemy_bbox_w, enemy_bbow_h;
 
@@ -186,6 +153,8 @@ static inline void destroy_enemy(Enemy *e){
     if (e->powerup != POWERUP_TYPE_NONE){
 	spawn_powerup(e->powerup, e->body.x, e->body.y);
     }
+    add_to_score(1);
+    hud_set_score();
 }
 
 static inline void handle_enemy_bounds(Enemy *e){

@@ -14,7 +14,7 @@ RESDIR  = res
 SRCDIRS = src \
 	src/core \
 	src/entities \
-	src/systems \
+	src/data \
 	src/render \
 	src/utils \
 	src/audio \
@@ -25,7 +25,7 @@ INC = \
 	-Isrc \
 	-Isrc/core \
 	-Isrc/entities \
-	-Isrc/systems \
+	-Isrc/data \
 	-Isrc/render \
 	-Isrc/utils \
 	-Isrc/audio \
