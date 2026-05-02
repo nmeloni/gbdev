@@ -36,7 +36,7 @@ void game_init(void) {
     oam           = 0;
     frame_counter = 0;
     hide_sprites_range(0, MAX_HARDWARE_SPRITES);
-    game_change_state(GAME_STATE_PLAY);    
+    game_change_state(GAME_STATE_PLAY);
 }
 
 void game_change_state(game_state_t new_state) {
@@ -113,6 +113,7 @@ static void init_gameplay(void) {
     init_background();
     //init_audio();
     init_level(LEVEL_1);
+
 }
 
 static void update_gameplay(void) {
@@ -124,7 +125,7 @@ static void update_gameplay(void) {
 
     update_shots();
     update_player();
-    
+
     update_bullets();
     update_enemies();
 

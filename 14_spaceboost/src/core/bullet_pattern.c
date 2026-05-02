@@ -12,12 +12,12 @@ const Direction16 shot_aimed_3[1] = { DIR_AIMED_5 };
 
 const BulletPattern bullet_patterns[] = {
     [BULLET_PATTERN_TYPE_SINGLE_DOWN] = {
-    .type = BULLET_TYPE_SMALL,
-    .dir = shot_aimed_3,
+    .type = BULLET_TYPE_NONE,
+    .dir = shot_down,
     .length = 1,
     .lag = 30,
     .cool_down = 30
-    } 
+    }
 };
 
 const BulletPatternType bullet_pattern_data[] = {
@@ -35,6 +35,7 @@ void init_bullet_pattern_manager(BulletPatternManager * bpm, BulletPatternType t
 }
 
 void update_bullet_pattern_manager(BulletPatternManager * bpm, uint8_t x, uint8_t y){
+    if (bpm->bp->type == BULLET_TYPE_NONE) return;
     if (bpm->cool_down_timer){
 	bpm->cool_down_timer--;
 	return;
@@ -60,10 +61,10 @@ void update_bullet_pattern_manager(BulletPatternManager * bpm, uint8_t x, uint8_
     } else {
 	int8_t dx = directions_dx[dir];
 	int8_t dy = directions_dy[dir];
-	
+
 	fire_bullet(bpm->bp->type, x, y, dx, dy);
     }
-    
+
     bpm->current_dir_index++;
     if (bpm->current_dir_index >= bpm->bp->length){
 	bpm->current_dir_index = 0;

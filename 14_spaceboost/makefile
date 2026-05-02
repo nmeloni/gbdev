@@ -31,7 +31,7 @@ INC = \
 	-Isrc/audio \
 	-Isrc/levels
 
-LCCFLAGS += $(INC)
+LCCFLAGS += $(INC) # -Wf--max-allocs-per-node50000 -Wf--opt-code-speed
 
 BINS      = $(PROJECTNAME).gb
 CSOURCES  = $(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c))
@@ -65,5 +65,5 @@ prepare:
 	@mkdir -p $(OBJDIR)
 
 clean:
-	rm -f *.gb *.ihx *.cdb *.adb *.noi *.map
+	rm -f *.gb *.ihx *.cdb *.adb *.noi *.map *.s19
 	rm -rf $(OBJDIR)

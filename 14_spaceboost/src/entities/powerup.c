@@ -33,11 +33,15 @@ void spawn_powerup(uint8_t type, uint8_t x, uint8_t y) {
 void update_powerup(void) {
     if (POWERUP->active == 0) return;
     //Si le powerup est actif
-    handle_powerup_move_pattern();
-    //On gère les bords de l'écran avec frame skip
-    if (frame_counter % POWERUP_BOUND_FRAME_SKIP == 3) handle_powerup_bounds();
-    if (frame_counter % POWERUP_VS_PLAYER_FRAME_SKIP == 0) handle_powerup_vs_player();
+    update_body_position(&POWERUP->body);
     draw_powerup();
+
+    //On gère une frame sur 4
+    if (frame_counter % 4 == 0){
+        handle_powerup_move_pattern();
+        handle_powerup_bounds();
+        handle_powerup_vs_player();
+    }
 }
 
 static inline void handle_powerup_bounds(void){
@@ -65,7 +69,6 @@ static inline void handle_powerup_move_pattern(void){
     update_static_move_pattern_manager(&POWERUP->spm);
     POWERUP->body.dx = POWERUP->spm.dx;
     POWERUP->body.dy = POWERUP->spm.dy ;
-    update_body_position(&POWERUP->body);
 }
 
 
@@ -73,5 +76,5 @@ static inline void draw_powerup(void){
     oam += move_metasprite_ex(powerup_sprite_metasprites[POWERUP->type],
 			      POWERUP_TILE_OFFSET, 0, oam,
 			      POWERUP->body.x, POWERUP->body.y);
-    
+
 }

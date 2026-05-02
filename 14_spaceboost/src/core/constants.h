@@ -20,8 +20,8 @@
 
 // ─── Pools d'entités ──────────────────────────────────────────────────────────
 #define MAX_ENEMIES           8u
-#define MAX_SHOTS             5u
-#define MAX_BULLETS           24u
+#define MAX_SHOTS             4u
+#define MAX_BULLETS           16u
 #define MAX_EXPLOSIONS        8u
 
 // ─── Joueur ───────────────────────────────────────────────────────────────────
@@ -132,7 +132,7 @@
 
 #define ENEMY_TILE_OFFSET   80u
 #define ENEMY_1_TILE_OFFSET (ENEMY_TILE_OFFSET)
-#define ENEMY_2_TILE_OFFSET (ENEMY_TILE_OFFSET + 8u)       
+#define ENEMY_2_TILE_OFFSET (ENEMY_TILE_OFFSET + 8u)
 #define ENEMY_3_TILE_OFFSET (ENEMY_TILE_OFFSET + 16u)
 #define ENEMY_4_TILE_OFFSET (ENEMY_TILE_OFFSET + 24u)
 #define ENEMY_5_TILE_OFFSET (ENEMY_TILE_OFFSET + 32u)

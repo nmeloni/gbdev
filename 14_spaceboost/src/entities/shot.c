@@ -7,12 +7,16 @@
 #include "player.h"
 #include "audio.h"
 
-static inline void handle_shot_bounds(Shot *s);
+static inline void handle_shot_bounds(Shot *s, uint8_t j);
 static inline void draw_shot(Shot *s);
 
 Shot  SHOTS_POOL[MAX_SHOTS];
 uint8_t ACTIVE_SHOTS[MAX_SHOTS];
 uint8_t active_shot_index = 0;
+
+uint8_t shot_power;
+uint8_t shot_tile_offset;
+uint8_t shot_bbox_w, shot_bbox_h;
 
 const uint8_t shot_bbox[3][2] = {
     {SHOT_LVL1_WIDTH, SHOT_LVL1_HEIGHT},
@@ -38,6 +42,10 @@ void init_shots(void) {
         s->active = 0;
     }
     active_shot_index = 0;
+    shot_power = shot_power_table[0];
+    shot_tile_offset = shot_tile_offsets[0];
+    shot_bbox_h = shot_bbox[0][0];
+    shot_bbox_w = shot_bbox[0][1];
 }
 
 void fire_shot(uint8_t x, uint8_t y, int8_t dx, int8_t dy) {
@@ -52,7 +60,7 @@ void fire_shot(uint8_t x, uint8_t y, int8_t dx, int8_t dy) {
             s->body.fx  = 0;
             s->body.fy  = 0;
             ACTIVE_SHOTS[active_shot_index++] = i;
-            audio_play_sfx(SFX_SHOOT);
+            //audio_play_sfx(SFX_SHOOT);
             break;
         }
     }
@@ -62,19 +70,20 @@ void update_shots(void) {
     uint8_t *ac = &ACTIVE_SHOTS[0];
     for (uint8_t j = 0; j < active_shot_index; j++,ac++) {
         uint8_t i = *ac;
-	Shot *s = &SHOTS_POOL[i];
-        update_body_position(&s->body);
-	//On gère les bords de l'écran avec frame skip
-        if (frame_counter % SHOT_BOUND_FRAME_SKIP == 0)  handle_shot_bounds(s);
+        Shot *s = &SHOTS_POOL[i];
 
-	//Si le tir est actif on dessine sinon on élimine
-        if (s->active) {
-            draw_shot(s);
-        } else {
-            kill_active_shot(j);
-            j--;
-        }
-    }	
+        update_body_position(&s->body);
+        draw_shot(s);
+        //On gère les bords de l'écran avec frame skip
+        if (frame_counter % MAX_SHOTS == j % MAX_SHOTS)  handle_shot_bounds(s,j);
+    }
+}
+
+void powerup_shot(uint8_t power){
+    shot_power = shot_power_table[power];
+    shot_tile_offset = shot_tile_offsets[power];
+    shot_bbox_h = shot_bbox[power][0];
+    shot_bbox_w = shot_bbox[power][1];
 }
 
 inline void desactivate_shot(Shot *s){
@@ -85,18 +94,18 @@ inline void kill_active_shot(uint8_t j) {
     ACTIVE_SHOTS[j] = ACTIVE_SHOTS[--active_shot_index];
 }
 
-static inline void handle_shot_bounds(Shot *s) {
-    s->active =
-        is_inside_bounds(s->body.y, GAMESCREEN_Y_ORIGIN, GAMESCREEN_Y_END) &
-        is_inside_bounds(s->body.x, GAMESCREEN_X_ORIGIN, GAMESCREEN_X_END);
+static inline void handle_shot_bounds(Shot *s, uint8_t j) {
+    if ( is_outside_bounds(s->body.y, GAMESCREEN_Y_ORIGIN, GAMESCREEN_Y_END) ){
+        desactivate_shot(s);
+        kill_active_shot(j);
+    }
 }
 
 static inline void draw_shot(Shot *s) {
-    set_sprite_tile(oam, shot_tile_offsets[PLAYER->shot_power]);
+    set_sprite_tile(oam, shot_tile_offset);
     //On remet la prop a 0 au cas où il y a donnees de la frame précédentes
-    set_sprite_prop(oam, 0); 
+    set_sprite_prop(oam, 0);
     move_sprite(oam++,
                 s->body.x + SHOT_ONSCREEN_X_OFFSET,
                 s->body.y + SHOT_ONSCREEN_Y_OFFSET);
 }
-
