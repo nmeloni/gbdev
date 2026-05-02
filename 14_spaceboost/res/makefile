@@ -20,6 +20,26 @@ all: $(C_FILES)
 player_sprite.c: $(PNG_DIR)/player_sprite.png
 	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
 
+shield_sprite.c: $(PNG_DIR)/shield_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+powerup_sprite.c: $(PNG_DIR)/powerup_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+enemy_%_sprite.c: $(PNG_DIR)/enemy_%_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
+
+
+boss_beholder_sprite.c: $(PNG_DIR)/boss_beholder_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 32 -sh 32 -spr8x16 -noflip -keep_palette_order
+
+boss_dreadnought_sprite.c: $(PNG_DIR)/boss_dreadnought_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 48 -sh 32 -spr8x16 -noflip -keep_palette_order
+
+explosion_sprite.c: $(PNG_DIR)/explosion_sprite.png
+	$(PNG2ASSET) $< -c $@ -sw 16 -sh 16 -spr8x16 -noflip -keep_palette_order
+
 # regles spécifiques pour les tilesmap
 space_bkg_tileset.c: $(PNG_DIR)/space_bkg_tileset.png
 	$(PNG2ASSET) $< -c $@ -noflip -map -tiles_only
@@ -27,6 +47,11 @@ space_bkg_tileset.c: $(PNG_DIR)/space_bkg_tileset.png
 space_bkg_tilemap.c: $(PNG_DIR)/space_bkg_tilemap.png
 	$(PNG2ASSET) $< -c $@ -noflip -map -maps_only -source_tileset $(PNG_DIR)/space_bkg_tileset.png
 
+logo_img.c: $(PNG_DIR)/logo_img.png
+	$(PNG2ASSET) $< -c $@ -map -noflip
+
+titlescreen_img.c: $(PNG_DIR)/titlescreen_img.png
+	$(PNG2ASSET) $< -c $@ -map -noflip	
 
 # Nettoyer les fichiers générés
 clean:

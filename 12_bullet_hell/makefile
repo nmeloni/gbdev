@@ -1,60 +1,46 @@
 #
-# A Makefile that compiles all .c and .s files in "src" and "res" 
-# subdirectories and places the output in a "obj" subdirectory
+# Makefile — 12_bullet_hell
+# Module de test de performance : bullets, collisions, mesure CPU
 #
 
-# If you move this project you can change the directory 
-# to match your GBDK root directory (ex: GBDK_HOME = "C:/GBDK/"
-
-
 LCC = $(GBDKDIR)bin/lcc
-# You can set the name of the .gb ROM file here
-PROJECTNAME    = shooter
 
-SRCDIR      = src
-OBJDIR      = obj
-RESDIR      = res
+PROJECTNAME = bullet_hell
 
-INC = -Ires -Isrc
-LCCFLAGS   += $(INC) 
+SRCDIR  = src
+OBJDIR  = obj
+RESDIR  = res
 
-BINS	    = $(PROJECTNAME).gb
-CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c)))
-ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
-OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
+INC = -Isrc -Ires -Wf--max-allocs-per-node50000 -Wf--opt-code-speed
 
-all:	prepare $(BINS)
+LCCFLAGS += $(INC)
 
-# Commande pour générer les ressources
+BINS      = $(PROJECTNAME).gb
+CSOURCES  = $(wildcard $(SRCDIR)/*.c)
+RESOURCES = $(wildcard $(RESDIR)/*.c)
+OBJS      = $(CSOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o) \
+            $(RESOURCES:$(RESDIR)/%.c=$(OBJDIR)/res_%.o)
+
+all: prepare $(BINS)
+
 resources:
 	@echo "Generating resources..."
 	@$(MAKE) -C $(RESDIR)
 
-# Compile .c files in "src/" to .o object files
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c 
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo "  CC $<"
 	$(LCC) $(LCCFLAGS) -c -o $@ $<
 
-# Compile .c files in "res/" to .o object files
-$(OBJDIR)/%.o:	$(RESDIR)/%.c
+$(OBJDIR)/res_%.o: $(RESDIR)/%.c
+	@echo "  CC $<"
 	$(LCC) $(LCCFLAGS) -c -o $@ $<
 
-# Compile .s assembly files in "src/" to .o object files
-$(OBJDIR)/%.o:	$(SRCDIR)/%.s
-	$(LCC) $(LCCFLAGS) -c -o $@ $<
-
-# If needed, compile .c files in "src/" to .s assembly files
-# (not required if .c is compiled directly to .o)
-$(OBJDIR)/%.s:	$(SRCDIR)/%.c 
-	$(LCC) $(LCCFLAGS) -S -o $@ $<
-
-# Link the compiled object files into a .gb ROM file
-$(BINS):	$(OBJS)
+$(BINS): $(OBJS)
 	$(LCC) $(LCCFLAGS) -o $(BINS) $(OBJS)
 
 prepare:
-	mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 clean:
-	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
-	rm -f  $(OBJDIR)/*.* 
-
+	rm -f *.gb *.ihx *.cdb *.adb *.noi *.map
+	rm -rf $(OBJDIR)
