@@ -23,6 +23,7 @@ arch/
 *.noi
 *.ihx
 *.lk
+*.s19
 
 ####################################
 # Assets intermédiaires / temporaires
@@ -32,6 +33,7 @@ arch/
 *.bak
 *.old
 *.swp
+*.json
 
 ####################################
 # Logs
