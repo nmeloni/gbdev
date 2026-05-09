@@ -59,6 +59,7 @@ typedef enum {
 
     STATIC_PATTERN_TYPE_MOVE_LATERAL,
     STATIC_PATTERN_TYPE_ZIGZAG,
+    STATIC_PATTERN_TYPE_SINUSOIDAL,
     STATIC_PATTERN_TYPE_NONE
 } StaticPatternType;
 
@@ -149,7 +150,7 @@ typedef struct {
 
 // ─── Structure Enemy ─────────────────────────────────────────────────────────
 typedef enum {
-    ENEMY_DRONE,
+    ENEMY_DRONE = 0,
     ENEMY_SCOUT,
     ENEMY_MINION,
     ENEMY_SPHERE,
@@ -185,6 +186,59 @@ typedef struct {
     BulletPatternManager bpm; //bullet pattern manager
 } Enemy;
 
+// ─── Structure Boss  ─────────────────────────────────────────────────────────
+typedef enum {
+    BOSS_PHASE_INTRO = 0,
+    BOSS_PHASE_1,
+    BOSS_TRANSITION_1_2,
+    BOSS_PHASE_2,
+    BOSS_TRANSITION_2_3,
+    BOSS_PHASE_3,
+    BOSS_PHASE_DEFEATED
+} BossPhase;
+
+typedef enum {
+    BOSS_PATTERN_START = 0,
+    BOSS_PATTERN_LATERAL,
+    BOSS_PATTERN_SINUSOIDAL,
+    BOSS_PATTERN_WAIT,
+    BOSS_PATTERN_SHAKE,
+    BOSS_PATTERN_CENTER,
+
+    BOSS_PATTERN_STATIC,
+    BOSS_PATTERN_WINK,
+    BOSS_PATTERN_GO_TO_START_POSITION,
+    BOSS_PATTERN_CHARGE_AT_DIRECTION,
+    BOSS_PATTERN_AIM_AT_PLAYER,
+    BOSS_PATTERN_CHANGE_PHASE,
+    BOSS_PATTERN_DESTROY,
+    BOSS_PATTERN_END
+} BossMovePatternType;
+
+typedef enum {
+    BOSS_BEHOLDER,
+    BOSS_DREADNOUGHT
+} BossId;
+
+typedef struct {
+    Body         body;
+    uint8_t      bbox_w, bbox_h;
+    uint8_t      active;
+    uint8_t      timer;
+    uint8_t      hittable;
+    uint8_t      ishit;
+    uint8_t      frame;
+    BossPhase    phase;
+    StaticPatternType *static_pattern;
+    uint8_t      static_pattern_len;
+    BossMovePatternType      current_pattern;
+    uint8_t      current_pattern_index;
+    BulletPatternManager bpm;
+    int16_t      hp;
+    const BossMovePatternType      (*move_pattern_list)[8];
+    const metasprite_t * const * metasprites;
+} Boss;
+
 // ─── Structure Level ─────────────────────────────────────────────────────────
 typedef enum {
     LEVEL_1,
@@ -200,6 +254,8 @@ typedef enum {
     LEVEL_EVENT_POWERUP_SHOT,
     LEVEL_EVENT_POWERUP_SHIELD,
     LEVEL_EVENT_POWERUP_LIFE,
+    LEVEL_EVENT_BOSS_BEHOLDER,
+    LEVEL_EVENT_BOSS_DREADNOUGHT,
     LEVEL_EVENT_END,
     LEVEL_EVENT_OUTRO,
     LEVEL_EVENT_LOAD_LEVEL_2,

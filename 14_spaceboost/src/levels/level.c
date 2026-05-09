@@ -2,6 +2,7 @@
 #include "body.h"
 #include "player.h"
 #include "enemy.h"
+#include "boss.h"
 #include "enemy_data.h"
 
 #include "level.h"
@@ -60,6 +61,12 @@ void update_level(void){
     case LEVEL_EVENT_SPAWN_ENEMY:
         handle_spawn_enemy_event();
         break;
+    case LEVEL_EVENT_BOSS_BEHOLDER:
+        spawn_boss(BOSS_BEHOLDER);
+        break;
+    case LEVEL_EVENT_BOSS_DREADNOUGHT:
+        spawn_boss(BOSS_DREADNOUGHT);
+        break;
     case LEVEL_EVENT_POWERUP_SHOT:
         powerup_event = POWERUP_TYPE_SHOT;
         break;
@@ -108,22 +115,22 @@ static inline void handle_end_event(void){
 
 static inline void handle_outro_event(void){
     if (PLAYER->body.y > 8){
-	if (PLAYER->body.dy > -120){
-	    PLAYER->body.dy -= 2;
-	}
-	update_body_position(&PLAYER->body);
-	return;
+        if (PLAYER->body.dy > -120){
+            PLAYER->body.dy -= 2;
+        }
+        update_body_position(&PLAYER->body);
+        return;
     }
 }
 
 static inline void handle_load_event(void){
     switch (LEM->current_event_type) {
     case LEVEL_EVENT_LOAD_TITLE_SCREEN:
-	game_change_state(GAME_STATE_TITLE_SCREEN);
-	break;
+        game_change_state(GAME_STATE_TITLE_SCREEN);
+        break;
     default:
-	game_change_state(GAME_STATE_TITLE_SCREEN);
-	break;
+        game_change_state(GAME_STATE_TITLE_SCREEN);
+        break;
     }
 }
 
@@ -132,8 +139,8 @@ static inline void handle_spawn_enemy_event(void){
 
     uint8_t type = le->enemy_type;
     uint8_t data_type = le->enemy_data_type;
-    uint8_t speed = enemy_speed[type];
-    uint8_t hp = enemy_hp[type];
+    uint8_t speed = enemy_speed[data_type];
+    uint8_t hp = enemy_hp[data_type];
     add_enemy(le->x, le->y, type, data_type, hp, speed, powerup_event);
     powerup_event = POWERUP_TYPE_NONE;
 }

@@ -35,16 +35,11 @@
 #define PLAYER_MAX_POWER_LVL    2u
 #define PLAYER_MAX_LIVES        9u
 #define PLAYER_INVINCIBILITY  191u
-#define PLAYER_SHOT_COOLDOWN   12u
+#define PLAYER_SHOT_COOLDOWN   10u
 #define PLAYER_BOOST_DURATION  48u
 #define PLAYER_BBOX_W           1u
 #define PLAYER_BBOX_H           1u
-// Limites basées sur l'analyse des offsets metasprite (METASPR_ITEM(dy,dx,dtile,props))
-// Entry 0 : dx=-8 → OAM_x = body.x-8 → screen cols body.x-16 à body.x-9  (gauche)
-// Entry 1 : dx=+8 → OAM_x = body.x+8 → screen cols body.x   à body.x+7   (droite)
-// Bord gauche : body.x-16 = 0  → body.x = 16
-// Bord droit  : body.x+7  = 159 → body.x = 152
-// Bord haut/bas inchangés (validés par test)
+
 #define PLAYER_MIN_X          8u
 #define PLAYER_MAX_X          168u
 #define PLAYER_MIN_Y          24u
@@ -102,11 +97,11 @@
 // ─── Enemy ────────────────────────────────────────────────────────────────────
 // Marges de détection hors-écran (permet de sortir légèrement)
 #define ENEMY_MIN_X     4u
-#define ENEMY_MIN_Y     8u
-#define ENEMY_MAX_X     168u
+#define ENEMY_MIN_Y     4u
+#define ENEMY_MAX_X     172u
 #define ENEMY_MAX_Y     144u
 
-#define ENEMY_IS_HIT_DURATION    24u
+#define ENEMY_IS_HIT_DURATION     4u
 #define ENEMY_ANIM_DURATION       8u
 #define ENEMY_ANIM_DURATION_LOG2  3u
 
@@ -115,6 +110,20 @@
 #define ENEMY_VS_SHOT_MAN_DIST      16u
 #define ENEMY_VS_PLAYER_FRAME_SKIP   2u
 #define ENEMY_VS_PLAYER_MAN_DIST    16u
+
+// ─── Boss ────────────────────────────────────────────────────────────────────
+#define BOSS_VS_SHOT_MAN_DIST       32u
+#define BOSS_HIT_TIMER               4u
+
+#define BOSS_BEHOLDER_BBOX_W        12u
+#define BOSS_BEHOLDER_BBOX_H        12u
+#define BOSS_BEHOLDER_ENTER_TIMER  240u
+
+#define BOSS_BEHOLDER_START_X       88
+#define BOSS_BEHOLDER_START_Y       60u
+#define BOSS_BEHOLDER_HP_PHASE_1    10
+#define BOSS_BEHOLDER_HP_PHASE_2    10
+#define BOSS_BEHOLDER_HP_PHASE_3    10
 
 // ─── Offsets de tiles dans la VRAM sprite ────────────────────────────────────
 // Chaque entrée = index de départ dans la table sprite hardware (0-127 en 8x16)

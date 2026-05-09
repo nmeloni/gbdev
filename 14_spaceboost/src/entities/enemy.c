@@ -181,7 +181,7 @@ static inline void handle_enemy_vs_shot_collision(Enemy *e){
 
         if (check_collision_box(s->body.x, s->body.y, shot_bbox_w, shot_bbox_h,
                                 e->body.x, e->body.y, enemy_bbox_w, enemy_bbow_h)){
-            enemy_get_hit(e, shot_power_table[PLAYER->shot_power]);
+            enemy_get_hit(e, shot_power);
             desactivate_shot(s);
             kill_active_shot(j);
             return;

@@ -1,12 +1,13 @@
 #include "move_pattern.h"
 #include "constants.h"
 #include "game_types.h"
+
 #include <stdint.h>
 
 static const uint8_t pattern_length[] = {
     [STATIC_PATTERN_TYPE_MOVE_DOWN]=1,1,1,1,1,1,1,1,
     [STATIC_PATTERN_TYPE_MOVE_LEFT_BKG]=1,1,
-    [STATIC_PATTERN_TYPE_MOVE_LATERAL]=16,16,
+    [STATIC_PATTERN_TYPE_MOVE_LATERAL]=16,16,16,
     [STATIC_PATTERN_TYPE_NONE]=1
 };
 
@@ -88,6 +89,25 @@ static const StaticPattern move_zigzag[16] = {
     {.dx =  24, .dy =   4, .duration = 4}
 };
 
+static const StaticPattern move_sinusoidal[16] = {
+    {.dx =   4, .dy =   32, .duration = 2},
+    {.dx =  4, .dy =   24, .duration = 4},
+    {.dx =  4, .dy =   16, .duration = 4},
+    {.dx =   4, .dy =   8, .duration = 4},
+    {.dx =    4, .dy =   0, .duration = 2},
+    {.dx =  4, .dy =   -8, .duration = 4},
+    {.dx = 4, .dy =   -16, .duration = 4},
+    {.dx = 4, .dy =   -24, .duration = 4},
+    {.dx =  4, .dy =   -32, .duration = 2},
+    {.dx = 4, .dy =   -24, .duration = 4},
+    {.dx = 4, .dy =   -16, .duration = 4},
+    {.dx =  4, .dy =   -8, .duration = 4},
+    {.dx =    4, .dy =   0, .duration = 2},
+    {.dx =   4, .dy =   8, .duration = 4},
+    {.dx =  4, .dy =   16, .duration = 4},
+    {.dx =  4, .dy =   24, .duration = 4}
+};
+
 static const StaticPattern move_none[1] = {
     { .dx = 0, .dy = 0, .duration = 0 }
 };
@@ -105,6 +125,7 @@ static const StaticPattern *  move_patterns[] = {
     move_right_background,
     move_lateral,
     move_zigzag,
+    move_sinusoidal,
     move_none
 };
 
@@ -125,25 +146,25 @@ void init_static_move_pattern_manager(StaticPatternManager *smp,
 
 void update_static_move_pattern_manager(StaticPatternManager *smp){
     if (smp->timer == 0){
-	//Le pattern courant se termine on passe au suivant
-	smp->active_pattern++;
-	//S'il y a depassement et qu'on est sur le deuxième type de
-	//pattern on on boucle, sinon on change de type de pattern
-	if (smp->active_pattern >= smp->pattern_length){
-	    if (smp->active_type_index == 1){
-		smp->active_pattern = 0;
-	    } else {
-		smp->active_type_index = 1;
-		smp->active_type = smp->type[1];
-		smp->pattern_length = pattern_length[smp->active_type];
-		smp->active_pattern = 0;
-	    }
-	}
-	//on remet le timer a jour
-	const StaticPattern *temp = &move_patterns[smp->active_type][smp->active_pattern];
-	smp->timer = temp->duration;
-	smp->dx    = temp->dx;
-	smp->dy    = temp->dy;
+        //Le pattern courant se termine on passe au suivant
+        smp->active_pattern++;
+        //S'il y a depassement et qu'on est sur le deuxième type de
+        //pattern on on boucle, sinon on change de type de pattern
+        if (smp->active_pattern >= smp->pattern_length){
+            if (smp->active_type_index == 1){
+                smp->active_pattern = 0;
+            } else {
+                smp->active_type_index = 1;
+                smp->active_type = smp->type[1];
+                smp->pattern_length = pattern_length[smp->active_type];
+                smp->active_pattern = 0;
+            }
+        }
+        //on remet le timer a jour
+        const StaticPattern *temp = &move_patterns[smp->active_type][smp->active_pattern];
+        smp->timer = temp->duration;
+        smp->dx    = temp->dx;
+        smp->dy    = temp->dy;
     }
     smp->timer--;
 }

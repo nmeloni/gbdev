@@ -37,7 +37,13 @@ const uint8_t enemy_speed[] = {
 };
 
 const uint8_t enemy_bbox[][2] = {
-    [ENEMY_DRONE] = {8,8}
+    [ENEMY_DRONE]   = {8,8},
+    [ENEMY_SCOUT]   = {8,8},
+    [ENEMY_MINION]  = {8,8},
+    [ENEMY_SPHERE]  = {8,8},
+    [ENEMY_PROBE]   = {8,8},
+    [ENEMY_SWARMER] = {8,8},
+    [ENEMY_RUSHER]  = {8,8}
 };
 
 const const metasprite_t* const * enemy_metasprites[] = {

@@ -114,7 +114,7 @@ static void init_gameplay(void) {
     init_bullets();
     init_powerup();
     init_explosions();
-    //init_boss();
+    init_boss();
     init_background();
     //init_audio();
     init_level(LEVEL_1);
@@ -134,13 +134,17 @@ static void update_gameplay(void) {
     update_bullets();
     update_enemies();
 
-    //if (BOSS.active) update_boss();
+
     update_powerup();
     update_explosions();
 
-    scroll_background();
-    update_level();
+    if (BOSS->active){
+        update_boss();
+    } else {
+        update_level();
+    }
 
+    scroll_background();
     hide_sprites_range(oam, MAX_HARDWARE_SPRITES);
 
     // Entrée en pause

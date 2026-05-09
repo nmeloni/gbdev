@@ -3,7 +3,7 @@
 # Compile tous les .c dans src/ et ses sous-dossiers + res/
 #
 
-LCC = $(GBDKDIR)bin/lcc
+LCC = $(GBDKDIR)/bin/lcc
 
 PROJECTNAME = spaceboost
 
