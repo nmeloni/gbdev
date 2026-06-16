@@ -29,7 +29,7 @@
 #define PLAYER_START_Y  120u
 
 // ─── Bullets ──────────────────────────────────────────────────────────────────
-#define MAX_BULLETS           32u   // 40 OAM - 2 pour le joueur (2 hw sprites 8x16)
+#define MAX_BULLETS           38u   // 40 OAM - 2 pour le joueur (2 hw sprites 8x16)
 #define BULLET_HITBOX_W       2u
 #define BULLET_HITBOX_H       2u
 

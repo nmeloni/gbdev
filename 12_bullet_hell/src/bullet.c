@@ -39,8 +39,8 @@ static void try_spawn_bullet(void) {
         int8_t  dx = directions_dx[d];
         int8_t  dy = directions_dy[d];
 
-        b->body.dx = dx;
-        b->body.dy = dy;
+        b->body.dx = dx>>1;
+        b->body.dy = dy>>1;
         b->body.fx = 0;
         b->body.fy = 0;
 
@@ -106,7 +106,7 @@ void bullets_update(void) {
         }
 
         update_body_position(&b->body);
-
+        if ( (frame_counter & 1) != (j & 1)) continue;
         // On check les bordures 1 frame sur 8
         if ( (frame_counter & 7) != (j & 7)) goto print_sprite;
 
@@ -117,9 +117,9 @@ void bullets_update(void) {
         }
 
         //On check les collisions avec le joueur 1 frame sur 2
-        if ( (frame_counter & 2) != (j & 2)) goto print_sprite;
 
-         if (manathan_distance(b->body.x, b->body.y, PLAYER.body.x,PLAYER.body.y) > MAN_DIST_THRESHOLD)  goto print_sprite;
+
+        if (manathan_distance(b->body.x, b->body.y, PLAYER.body.x,PLAYER.body.y) > MAN_DIST_THRESHOLD)  goto print_sprite;
 
         if (check_collision_box(b->body.x, b->body.y,
                                 BULLET_HITBOX_W, BULLET_HITBOX_H,
@@ -130,6 +130,7 @@ void bullets_update(void) {
         }
 
     print_sprite:
+
         set_sprite_tile(oam, BULLET_TILE_OFFSET);
         // l'affichage des sprites standard n'est pas centré (-4,-8) pour les
         // SPRITE8x16
